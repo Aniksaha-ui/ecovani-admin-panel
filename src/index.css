@@ -141,6 +141,24 @@ body {
 .operations-invoice__total { min-width: 190px; border-radius: 10px; background: #16233f; padding: 13px 15px; text-align: right; }
 .operations-invoice__total strong { display: block; margin: 4px 0; color: #fff; font-size: 20px; }
 .operations-invoice__total small { color: #93e1b6; font-size: 12px; }
+.commerce-order-invoice { box-shadow: 0 24px 70px rgb(0 0 0 / 45%); }
+.commerce-order-invoice .operations-invoice__header { align-items: flex-start; }
+.commerce-order-invoice .operations-invoice__status { border-color: #557bd1; background: rgb(45 81 159 / 45%); }
+.commerce-order-invoice .operations-invoice__parties { padding-top: 24px; padding-bottom: 24px; }
+.commerce-order-invoice .operations-invoice__parties div { min-height: 52px; }
+.commerce-order-invoice .operations-invoice__table td:nth-last-child(-n + 2), .commerce-order-invoice .operations-invoice__table th:nth-last-child(-n + 2) { text-align: right; }
+.commerce-order-invoice .operations-invoice__footer { align-items: end; border-top: 1px solid #302c30; margin-top: 20px; padding-top: 16px; }
+.commerce-order-invoice__note { margin: 0; color: #7f91b1; font-size: 11px; font-style: italic; text-align: right; }
+.commerce-order-invoice__actions { justify-content: flex-end; border-top: 1px solid #302c30; padding: 16px 26px 22px; }
+.commerce-order-invoice__actions .routes-control { display: inline-flex; align-items: center; gap: 7px; }
+
+@media print {
+  body * { visibility: hidden; }
+  .commerce-order-invoice, .commerce-order-invoice * { visibility: visible; }
+  .commerce-order-invoice { position: absolute; inset: 0; width: 100%; max-width: none; box-shadow: none; }
+  .commerce-order-invoice__actions, .commerce-order-invoice .admin-icon-button { display: none !important; }
+  .commerce-order-invoice .operations-invoice__header, .commerce-order-invoice .operations-invoice__identity div, .commerce-order-invoice .operations-invoice__table th, .commerce-order-invoice .operations-invoice__table tfoot td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 .operations-receipt-detail { display: grid; gap: 10px; }
 .operations-receipt-detail p { display: flex; justify-content: space-between; gap: 16px; margin: 0; border-bottom: 1px solid #2d282b; padding-bottom: 10px; color: #dbe7fb; font-size: 14px; }
 .operations-receipt-detail span { color: #8fa0bd; font-weight: 700; }
@@ -161,6 +179,17 @@ body {
 .menu-hub-card h2 { margin: 0; color: #fff; font-size: 18px; }
 .menu-hub-card p { margin: 8px 0 0; color: #9caac2; font-size: 13px; line-height: 20px; }
 .menu-hub-card__link { color: #82a7ff; font-size: 11px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+.commerce-transaction-modal { width: min(100%, 900px); }
+.commerce-transaction-modal .admin-modal__header h2 { display: flex; align-items: center; gap: 8px; }
+.commerce-transaction-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid #38323a; border-radius: 10px; background: #38323a; }
+.commerce-transaction-summary div { display: grid; gap: 4px; background: #181619; padding: 13px; }
+.commerce-transaction-summary span, .commerce-transaction-fields span { color: #8495b5; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.commerce-transaction-summary strong, .commerce-transaction-fields strong { overflow-wrap: anywhere; color: #edf4ff; font-size: 13px; }
+.commerce-transaction-summary small { overflow-wrap: anywhere; color: #90a0bb; font-size: 11px; }
+.commerce-transaction-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 18px; overflow: hidden; border: 1px solid #38323a; border-radius: 10px; }
+.commerce-transaction-fields p { display: grid; gap: 5px; min-height: 48px; margin: 0; border-right: 1px solid #302c30; border-bottom: 1px solid #302c30; padding: 11px 12px; }
+.commerce-transaction-fields p:nth-child(3n) { border-right: 0; }
+.commerce-transaction-fields p:nth-last-child(-n + 2) { border-bottom: 0; }
 
 @media (max-width: 640px) {
   .admin-modal-backdrop { align-items: start; padding: 10px; }
@@ -175,6 +204,10 @@ body {
   .operations-adjustment-detail__grid p:nth-last-child(-n + 2) { border-bottom: 1px solid #302c30; }
   .operations-adjustment-detail__grid p:last-child { border-bottom: 0; }
   .menu-hub-header { align-items: flex-start; flex-direction: column; }
+  .commerce-transaction-summary, .commerce-transaction-fields { grid-template-columns: 1fr; }
+  .commerce-transaction-fields p { border-right: 0; }
+  .commerce-transaction-fields p:nth-last-child(-n + 2) { border-bottom: 1px solid #302c30; }
+  .commerce-transaction-fields p:last-child { border-bottom: 0; }
   .operations-invoice__header, .operations-invoice__footer { padding: 19px; }
   .operations-invoice__parties { grid-template-columns: 1fr; padding: 16px 19px; }
   .operations-invoice__identity { grid-template-columns: 1fr; }

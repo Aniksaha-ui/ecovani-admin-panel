@@ -5,9 +5,10 @@ const list = async (path, { page = 1, search = '' } = {}) => { const query = new
 const send = async (path, method, body) => check(await apiRequest(path, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }), 'Request failed.')
 
 export const getOrders = (params) => list('/admin/orders', params)
-export const getOrder = (id) => check(apiRequest(`/admin/orders/${id}`), 'Unable to load order.')
+export const getOrder = async (id) => check(await apiRequest(`/admin/orders/${id}`), 'Unable to load order.')
 export const updateOrderTracking = (id, body) => send(`/admin/orders/${id}/tracking`, 'POST', body)
 export const getTransactions = (params) => list('/admin/transactions', params)
+export const getTransaction = async (id) => check(await apiRequest(`/admin/transactions/${id}`), 'Unable to load transaction.')
 export const getCoupons = (params) => list('/admin/coupons', params)
 export const saveCoupon = (values, id) => send(id ? `/admin/coupons/${id}` : '/admin/coupons', id ? 'PATCH' : 'POST', values)
 export const deleteCoupon = (id) => check(apiRequest(`/admin/coupons/${id}`, { method: 'DELETE' }), 'Unable to delete coupon.')
