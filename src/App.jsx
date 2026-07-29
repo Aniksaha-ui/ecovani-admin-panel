@@ -13,6 +13,7 @@ const UserComparePage = lazy(() => import('./features/Users/page/UserComparePage
 const UserProfilePage = lazy(() => import('./features/Users/page/UserProfilePage'))
 const CategoriesPage = lazy(() => import('./features/Categories/page/CategoriesPage'))
 const ProductsPage = lazy(() => import('./features/Products/page/ProductsPage'))
+const ProductBundlesPage = lazy(() => import('./features/ProductBundles/page/ProductBundlesPage'))
 const OperationsPage = lazy(() => import('./features/Operations/page/OperationsPage'))
 const CommercePage = lazy(() => import('./features/Commerce/page/CommercePage'))
 const MenuHubPage = lazy(() => import('./features/MenuHub/page/MenuHubPage'))
@@ -47,6 +48,7 @@ function AppRoutes() {
         <Route path={APP_ROUTES.inventory} element={<Suspense fallback={<FullPageLoader message="Loading inventory..." />}><MenuHubPage hub="inventory" /></Suspense>} />
         <Route path={APP_ROUTES.categories} element={<Suspense fallback={<FullPageLoader message="Loading categories..." />}><CategoriesPage /></Suspense>} />
         <Route path={APP_ROUTES.products} element={<Suspense fallback={<FullPageLoader message="Loading products..." />}><ProductsPage /></Suspense>} />
+        <Route path={APP_ROUTES.productBundles} element={<Suspense fallback={<FullPageLoader message="Loading product bundles..." />}><ProductBundlesPage /></Suspense>} />
         <Route path={APP_ROUTES.requisitions} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="requisitions" /></Suspense>} />
         <Route path={APP_ROUTES.procurements} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="procurements" /></Suspense>} />
         <Route path={APP_ROUTES.stockReceipts} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="receipts" /></Suspense>} />
