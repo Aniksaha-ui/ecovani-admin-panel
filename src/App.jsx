@@ -16,6 +16,7 @@ const ProductsPage = lazy(() => import('./features/Products/page/ProductsPage'))
 const ProductBundlesPage = lazy(() => import('./features/ProductBundles/page/ProductBundlesPage'))
 const OperationsPage = lazy(() => import('./features/Operations/page/OperationsPage'))
 const CommercePage = lazy(() => import('./features/Commerce/page/CommercePage'))
+const CompanyAccountsPage = lazy(() => import('./features/CompanyAccounts/page/CompanyAccountsPage'))
 const MenuHubPage = lazy(() => import('./features/MenuHub/page/MenuHubPage'))
 
 function ProtectedRoute({ children }) {
@@ -57,6 +58,7 @@ function AppRoutes() {
         <Route path={APP_ROUTES.orders} element={<Suspense fallback={<FullPageLoader message="Loading orders..." />}><CommercePage section="orders" /></Suspense>} />
         <Route path={APP_ROUTES.transactions} element={<Suspense fallback={<FullPageLoader message="Loading transactions..." />}><CommercePage section="transactions" /></Suspense>} />
         <Route path={APP_ROUTES.coupons} element={<Suspense fallback={<FullPageLoader message="Loading coupons..." />}><CommercePage section="coupons" /></Suspense>} />
+        <Route path={APP_ROUTES.companyAccounts} element={<Suspense fallback={<FullPageLoader message="Loading company accounts..." />}><CompanyAccountsPage /></Suspense>} />
         <Route path="*" element={<Navigate to={APP_ROUTES.users} replace />} />
       </Route>
       <Route path="*" element={<Navigate to={isAuthenticated ? APP_ROUTES.users : APP_ROUTES.login} replace />} />
