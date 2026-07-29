@@ -124,6 +124,12 @@ const hubs = {
         icon: Truck,
       },
       {
+        title: "Procurement payments",
+        text: "Record and manage payments for procurement orders.",
+        to: APP_ROUTES.procurementPayments,
+        icon: ReceiptText,
+      },
+      {
         title: "Stock receipts",
         text: "Review received inventory receipts and invoices.",
         to: APP_ROUTES.stockReceipts,

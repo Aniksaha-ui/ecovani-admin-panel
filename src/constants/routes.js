@@ -17,6 +17,7 @@ export const APP_ROUTES = {
   procurements: "/admin/operations/procurements",
   stockReceipts: "/admin/operations/stock-receipts",
   productStocks: "/admin/operations/product-stocks",
+  procurementPayments: "/admin/operations/procurement-payments",
   inventoryAdjustments: "/admin/operations/inventory-adjustments",
   orders: "/admin/orders",
   transactions: "/admin/transactions",
