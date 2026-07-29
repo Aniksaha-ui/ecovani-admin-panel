@@ -10,6 +10,7 @@ export const APP_ROUTES = {
   categories: '/admin/categories',
   subcategories: '/admin/subcategories',
   sections: '/admin/sections',
+  sectionProducts: '/admin/section-products',
   products: '/admin/products',
   productBundles: '/admin/product-bundles',
   requisitions: '/admin/operations/requisitions',
