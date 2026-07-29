@@ -130,6 +130,18 @@ const hubs = {
         icon: ReceiptText,
       },
       {
+        title: "Returns",
+        text: "Review and process customer product return requests.",
+        to: APP_ROUTES.returns,
+        icon: PackageCheck,
+      },
+      {
+        title: "Refund ledger",
+        text: "Review processed customer refunds and payment references.",
+        to: APP_ROUTES.refunds,
+        icon: ReceiptText,
+      },
+      {
         title: "Stock receipts",
         text: "Review received inventory receipts and invoices.",
         to: APP_ROUTES.stockReceipts,

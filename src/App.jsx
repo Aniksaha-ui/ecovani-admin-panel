@@ -30,6 +30,7 @@ const SectionProductsPage = lazy(
 const ProcurementPaymentsPage = lazy(
   () => import("./features/ProcurementPayments/page/ProcurementPaymentsPage"),
 );
+const ReturnsPage = lazy(() => import("./features/Returns/page/ReturnsPage"));
 const ProductsPage = lazy(
   () => import("./features/Products/page/ProductsPage"),
 );
@@ -216,6 +217,26 @@ function AppRoutes() {
               }
             >
               <ProcurementPaymentsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path={APP_ROUTES.returns}
+          element={
+            <Suspense
+              fallback={<FullPageLoader message="Loading returns..." />}
+            >
+              <ReturnsPage tab="returns" />
+            </Suspense>
+          }
+        />
+        <Route
+          path={APP_ROUTES.refunds}
+          element={
+            <Suspense
+              fallback={<FullPageLoader message="Loading refund ledger..." />}
+            >
+              <ReturnsPage tab="refunds" />
             </Suspense>
           }
         />
