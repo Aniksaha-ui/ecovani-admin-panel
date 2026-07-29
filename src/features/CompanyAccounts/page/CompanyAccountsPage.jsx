@@ -1,25 +1,274 @@
-import { Landmark, Pencil, Plus, RefreshCcw, Trash2, X } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
-import AdminDataTable, { AdminTableButton } from '../../../components/ui/AdminDataTable'
-import { useToast } from '../../../components/common/Toaster'
-import { deleteCompanyAccount, listCompanyAccounts, saveCompanyAccount } from '../service/companyAccountsService'
+import { Landmark, Pencil, Plus, RefreshCcw, Trash2, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import AdminDataTable, {
+  AdminTableButton,
+} from "../../../components/ui/AdminDataTable";
+import { useToast } from "../../../components/common/Toaster";
+import {
+  deleteCompanyAccount,
+  listCompanyAccounts,
+  saveCompanyAccount,
+} from "../service/companyAccountsService";
 
-const money = (value) => `৳${Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+const money = (value) =>
+  `৳${Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 function AccountForm({ account, saving, onClose, onSave }) {
-  const [form, setForm] = useState(() => ({ account_name: account?.account_name || '', account_number: account?.account_number || '', amount: account?.amount || '', type: account?.type || '' }))
-  const set = (key, value) => setForm((current) => ({ ...current, [key]: value }))
-  const submit = async (event) => { event.preventDefault(); const saved = await onSave({ ...form, amount: Number(form.amount) }, account?.id); if (saved) onClose() }
-  return <div className="admin-modal-backdrop"><form className="admin-modal" onSubmit={submit}><header className="admin-modal__header"><div><h2>{account ? 'Edit company account' : 'New company account'}</h2><p>Maintain accounts used for company payments and balances.</p></div><button type="button" className="admin-icon-button" onClick={onClose} aria-label="Close"><X size={18} /></button></header><div className="admin-form-grid"><label className="admin-field admin-field--full">Account name<input required value={form.account_name} onChange={(event) => set('account_name', event.target.value)} placeholder="e.g. Main operating account" /></label><label className="admin-field">Account number<input required value={form.account_number} onChange={(event) => set('account_number', event.target.value)} /></label><label className="admin-field">Account type<input required value={form.type} onChange={(event) => set('type', event.target.value)} placeholder="e.g. bank, cash, mobile banking" /></label><label className="admin-field admin-field--full">Current balance (৳)<input required min="0" step="0.01" type="number" value={form.amount} onChange={(event) => set('amount', event.target.value)} /></label></div><footer className="admin-modal__actions"><button className="routes-control" type="button" onClick={onClose}>Cancel</button><button className="routes-control routes-control--blue" disabled={saving}>{saving ? 'Saving...' : account ? 'Save changes' : 'Create account'}</button></footer></form></div>
+  const [form, setForm] = useState(() => ({
+    account_name: account?.account_name || "",
+    account_number: account?.account_number || "",
+    amount: account?.amount || "",
+    type: account?.type || "",
+  }));
+  const set = (key, value) =>
+    setForm((current) => ({ ...current, [key]: value }));
+  const submit = async (event) => {
+    event.preventDefault();
+    const saved = await onSave(
+      { ...form, amount: Number(form.amount) },
+      account?.id,
+    );
+    if (saved) onClose();
+  };
+  return (
+    <div className="admin-modal-backdrop">
+      <form className="admin-modal" onSubmit={submit}>
+        <header className="admin-modal__header">
+          <div>
+            <h2>{account ? "Edit company account" : "New company account"}</h2>
+            <p>Maintain accounts used for company payments and balances.</p>
+          </div>
+          <button
+            type="button"
+            className="admin-icon-button"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            <X size={18} />
+          </button>
+        </header>
+        <div className="admin-form-grid">
+          <label className="admin-field admin-field--full">
+            Account name
+            <input
+              required
+              value={form.account_name}
+              onChange={(event) => set("account_name", event.target.value)}
+              placeholder="e.g. Main operating account"
+            />
+          </label>
+          <label className="admin-field">
+            Account number
+            <input
+              required
+              value={form.account_number}
+              onChange={(event) => set("account_number", event.target.value)}
+            />
+          </label>
+          <label className="admin-field">
+            Account type
+            <input
+              required
+              value={form.type}
+              onChange={(event) => set("type", event.target.value)}
+              placeholder="e.g. bank, cash, mobile banking"
+            />
+          </label>
+          <label className="admin-field admin-field--full">
+            Current balance (৳)
+            <input
+              required
+              min="0"
+              step="0.01"
+              type="number"
+              value={form.amount}
+              onChange={(event) => set("amount", event.target.value)}
+            />
+          </label>
+        </div>
+        <footer className="admin-modal__actions">
+          <button className="routes-control" type="button" onClick={onClose}>
+            Cancel
+          </button>
+          <button
+            className="routes-control routes-control--blue"
+            disabled={saving}
+          >
+            {saving ? "Saving..." : account ? "Save changes" : "Create account"}
+          </button>
+        </footer>
+      </form>
+    </div>
+  );
 }
 
 export default function CompanyAccountsPage() {
-  const toast = useToast(); const [items, setItems] = useState([]); const [pagination, setPagination] = useState({}); const [page, setPage] = useState(1); const [search, setSearch] = useState(''); const [loading, setLoading] = useState(true); const [saving, setSaving] = useState(false); const [editing, setEditing] = useState(null); const [formOpen, setFormOpen] = useState(false)
-  const load = useCallback(async () => { setLoading(true); try { const result = await listCompanyAccounts({ page, search }); setItems(result.rows); setPagination(result.pagination) } catch (error) { toast.error(error.message) } finally { setLoading(false) } }, [page, search, toast])
-  useEffect(() => { void load() }, [load])
-  const save = async (values, id) => { setSaving(true); try { const result = await saveCompanyAccount(values, id); toast.success(id ? 'Company account updated.' : 'Company account created.'); await load(); return result } catch (error) { toast.error(error.message); return null } finally { setSaving(false) } }
-  const remove = async (account) => { if (!window.confirm(`Delete “${account.account_name}”? Payment history may still reference this account.`)) return; try { await deleteCompanyAccount(account.id); toast.success('Company account deleted.'); await load() } catch (error) { toast.error(error.message) } }
-  const columns = [{ id: 'account_name', label: 'Account', render: (row) => <div><strong className="text-white">{row.account_name}</strong><p className="mt-1 text-xs text-[#7d8ca5]">{row.account_number}</p></div> }, { id: 'type', label: 'Type', accessor: 'type' }, { id: 'amount', label: 'Balance', render: (row) => <strong className="text-[#b9d0ff]">{money(row.amount)}</strong> }, { id: 'updated_at', label: 'Updated', render: (row) => row.updated_at ? new Date(row.updated_at).toLocaleDateString() : '—' }]
-  const actions = (row) => <div className="flex justify-end gap-2"><button className="admin-row-action" title="Edit account" onClick={() => { setEditing(row); setFormOpen(true) }}><Pencil size={15} /></button><button className="admin-row-action admin-row-action--danger" title="Delete account" onClick={() => void remove(row)}><Trash2 size={15} /></button></div>
-  return <main className="routes-page"><div className="routes-page__inner"><header className="routes-page__header"><div className="flex flex-wrap items-start justify-between gap-4"><div><div className="routes-page__title"><Landmark size={20} color="#4f83ff" /><h1>Company Accounts</h1></div><p className="routes-page__subtitle">Manage account details and current balances used for company payments.</p></div><div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]"><Landmark size={16} />{pagination.total || 0} accounts</div></div></header><AdminDataTable columns={columns} data={items} isLoading={loading} pagination={pagination} search={search} searchPlaceholder="Search company accounts" onSearchChange={(value) => { setPage(1); setSearch(value) }} onPageChange={setPage} resultLabel={`Showing ${items.length} of ${pagination.total || 0} accounts`} renderRowActions={actions} actions={<><AdminTableButton onClick={load}><RefreshCcw size={14} />Refresh</AdminTableButton><AdminTableButton variant="blue" onClick={() => { setEditing(null); setFormOpen(true) }}><Plus size={14} />New account</AdminTableButton></>} emptyMessage="No company accounts found." /></div>{formOpen ? <AccountForm account={editing} saving={saving} onClose={() => setFormOpen(false)} onSave={save} /> : null}</main>
+  const toast = useToast();
+  const [items, setItems] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState(null);
+  const [formOpen, setFormOpen] = useState(false);
+  const load = useCallback(async () => {
+    setLoading(true);
+    try {
+      const result = await listCompanyAccounts({ page, search });
+      setItems(result.rows);
+      setPagination(result.pagination);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, search, toast]);
+  useEffect(() => {
+    void load();
+  }, [load]);
+  const save = async (values, id) => {
+    setSaving(true);
+    try {
+      const result = await saveCompanyAccount(values, id);
+      toast.success(
+        id ? "Company account updated." : "Company account created.",
+      );
+      await load();
+      return result;
+    } catch (error) {
+      toast.error(error.message);
+      return null;
+    } finally {
+      setSaving(false);
+    }
+  };
+  const remove = async (account) => {
+    if (
+      !window.confirm(
+        `Delete “${account.account_name}”? Payment history may still reference this account.`,
+      )
+    )
+      return;
+    try {
+      await deleteCompanyAccount(account.id);
+      toast.success("Company account deleted.");
+      await load();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+  const columns = [
+    {
+      id: "account_name",
+      label: "Account",
+      render: (row) => (
+        <div>
+          <strong className="text-white">{row.account_name}</strong>
+          <p className="mt-1 text-xs text-[#7d8ca5]">{row.account_number}</p>
+        </div>
+      ),
+    },
+    { id: "type", label: "Type", accessor: "type" },
+    {
+      id: "amount",
+      label: "Balance",
+      render: (row) => (
+        <strong className="text-[#b9d0ff]">{money(row.amount)}</strong>
+      ),
+    },
+    {
+      id: "updated_at",
+      label: "Updated",
+      render: (row) =>
+        row.updated_at ? new Date(row.updated_at).toLocaleDateString() : "—",
+    },
+  ];
+  const actions = (row) => (
+    <div className="flex justify-end gap-2">
+      <button
+        className="admin-row-action"
+        title="Edit account"
+        onClick={() => {
+          setEditing(row);
+          setFormOpen(true);
+        }}
+      >
+        <Pencil size={15} />
+      </button>
+      <button
+        className="admin-row-action admin-row-action--danger"
+        title="Delete account"
+        onClick={() => void remove(row)}
+      >
+        <Trash2 size={15} />
+      </button>
+    </div>
+  );
+  return (
+    <main className="routes-page">
+      <div className="routes-page__inner">
+        <header className="routes-page__header">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="routes-page__title">
+                <Landmark size={20} color="#4f83ff" />
+                <h1>Company Accounts</h1>
+              </div>
+              <p className="routes-page__subtitle">
+                Manage account details and current balances used for company
+                payments.
+              </p>
+            </div>
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+              <Landmark size={16} />
+              {pagination.total || 0} accounts
+            </div>
+          </div>
+        </header>
+        <AdminDataTable
+          columns={columns}
+          data={items}
+          isLoading={loading}
+          pagination={pagination}
+          search={search}
+          searchPlaceholder="Search company accounts"
+          onSearchChange={(value) => {
+            setPage(1);
+            setSearch(value);
+          }}
+          onPageChange={setPage}
+          resultLabel={`Showing ${items.length} of ${pagination.total || 0} accounts`}
+          renderRowActions={actions}
+          actions={
+            <>
+              <AdminTableButton onClick={load}>
+                <RefreshCcw size={14} />
+                Refresh
+              </AdminTableButton>
+              <AdminTableButton
+                variant="blue"
+                onClick={() => {
+                  setEditing(null);
+                  setFormOpen(true);
+                }}
+              >
+                <Plus size={14} />
+                New account
+              </AdminTableButton>
+            </>
+          }
+          emptyMessage="No company accounts found."
+        />
+      </div>
+      {formOpen ? (
+        <AccountForm
+          account={editing}
+          saving={saving}
+          onClose={() => setFormOpen(false)}
+          onSave={save}
+        />
+      ) : null}
+    </main>
+  );
 }

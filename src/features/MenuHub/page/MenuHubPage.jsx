@@ -1,12 +1,187 @@
-import { ArrowRight, Boxes, ClipboardList, LayoutDashboard, PackageCheck, ReceiptText, Tags, Truck, Users } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import { APP_ROUTES } from '../../../constants/routes'
+import {
+  ArrowRight,
+  Boxes,
+  ClipboardList,
+  LayoutDashboard,
+  PackageCheck,
+  ReceiptText,
+  Tags,
+  Truck,
+  Users,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { APP_ROUTES } from "../../../constants/routes";
 
 const hubs = {
-  users: { title: 'User Management', subtitle: 'Choose a user-management area to continue.', icon: Users, cards: [{ title: 'All users', text: 'Browse staff and admin accounts, roles, and profiles.', to: APP_ROUTES.users, icon: Users }, { title: 'Customer comparison', text: 'Compare selected customer accounts side by side.', to: APP_ROUTES.userCompare, icon: LayoutDashboard }] },
-  commerce: { title: 'Commerce', subtitle: 'Manage sales activity, payments, and promotions from one place.', icon: LayoutDashboard, cards: [{ title: 'Orders', text: 'Review customer orders, payments, and delivery details.', to: APP_ROUTES.orders, icon: Truck }, { title: 'Transactions', text: 'Review payment transaction records and references.', to: APP_ROUTES.transactions, icon: ReceiptText }, { title: 'Company accounts', text: 'Manage company payment accounts and current balances.', to: APP_ROUTES.companyAccounts, icon: ReceiptText }, { title: 'Coupons', text: 'Create and manage promotional discount codes.', to: APP_ROUTES.coupons, icon: Tags }] },
-  catalog: { title: 'Catalog', subtitle: 'Manage your product structure and product information.', icon: Boxes, cards: [{ title: 'Categories', text: 'Organize categories and their product subcategories.', to: APP_ROUTES.categories, icon: Tags }, { title: 'Subcategories', text: 'Manage product groups within each category.', to: APP_ROUTES.subcategories, icon: Tags }, { title: 'Sections', text: 'Manage active product sections and display order.', to: APP_ROUTES.sections, icon: LayoutDashboard }, { title: 'Section products', text: 'Join products and optional bundles to display sections.', to: APP_ROUTES.sectionProducts, icon: PackageCheck }, { title: 'Products', text: 'Manage products, pricing, stock, images, and discounts.', to: APP_ROUTES.products, icon: Boxes }, { title: 'Product bundles', text: 'Create bundled offers, pricing, and storefront availability.', to: APP_ROUTES.productBundles, icon: PackageCheck }] },
-  inventory: { title: 'Inventory & Procurement', subtitle: 'Manage requisitions, receiving, stock, and adjustment history.', icon: ClipboardList, cards: [{ title: 'Requisitions', text: 'Create and approve internal product requests.', to: APP_ROUTES.requisitions, icon: ClipboardList }, { title: 'Procurements', text: 'Receive stock and record supplier payments.', to: APP_ROUTES.procurements, icon: Truck }, { title: 'Stock receipts', text: 'Review received inventory receipts and invoices.', to: APP_ROUTES.stockReceipts, icon: ReceiptText }, { title: 'Product stock', text: 'Review current stock and make manual adjustments.', to: APP_ROUTES.productStocks, icon: Boxes }, { title: 'Inventory adjustments', text: 'Review complete inventory adjustment audit records.', to: APP_ROUTES.inventoryAdjustments, icon: PackageCheck }] },
-}
+  users: {
+    title: "User Management",
+    subtitle: "Choose a user-management area to continue.",
+    icon: Users,
+    cards: [
+      {
+        title: "All users",
+        text: "Browse staff and admin accounts, roles, and profiles.",
+        to: APP_ROUTES.users,
+        icon: Users,
+      },
+      {
+        title: "Customer comparison",
+        text: "Compare selected customer accounts side by side.",
+        to: APP_ROUTES.userCompare,
+        icon: LayoutDashboard,
+      },
+    ],
+  },
+  commerce: {
+    title: "Commerce",
+    subtitle: "Manage sales activity, payments, and promotions from one place.",
+    icon: LayoutDashboard,
+    cards: [
+      {
+        title: "Orders",
+        text: "Review customer orders, payments, and delivery details.",
+        to: APP_ROUTES.orders,
+        icon: Truck,
+      },
+      {
+        title: "Transactions",
+        text: "Review payment transaction records and references.",
+        to: APP_ROUTES.transactions,
+        icon: ReceiptText,
+      },
+      {
+        title: "Company accounts",
+        text: "Manage company payment accounts and current balances.",
+        to: APP_ROUTES.companyAccounts,
+        icon: ReceiptText,
+      },
+      {
+        title: "Coupons",
+        text: "Create and manage promotional discount codes.",
+        to: APP_ROUTES.coupons,
+        icon: Tags,
+      },
+    ],
+  },
+  catalog: {
+    title: "Catalog",
+    subtitle: "Manage your product structure and product information.",
+    icon: Boxes,
+    cards: [
+      {
+        title: "Categories",
+        text: "Organize categories and their product subcategories.",
+        to: APP_ROUTES.categories,
+        icon: Tags,
+      },
+      {
+        title: "Subcategories",
+        text: "Manage product groups within each category.",
+        to: APP_ROUTES.subcategories,
+        icon: Tags,
+      },
+      {
+        title: "Sections",
+        text: "Manage active product sections and display order.",
+        to: APP_ROUTES.sections,
+        icon: LayoutDashboard,
+      },
+      {
+        title: "Section products",
+        text: "Join products and optional bundles to display sections.",
+        to: APP_ROUTES.sectionProducts,
+        icon: PackageCheck,
+      },
+      {
+        title: "Products",
+        text: "Manage products, pricing, stock, images, and discounts.",
+        to: APP_ROUTES.products,
+        icon: Boxes,
+      },
+      {
+        title: "Product bundles",
+        text: "Create bundled offers, pricing, and storefront availability.",
+        to: APP_ROUTES.productBundles,
+        icon: PackageCheck,
+      },
+    ],
+  },
+  inventory: {
+    title: "Inventory & Procurement",
+    subtitle: "Manage requisitions, receiving, stock, and adjustment history.",
+    icon: ClipboardList,
+    cards: [
+      {
+        title: "Requisitions",
+        text: "Create and approve internal product requests.",
+        to: APP_ROUTES.requisitions,
+        icon: ClipboardList,
+      },
+      {
+        title: "Procurements",
+        text: "Receive stock and record supplier payments.",
+        to: APP_ROUTES.procurements,
+        icon: Truck,
+      },
+      {
+        title: "Stock receipts",
+        text: "Review received inventory receipts and invoices.",
+        to: APP_ROUTES.stockReceipts,
+        icon: ReceiptText,
+      },
+      {
+        title: "Product stock",
+        text: "Review current stock and make manual adjustments.",
+        to: APP_ROUTES.productStocks,
+        icon: Boxes,
+      },
+      {
+        title: "Inventory adjustments",
+        text: "Review complete inventory adjustment audit records.",
+        to: APP_ROUTES.inventoryAdjustments,
+        icon: PackageCheck,
+      },
+    ],
+  },
+};
 
-export default function MenuHubPage({ hub }) { const data = hubs[hub]; const Icon = data.icon; return <main className="routes-page"><div className="routes-page__inner"><header className="menu-hub-header"><div><div className="routes-page__title"><Icon size={21} color="#4f83ff" /><h1>{data.title}</h1></div><p className="routes-page__subtitle">{data.subtitle}</p></div><span className="menu-hub-count">{data.cards.length} areas</span></header><section className="menu-hub-grid">{data.cards.map((card) => { const CardIcon = card.icon; return <Link key={card.to} to={card.to} className="menu-hub-card"><div className="menu-hub-card__top"><span className="menu-hub-card__icon"><CardIcon size={20} /></span><ArrowRight size={18} /></div><div><h2>{card.title}</h2><p>{card.text}</p></div><span className="menu-hub-card__link">Open {card.title}</span></Link> })}</section></div></main> }
+export default function MenuHubPage({ hub }) {
+  const data = hubs[hub];
+  const Icon = data.icon;
+  return (
+    <main className="routes-page">
+      <div className="routes-page__inner">
+        <header className="menu-hub-header">
+          <div>
+            <div className="routes-page__title">
+              <Icon size={21} color="#4f83ff" />
+              <h1>{data.title}</h1>
+            </div>
+            <p className="routes-page__subtitle">{data.subtitle}</p>
+          </div>
+          <span className="menu-hub-count">{data.cards.length} areas</span>
+        </header>
+        <section className="menu-hub-grid">
+          {data.cards.map((card) => {
+            const CardIcon = card.icon;
+            return (
+              <Link key={card.to} to={card.to} className="menu-hub-card">
+                <div className="menu-hub-card__top">
+                  <span className="menu-hub-card__icon">
+                    <CardIcon size={20} />
+                  </span>
+                  <ArrowRight size={18} />
+                </div>
+                <div>
+                  <h2>{card.title}</h2>
+                  <p>{card.text}</p>
+                </div>
+                <span className="menu-hub-card__link">Open {card.title}</span>
+              </Link>
+            );
+          })}
+        </section>
+      </div>
+    </main>
+  );
+}
