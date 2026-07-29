@@ -11,6 +11,11 @@ const LoginPage = lazy(() => import('./features/auth/page/LoginPage'))
 const UsersPage = lazy(() => import('./features/Users/page/UsersPage'))
 const UserComparePage = lazy(() => import('./features/Users/page/UserComparePage'))
 const UserProfilePage = lazy(() => import('./features/Users/page/UserProfilePage'))
+const CategoriesPage = lazy(() => import('./features/Categories/page/CategoriesPage'))
+const ProductsPage = lazy(() => import('./features/Products/page/ProductsPage'))
+const OperationsPage = lazy(() => import('./features/Operations/page/OperationsPage'))
+const CommercePage = lazy(() => import('./features/Commerce/page/CommercePage'))
+const MenuHubPage = lazy(() => import('./features/MenuHub/page/MenuHubPage'))
 
 function ProtectedRoute({ children }) {
   const { auth: { isAuthenticated } } = useAuthContext()
@@ -36,6 +41,20 @@ function AppRoutes() {
         <Route path={APP_ROUTES.users} element={<Suspense fallback={<FullPageLoader message="Loading users..." />}><UsersPage /></Suspense>} />
         <Route path={APP_ROUTES.userCompare} element={<Suspense fallback={<FullPageLoader message="Loading user comparison..." />}><UserComparePage /></Suspense>} />
         <Route path={APP_ROUTES.userProfile()} element={<Suspense fallback={<FullPageLoader message="Loading user profile..." />}><UserProfilePage /></Suspense>} />
+        <Route path={APP_ROUTES.userManagement} element={<Suspense fallback={<FullPageLoader message="Loading user management..." />}><MenuHubPage hub="users" /></Suspense>} />
+        <Route path={APP_ROUTES.commerce} element={<Suspense fallback={<FullPageLoader message="Loading commerce..." />}><MenuHubPage hub="commerce" /></Suspense>} />
+        <Route path={APP_ROUTES.catalog} element={<Suspense fallback={<FullPageLoader message="Loading catalog..." />}><MenuHubPage hub="catalog" /></Suspense>} />
+        <Route path={APP_ROUTES.inventory} element={<Suspense fallback={<FullPageLoader message="Loading inventory..." />}><MenuHubPage hub="inventory" /></Suspense>} />
+        <Route path={APP_ROUTES.categories} element={<Suspense fallback={<FullPageLoader message="Loading categories..." />}><CategoriesPage /></Suspense>} />
+        <Route path={APP_ROUTES.products} element={<Suspense fallback={<FullPageLoader message="Loading products..." />}><ProductsPage /></Suspense>} />
+        <Route path={APP_ROUTES.requisitions} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="requisitions" /></Suspense>} />
+        <Route path={APP_ROUTES.procurements} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="procurements" /></Suspense>} />
+        <Route path={APP_ROUTES.stockReceipts} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="receipts" /></Suspense>} />
+        <Route path={APP_ROUTES.productStocks} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="stocks" /></Suspense>} />
+        <Route path={APP_ROUTES.inventoryAdjustments} element={<Suspense fallback={<FullPageLoader message="Loading operations..." />}><OperationsPage section="adjustments" /></Suspense>} />
+        <Route path={APP_ROUTES.orders} element={<Suspense fallback={<FullPageLoader message="Loading orders..." />}><CommercePage section="orders" /></Suspense>} />
+        <Route path={APP_ROUTES.transactions} element={<Suspense fallback={<FullPageLoader message="Loading transactions..." />}><CommercePage section="transactions" /></Suspense>} />
+        <Route path={APP_ROUTES.coupons} element={<Suspense fallback={<FullPageLoader message="Loading coupons..." />}><CommercePage section="coupons" /></Suspense>} />
         <Route path="*" element={<Navigate to={APP_ROUTES.users} replace />} />
       </Route>
       <Route path="*" element={<Navigate to={isAuthenticated ? APP_ROUTES.users : APP_ROUTES.login} replace />} />

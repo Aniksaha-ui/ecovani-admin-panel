@@ -62,8 +62,9 @@ const resolveErrorMessage = (data, fallback) => {
   }
 
   return (
-    data?.message ||
     flattenValidationErrors(data?.errors) ||
+    flattenValidationErrors(data?.data) ||
+    data?.message ||
     data?.error ||
     fallback ||
     "Something went wrong. Please try again."

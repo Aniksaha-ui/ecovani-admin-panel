@@ -1,8 +1,8 @@
-import { Bell, ChevronDown, LogOut, Menu, PanelLeft, Search, Sun } from 'lucide-react'
+import { Bell, ChevronDown, LogOut, Menu, Search, Sun } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useAuthContext } from '../contexts/AuthContext'
 
-export function Navbar({ isSidebarCollapsed, title, onMenuClick }) {
+export function Navbar({ title, onMenuClick }) {
   const { auth, sessionMessage, clearSessionMessage, logout, logoutState } = useAuthContext()
   const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const profileMenuRef = useRef(null)
@@ -35,13 +35,12 @@ export function Navbar({ isSidebarCollapsed, title, onMenuClick }) {
       <div className="flex min-w-0 flex-1 items-center gap-3">
         <button
           type="button"
-          className="inline-flex h-10 items-center justify-center rounded-xl border border-[#2d282b] bg-[#211c1f] px-3 text-[#969baa] transition hover:border-[#3a3438] hover:text-white"
+          className="inline-flex h-10 items-center justify-center rounded-xl border border-[#2d282b] bg-[#211c1f] px-3 text-[#969baa] transition hover:border-[#3a3438] hover:text-white md:hidden"
           onClick={onMenuClick}
-          aria-label="Toggle sidebar"
-          title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          aria-label="Open navigation"
+          title="Open navigation"
         >
-          <Menu size={20} className="md:hidden" />
-          <PanelLeft size={18} className="hidden md:block" />
+          <Menu size={20} />
         </button>
         <h1 className="truncate text-xs font-bold text-white sm:text-sm">{title}</h1>
       </div>
