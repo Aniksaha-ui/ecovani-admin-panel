@@ -13,6 +13,7 @@ export const APP_ROUTES = {
   sectionProducts: "/admin/section-products",
   products: "/admin/products",
   productBundles: "/admin/product-bundles",
+  productReviews: "/admin/product-reviews",
   requisitions: "/admin/operations/requisitions",
   procurements: "/admin/operations/procurements",
   stockReceipts: "/admin/operations/stock-receipts",

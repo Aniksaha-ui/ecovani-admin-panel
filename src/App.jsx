@@ -36,6 +36,9 @@ const ProductsPage = lazy(
 const ProductBundlesPage = lazy(
   () => import("./features/ProductBundles/page/ProductBundlesPage"),
 );
+const ProductReviewsPage = lazy(
+  () => import("./features/ProductReviews/page/ProductReviewsPage"),
+);
 const OperationsPage = lazy(
   () => import("./features/Operations/page/OperationsPage"),
 );
@@ -213,6 +216,16 @@ function AppRoutes() {
               }
             >
               <ProcurementPaymentsPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path={APP_ROUTES.productReviews}
+          element={
+            <Suspense
+              fallback={<FullPageLoader message="Loading product reviews..." />}
+            >
+              <ProductReviewsPage />
             </Suspense>
           }
         />
