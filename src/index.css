@@ -262,6 +262,16 @@ body {
 .requisition-invoice .requisition-detail-notes { margin: 16px; }
 .requisition-invoice .stock-history { margin: 16px; }
 .requisition-invoice .stock-history tfoot td { padding: 11px 12px; border-top: 1px solid #332d30; color: #fff; font-weight: 800; }
+.requisition-detail-section { margin: 16px; }
+.requisition-detail-section > h3 { margin: 0 0 10px; color: #fff; font-size: 14px; }
+.requisition-detail-table-wrap { overflow-x: auto; border: 1px solid #332d30; border-radius: 8px; }
+.requisition-detail-table { width: 100%; border-collapse: collapse; }
+.requisition-detail-table th, .requisition-detail-table td { padding: 10px 12px; border-bottom: 1px solid #332d30; text-align: left; font-size: 13px; }
+.requisition-detail-table tr:last-child th, .requisition-detail-table tr:last-child td { border-bottom: 0; }
+.requisition-detail-table th { width: 38%; color: #8fa0bd; background: #211d20; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+.requisition-detail-table td { color: #fff; overflow-wrap: anywhere; }
+.requisition-detail-section .requisition-detail-notes { margin: 0; }
+@media (max-width: 720px) { .requisition-detail-section { margin: 12px; } .requisition-detail-table th { width: 45%; } }
 @media (max-width: 720px) { .requisition-invoice__header { flex-direction: column; }.requisition-invoice__parties { grid-template-columns: 1fr; }.requisition-invoice__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }.requisition-invoice__parties > div, .requisition-invoice__meta > div { border-bottom: 1px solid #332d30; }.requisition-invoice__actions { width: 100%; }.requisition-invoice__actions button { flex: 1; justify-content: center; } }
 @media (max-width: 720px) { .requisition-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .product-report-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

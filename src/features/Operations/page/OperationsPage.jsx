@@ -18,6 +18,7 @@ import {
   StockModal,
 } from "../component/OperationsModal";
 import RequisitionDetailDrawer from "../component/RequisitionDetailDrawer";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import useOperations from "../hooks/useOperations";
 import {
   acceptRequisition,
@@ -78,6 +79,11 @@ const columnsFor = (section) => {
         label: "Priority",
         render: (row) => badge(row.priority),
       },
+      {
+        id: "department",
+        label: "Department",
+        render: (row) => row.department || "—",
+      },
       { id: "items_count", label: "Items", accessor: "items_count" },
       {
         id: "total_amount",
@@ -100,15 +106,30 @@ const columnsFor = (section) => {
           </div>
         ),
       },
-      { id: "supplier_name", label: "Supplier", accessor: "supplier_name", width: "180px" },
-      { id: "items_count", label: "Items", accessor: "items_count", width: "75px" },
+      {
+        id: "supplier_name",
+        label: "Supplier",
+        accessor: "supplier_name",
+        width: "180px",
+      },
+      {
+        id: "items_count",
+        label: "Items",
+        accessor: "items_count",
+        width: "75px",
+      },
       {
         id: "total_amount",
         label: "Total",
         width: "125px",
         render: (row) => `৳${Number(row.total_amount || 0).toLocaleString()}`,
       },
-      { id: "status", label: "Status", render: (row) => badge(row.status), width: "110px" },
+      {
+        id: "status",
+        label: "Status",
+        render: (row) => badge(row.status),
+        width: "110px",
+      },
     ];
   if (section === "receipts")
     return [
@@ -222,6 +243,7 @@ const columnsFor = (section) => {
 };
 
 export default function OperationsPage({ section }) {
+  const { auth } = useAuthContext();
   const [adjustmentDetail, setAdjustmentDetail] = useState(null);
   const [requisitionDetail, setRequisitionDetail] = useState(null);
   const api = useOperations(section);
@@ -256,7 +278,11 @@ export default function OperationsPage({ section }) {
   const rowActions = (row) => (
     <div className="operations-row-actions">
       {section === "requisitions" || section === "procurements" ? (
-        <button className="admin-row-action" title="View requisition details" onClick={() => void openRequisitionDetail(row)}>
+        <button
+          className="admin-row-action"
+          title="View requisition details"
+          onClick={() => void openRequisitionDetail(row)}
+        >
           <Eye size={15} />
         </button>
       ) : null}
@@ -399,7 +425,11 @@ export default function OperationsPage({ section }) {
           }}
           resultLabel={`Showing ${api.items.length} of ${api.pagination.total} ${names[section].toLowerCase()}`}
           renderRowActions={rowActions}
-          rowActionsWidth={section === "procurements" || section === "requisitions" ? "220px" : "112px"}
+          rowActionsWidth={
+            section === "procurements" || section === "requisitions"
+              ? "220px"
+              : "112px"
+          }
           actions={
             <>
               <AdminTableButton
@@ -438,6 +468,7 @@ export default function OperationsPage({ section }) {
       {modal === "requisition" ? (
         <RequisitionModal
           options={api.options}
+          requestedBy={auth.user?.name}
           saving={api.saving}
           onClose={() => setModal(null)}
           onSave={onSaveRequisition}
@@ -470,7 +501,12 @@ export default function OperationsPage({ section }) {
           />
         ) : null}
       </>
-      {requisitionDetail ? <RequisitionDetailDrawer record={requisitionDetail} onClose={() => setRequisitionDetail(null)} /> : null}
+      {requisitionDetail ? (
+        <RequisitionDetailDrawer
+          record={requisitionDetail}
+          onClose={() => setRequisitionDetail(null)}
+        />
+      ) : null}
       {receiptDetail ? (
         <div className="admin-modal-backdrop">
           <article className="admin-modal admin-modal--wide operations-invoice">

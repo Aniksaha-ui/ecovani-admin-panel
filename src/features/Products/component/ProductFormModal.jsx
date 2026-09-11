@@ -1,6 +1,7 @@
 import { X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { APP_CONFIG } from "../../../services/config";
+import { WAREHOUSE_LOCATIONS } from "../../Operations/constants/requisitionDepartments";
 
 const initialValues = {
   name: "",
@@ -184,11 +185,17 @@ export default function ProductFormModal({
               </label>
               <label className="admin-field">
                 Warehouse location
-                <input
+                <select
                   value={values.warehouse_location}
                   onChange={(e) => update("warehouse_location", e.target.value)}
-                  placeholder="Optional location"
-                />
+                >
+                  <option value="">Select warehouse</option>
+                  {WAREHOUSE_LOCATIONS.map((warehouse) => (
+                    <option key={warehouse} value={warehouse}>
+                      {warehouse}
+                    </option>
+                  ))}
+                </select>
               </label>
             </>
           )}
