@@ -142,6 +142,210 @@ body {
   font-size: 11px;
   font-weight: 500;
 }
+.product-image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 8px;
+}
+.product-image-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid #3a3337;
+  border-radius: 8px;
+}
+.product-image-grid__new {
+  position: relative;
+}
+.product-image-grid__new button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(20 15 17 / 85%);
+  color: #fff;
+  cursor: pointer;
+}
+.product-stock-total {
+  padding: 10px 11px;
+  border: 1px solid #315b4a;
+  border-radius: 8px;
+  background: rgb(6 78 59 / 25%);
+  color: #a7f3d0;
+  font-size: 16px;
+  font-weight: 800;
+}
+.product-stock-breakdown {
+  display: grid;
+  gap: 6px;
+}
+.product-stock-breakdown > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 1px solid #332d30;
+  border-radius: 7px;
+  background: #100d0e;
+  color: #c5d9f7;
+  font-size: 12px;
+  font-weight: 500;
+}
+.product-stock-breakdown strong {
+  color: #fff;
+}
+.product-stock-breakdown--modal {
+  margin-top: 12px;
+}
+.product-stock-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+.product-stock-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 9px;
+  border: 1px solid #5378c8;
+  border-radius: 8px;
+  background: #17214a;
+  color: #c5d9f7;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.product-stock-action:hover {
+  background: #243777;
+  color: #fff;
+}
+.common-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+.common-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(0 0 0 / 68%);
+}
+.common-drawer__panel {
+  position: relative;
+  display: flex;
+  width: min(1080px, 100%);
+  max-height: calc(100vh - 32px);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #332d30;
+  border-radius: 12px;
+  background: #171314;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 45%);
+}
+.common-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #2d282b;
+  padding: 20px 22px;
+}
+.common-drawer__header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+}
+.common-drawer__header p {
+  margin: 8px 0 0;
+  color: #8fa0bd;
+  font-size: 13px;
+}
+.common-drawer__body {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 22px 22px;
+}
+.stock-history {
+  margin-top: 24px;
+}
+.stock-history h3,
+.stock-summary h3 {
+  margin: 0 0 12px;
+  color: #fff;
+  font-size: 15px;
+}
+.stock-history__table-wrap {
+  overflow-x: auto;
+  border: 1px solid #332d30;
+  border-radius: 9px;
+}
+.stock-history table {
+  width: 100%;
+  min-width: 930px;
+  border-collapse: collapse;
+  color: #dbe7fb;
+  font-size: 12px;
+}
+.stock-summary {
+  margin-top: 24px;
+}
+.stock-summary table {
+  width: 100%;
+  min-width: 360px;
+  border-collapse: collapse;
+  color: #dbe7fb;
+  font-size: 12px;
+}
+.stock-history th,
+.stock-history td,
+.stock-summary th,
+.stock-summary td {
+  padding: 11px 12px;
+  border-bottom: 1px solid #332d30;
+  text-align: left;
+  vertical-align: top;
+}
+.stock-history th,
+.stock-summary th {
+  background: #211d20;
+  color: #8fa0bd;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.stock-history td small {
+  display: block;
+  margin-top: 4px;
+  color: #8fa0bd;
+}
+.stock-history__positive {
+  color: #6ee7b7;
+  font-weight: 800;
+}
+.stock-history__negative {
+  color: #fda4af;
+  font-weight: 800;
+}
+.stock-history__empty {
+  color: #8fa0bd;
+  text-align: center !important;
+}
 .admin-toggle,
 .admin-check {
   display: inline-flex;

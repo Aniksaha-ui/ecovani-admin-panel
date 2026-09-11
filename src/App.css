@@ -377,6 +377,7 @@
 
 .routes-table th {
   padding: 0 16px;
+  border-right: 1px solid #2d282b;
   color: #9fb2d0;
   font-size: 11px;
   font-weight: 800;
@@ -397,10 +398,16 @@
 
 .routes-table td {
   padding: 0 16px;
+  border-right: 1px solid #2d282b;
   color: #ffffff;
   font-size: 14px;
   line-height: 20px;
   vertical-align: middle;
+}
+
+.routes-table th:last-child,
+.routes-table td:last-child {
+  border-right: 0;
 }
 
 .routes-table tfoot tr {
