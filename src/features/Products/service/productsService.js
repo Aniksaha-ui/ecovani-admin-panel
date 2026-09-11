@@ -13,6 +13,7 @@ export const getProducts = async ({ page = 1, search = '' } = {}) => {
 }
 export const getProductOptions = async () => (assertSucceeded(await apiRequest(API_URLS.admin.productOptions), 'Unable to load product options.').data || {})
 export const getProduct = async (id) => assertSucceeded(await apiRequest(`${API_URLS.admin.products}/${id}`), 'Unable to load product.').data
+export const getProductReport = async (id) => assertSucceeded(await apiRequest(API_URLS.admin.productReport(id)), 'Unable to load product report.').data
 export const saveProduct = async (values, id) => {
   const body = new FormData()
   Object.entries(values).forEach(([key, value]) => {

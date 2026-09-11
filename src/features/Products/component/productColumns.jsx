@@ -1,4 +1,4 @@
-import { Boxes, Pencil, Trash2 } from "lucide-react";
+import { BarChart3, Boxes, Pencil, Trash2 } from "lucide-react";
 export const productColumns = () => [
   { id: "serial", label: "SL", accessor: "serial", width: "65px" },
   {
@@ -57,15 +57,18 @@ export const productColumns = () => [
   },
 ];
 export const productActions =
-  ({ onEdit, onDelete, onViewStock }) =>
+  ({ onEdit, onDelete, onViewStock, onViewReport }) =>
   (item) => (
-    <div className="flex justify-end gap-2">
+    <div className="product-row-actions">
       <button
         className="product-stock-action"
         onClick={() => onViewStock(item)}
       >
         <Boxes size={14} />
         Stock
+      </button>
+      <button className="product-report-action" onClick={() => onViewReport(item)}>
+        <BarChart3 size={14} /> Report
       </button>
       <button
         className="admin-row-action"

@@ -8,6 +8,7 @@ export const API_URLS = {
     userProfile: (userId) => `/admin/users/${userId}/profile`,
     categories: '/admin/categories',
     products: '/admin/products',
+    productReport: (productId) => `/admin/products/${productId}/report`,
     productOptions: '/admin/products/options',
     requisitionOptions: '/admin/requisitions/options',
     requisitions: '/admin/requisitions',

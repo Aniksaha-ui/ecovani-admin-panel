@@ -10,8 +10,10 @@ export const getOptions = async () => check(await apiRequest(API_URLS.admin.requ
 export const getStockOptions = async () => check(await apiRequest(API_URLS.admin.productStockOptions), 'Unable to load stock options.') || {}
 export const getRequisitions = (params) => list(API_URLS.admin.requisitions, params)
 export const createRequisition = (data) => post(API_URLS.admin.requisitions, data, 'Unable to create requisition.')
+export const getRequisition = async (id) => check(await apiRequest(`${API_URLS.admin.requisitions}/${id}`), 'Unable to load requisition details.')
 export const acceptRequisition = (id) => post(`${API_URLS.admin.requisitions}/${id}/accept`, {}, 'Unable to accept requisition.')
 export const getProcurements = (params) => list(API_URLS.admin.procurements, params)
+export const getProcurement = async (id) => check(await apiRequest(`${API_URLS.admin.procurements}/${id}`), 'Unable to load procurement details.')
 export const receiveProcurement = (id, data) => post(`${API_URLS.admin.procurements}/${id}/receive`, data, 'Unable to receive procurement.')
 export const markProcurementOnHand = (id, data) => post(`${API_URLS.admin.procurements}/${id}/on-hand`, data, 'Unable to mark procurement on hand.')
 export const getReceipts = (params) => list(API_URLS.admin.stockReceipts, params)

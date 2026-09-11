@@ -232,6 +232,39 @@ body {
   background: #243777;
   color: #fff;
 }
+.product-row-actions { display: flex; min-width: 228px; align-items: center; justify-content: flex-end; gap: 8px; white-space: nowrap; }
+.product-report-action { display: inline-flex; align-items: center; gap: 5px; height: 32px; padding: 0 9px; border: 1px solid #315b4a; border-radius: 8px; background: rgb(6 78 59 / 25%); color: #a7f3d0; font-size: 12px; font-weight: 700; cursor: pointer; }
+.product-report-action:hover { background: rgb(6 78 59 / 50%); color: #fff; }
+.product-report-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.product-report-metrics > div { padding: 14px; border: 1px solid #332d30; border-radius: 9px; background: #211d20; }
+.product-report-metrics span { display: block; color: #8fa0bd; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.product-report-metrics strong { display: block; margin-top: 7px; color: #fff; font-size: 16px; }
+.product-report-metrics__profit { color: #6ee7b7 !important; }
+.product-report-metrics__loss { color: #fda4af !important; }
+.product-report-note { margin: 14px 0 0; color: #8fa0bd; font-size: 12px; line-height: 18px; }
+.product-report-status { text-transform: capitalize; }
+.requisition-detail-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid #332d30; border-radius: 9px; overflow: hidden; }
+.requisition-detail-grid > div { padding: 13px; border-right: 1px solid #332d30; border-bottom: 1px solid #332d30; background: #211d20; }
+.requisition-detail-grid span { display: block; color: #8fa0bd; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.requisition-detail-grid strong { display: block; margin-top: 6px; color: #fff; font-size: 13px; overflow-wrap: anywhere; }
+.requisition-detail-notes { margin: 16px 0 0; padding: 12px; border-radius: 8px; background: #211d20; color: #c5d9f7; font-size: 13px; }
+.requisition-invoice { overflow: hidden; border: 1px solid #332d30; border-radius: 10px; background: #171314; }
+.requisition-invoice__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 20px; border-bottom: 1px solid #332d30; background: linear-gradient(120deg, #17214a, #171314); }
+.requisition-invoice__header > div:first-child > span, .requisition-invoice__parties span, .requisition-invoice__meta span { color: #8fa0bd; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.requisition-invoice__header h3 { margin: 7px 0 0; color: #fff; font-size: 22px; }
+.requisition-invoice__header p { margin: 6px 0 0; color: #a9badd; font-size: 13px; }
+.requisition-invoice__actions { display: flex; gap: 8px; }
+.requisition-invoice__parties { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid #332d30; }
+.requisition-invoice__parties > div, .requisition-invoice__meta > div { padding: 16px; border-right: 1px solid #332d30; }
+.requisition-invoice__parties strong, .requisition-invoice__parties small, .requisition-invoice__meta strong { display: block; margin-top: 7px; color: #fff; font-size: 13px; }
+.requisition-invoice__parties small { margin-top: 4px; color: #8fa0bd; }
+.requisition-invoice__meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid #332d30; background: #211d20; }
+.requisition-invoice .requisition-detail-notes { margin: 16px; }
+.requisition-invoice .stock-history { margin: 16px; }
+.requisition-invoice .stock-history tfoot td { padding: 11px 12px; border-top: 1px solid #332d30; color: #fff; font-weight: 800; }
+@media (max-width: 720px) { .requisition-invoice__header { flex-direction: column; }.requisition-invoice__parties { grid-template-columns: 1fr; }.requisition-invoice__meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }.requisition-invoice__parties > div, .requisition-invoice__meta > div { border-bottom: 1px solid #332d30; }.requisition-invoice__actions { width: 100%; }.requisition-invoice__actions button { flex: 1; justify-content: center; } }
+@media (max-width: 720px) { .requisition-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .product-report-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .common-drawer {
   position: fixed;
   inset: 0;
@@ -607,6 +640,7 @@ body {
   font-weight: 800;
   transition: 0.16s ease;
 }
+.operations-row-actions { display: flex; justify-content: flex-end; gap: 8px; white-space: nowrap; }
 .operations-receive-pay-button:hover {
   border-color: #89aaff;
   background: linear-gradient(135deg, #3d70ec, #2d55b2);
