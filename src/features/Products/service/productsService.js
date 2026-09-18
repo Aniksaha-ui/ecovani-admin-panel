@@ -57,7 +57,8 @@ export const getProductReport = async (id) =>
 export const saveProduct = async (values, id) => {
   const body = new FormData();
   Object.entries(values).forEach(([key, value]) => {
-    if (key === "images")
+    if (key === "image" && value instanceof File) body.append("image", value);
+    else if (key === "images")
       Array.from(value || []).forEach((file) => body.append("images[]", file));
     else if (key === "section_ids")
       (value || []).forEach((sectionId) =>

@@ -2687,3 +2687,495 @@
 .theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea) { margin-top: 1px; border-color: #8fa4bf; border-radius: 7px; background: #fff; color: #172033; }
 .theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea):focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgb(37 99 235 / 14%); }
 .theme-light .admin-modal:not(.document-invoice) .admin-modal__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 0; border-top: 1px solid #d3dce8; padding: 14px 20px; }
+
+/* Light dashboard metrics use the same clear, high-contrast colour blocks as the
+   sales overview. The selected tone controls the entire card, not only its icon. */
+.theme-light .dashboard-metric-card {
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 10px 20px rgb(15 23 42 / 10%);
+}
+.theme-light .dashboard-metric-card--amber {
+  background: #ff9f43;
+}
+.theme-light .dashboard-metric-card--cyan {
+  background: #0b3153;
+}
+.theme-light .dashboard-metric-card--emerald,
+.theme-light .dashboard-metric-card--green {
+  background: #109b8b;
+}
+.theme-light .dashboard-metric-card--blue {
+  background: #2563eb;
+}
+.theme-light .dashboard-metric-card__icon {
+  background: #fff !important;
+  color: currentColor;
+}
+.theme-light .dashboard-metric-card--amber .dashboard-metric-card__icon {
+  color: #f47b20;
+}
+.theme-light .dashboard-metric-card--cyan .dashboard-metric-card__icon {
+  color: #0b3153;
+}
+.theme-light .dashboard-metric-card--emerald .dashboard-metric-card__icon,
+.theme-light .dashboard-metric-card--green .dashboard-metric-card__icon {
+  color: #079281;
+}
+.theme-light .dashboard-metric-card--blue .dashboard-metric-card__icon {
+  color: #2563eb;
+}
+.theme-light .dashboard-metric-card :is(.dashboard-metric-card__label, .dashboard-metric-card__value) {
+  color: #fff;
+}
+
+/* Shared form system — applies across every module using the admin, CRUD, or
+   package form primitives. Invoice documents keep their dedicated print layout. */
+.admin-modal-backdrop,
+.crud-modal__backdrop {
+  backdrop-filter: blur(4px);
+}
+.admin-modal:not(.document-invoice) {
+  max-height: min(860px, calc(100vh - 40px));
+  overflow: auto;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 28px 72px rgb(2 8 23 / 42%);
+}
+.admin-modal:not(.document-invoice) .admin-modal__header {
+  align-items: flex-start;
+  margin: 0;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-header);
+  padding: 19px 22px 17px;
+}
+.admin-modal:not(.document-invoice) .admin-modal__header h2 {
+  font-size: 19px;
+  letter-spacing: -0.015em;
+}
+.admin-modal:not(.document-invoice) .admin-modal__header p {
+  max-width: 580px;
+  margin-top: 5px;
+}
+.admin-modal:not(.document-invoice) .admin-form-grid {
+  gap: 18px;
+  padding: 22px;
+}
+.admin-modal:not(.document-invoice) > .admin-field {
+  margin: 20px 22px 0;
+}
+.admin-modal:not(.document-invoice) > .admin-field + .admin-field {
+  margin-top: 16px;
+}
+.admin-field,
+.crud-field {
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+}
+.admin-field :is(input, select, textarea),
+.crud-field :is(input, select, textarea) {
+  min-height: 42px;
+  border-color: var(--color-border-strong);
+  border-radius: 9px;
+  background: var(--color-surface-raised);
+  box-shadow: inset 0 1px 1px rgb(15 23 42 / 3%);
+  padding: 10px 12px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+.admin-field textarea,
+.crud-field textarea {
+  min-height: 112px;
+  line-height: 1.5;
+}
+.admin-field :is(input, select, textarea)::placeholder,
+.crud-field :is(input, select, textarea)::placeholder {
+  color: var(--color-text-faint);
+  opacity: 0.85;
+}
+.admin-field :is(input, select, textarea):hover:not(:disabled),
+.crud-field :is(input, select, textarea):hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border-strong));
+}
+.admin-field :is(input, select, textarea):focus,
+.crud-field :is(input, select, textarea):focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 16%);
+}
+.admin-field__hint {
+  margin-top: -2px;
+  line-height: 1.4;
+}
+.admin-field fieldset,
+.admin-modal fieldset.admin-field {
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 13px;
+}
+.admin-toggle,
+.admin-check,
+.package-form-toggles label {
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.admin-toggle {
+  min-height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  background: var(--color-surface-raised);
+  padding: 0 13px;
+}
+.admin-toggle:has(input:checked),
+.package-form-toggles label:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+.admin-modal:not(.document-invoice) .admin-modal__actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin-top: 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 15px 22px;
+}
+.admin-modal:not(.document-invoice) .admin-modal__actions .routes-control,
+.crud-button {
+  min-height: 38px;
+  border-radius: 8px;
+  padding-inline: 16px;
+}
+.crud-modal__panel {
+  border-radius: 14px;
+}
+.crud-modal__header {
+  background: var(--color-surface-header);
+  padding: 19px 22px 17px;
+}
+.crud-modal__body {
+  gap: 18px;
+  padding: 22px;
+}
+.crud-field :is(input, select) {
+  height: 42px;
+}
+.crud-modal__footer {
+  background: var(--color-surface);
+  padding: 15px 22px;
+}
+.package-form-grid {
+  gap: 18px;
+}
+.package-form-section {
+  border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .admin-modal:not(.document-invoice) .admin-modal__header,
+  .admin-modal:not(.document-invoice) .admin-form-grid,
+  .crud-modal__header,
+  .crud-modal__body {
+    padding-inline: 16px;
+  }
+  .admin-modal:not(.document-invoice) > .admin-field {
+    margin-inline: 16px;
+  }
+  .admin-modal:not(.document-invoice) .admin-modal__actions,
+  .crud-modal__footer {
+    padding-inline: 16px;
+  }
+}
+
+/* Four-column, ruled transaction ledger matching the invoice information table. */
+.commerce-transaction-modal .commerce-transaction-summary {
+  margin: 18px 22px 0;
+}
+.commerce-transaction-table-wrap {
+  margin: 18px 22px 0;
+  overflow-x: auto;
+  border: 1px solid var(--color-border-strong);
+}
+.commerce-transaction-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  color: var(--color-text-primary);
+  font-size: 12px;
+}
+.commerce-transaction-table th,
+.commerce-transaction-table td {
+  border-right: 1px solid var(--color-border-strong);
+  border-bottom: 1px solid var(--color-border-strong);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.commerce-transaction-table tr > :last-child {
+  border-right: 0;
+}
+.commerce-transaction-table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+.commerce-transaction-table thead th {
+  background: var(--color-surface-header);
+  color: var(--color-text-secondary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+.commerce-transaction-table tbody th {
+  width: 18%;
+  background: color-mix(in srgb, var(--color-surface-header) 64%, transparent);
+  color: var(--color-text-secondary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.commerce-transaction-table td {
+  width: 32%;
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+.theme-light .commerce-transaction-table-wrap {
+  border-color: #53657d;
+}
+.theme-light .commerce-transaction-table th,
+.theme-light .commerce-transaction-table td {
+  border-color: #8293a9;
+}
+.theme-light .commerce-transaction-table thead th {
+  background: #cbd5e1;
+  color: #172033;
+}
+.theme-light .commerce-transaction-table tbody th {
+  background: #eef3f8;
+  color: #344861;
+}
+.theme-light .commerce-transaction-table td {
+  background: #fff;
+  color: #172033;
+}
+@media (max-width: 640px) {
+  .commerce-transaction-modal .commerce-transaction-summary,
+  .commerce-transaction-table-wrap {
+    margin-inline: 16px;
+  }
+}
+
+/* Light-form pattern: clean white panels, clear fields, and decisive actions. */
+.theme-light .admin-modal:not(.document-invoice),
+.theme-light .crud-modal__panel {
+  border-color: #d4dce7 !important;
+  background: #fff !important;
+  box-shadow: 0 20px 52px rgb(15 23 42 / 24%) !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header,
+.theme-light .crud-modal__header {
+  align-items: center;
+  border-bottom-color: #e5eaf0 !important;
+  background: #fff !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header h2,
+.theme-light .crud-modal__header h2 {
+  color: #152235;
+  font-size: 18px;
+  font-weight: 800;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header p,
+.theme-light .crud-modal__eyebrow {
+  color: #637086 !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-icon-button {
+  width: 21px;
+  height: 21px;
+  border: 0;
+  border-radius: 999px;
+  background: #ef1717;
+  color: #fff;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-icon-button:hover {
+  background: #c91515;
+  color: #fff;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-field,
+.theme-light .crud-field,
+.theme-light .crud-field span {
+  color: #263548;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea),
+.theme-light .crud-field :is(input, select, textarea) {
+  min-height: 40px;
+  border-color: #d9e1ea;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: none;
+  color: #172033;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-field textarea,
+.theme-light .crud-field textarea {
+  min-height: 104px;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea):hover:not(:disabled),
+.theme-light .crud-field :is(input, select, textarea):hover:not(:disabled) {
+  border-color: #a9b8ca;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea):focus,
+.theme-light .crud-field :is(input, select, textarea):focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgb(37 99 235 / 12%);
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-toggle {
+  justify-content: space-between;
+  min-height: 46px;
+  border-color: #e5eaf0;
+  border-inline: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+  color: #263548;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-toggle:has(input:checked) {
+  border-color: #e5eaf0;
+  background: transparent;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-toggle input {
+  width: 31px;
+  height: 17px;
+  accent-color: #36bd8b;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions,
+.theme-light .crud-modal__footer {
+  border-top-color: #e5eaf0 !important;
+  background: #fff !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions .routes-control,
+.theme-light .crud-modal__footer .crud-button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 6px;
+  box-shadow: none;
+  color: #fff;
+  font-weight: 700;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions .routes-control:not(.routes-control--blue),
+.theme-light .crud-button--ghost {
+  background: #0b3153 !important;
+  color: #fff !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions .routes-control--blue,
+.theme-light .crud-button--primary {
+  border-color: #ff9f43 !important;
+  background: #ff9f43 !important;
+  color: #fff !important;
+}
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions .routes-control--blue:hover,
+.theme-light .crud-button--primary:hover {
+  border-color: #f58c2d !important;
+  background: #f58c2d !important;
+}
+
+.category-form-image-preview {
+  display: block;
+  width: 84px;
+  height: 84px;
+  margin: 0 22px 20px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  object-fit: cover;
+}
+.category-table-image {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 7px;
+  background: var(--color-surface-raised);
+  color: var(--color-text-faint);
+  object-fit: cover;
+}
+.theme-light .category-table-image--empty {
+  background: #f3f6fa;
+}
+
+/* Product list: restrained blue-gray table colours with clear data contrast. */
+.product-table-image {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 7px;
+  background: var(--color-surface-raised);
+  color: var(--color-text-faint);
+  object-fit: cover;
+}
+.product-stock-value {
+  font-weight: 750;
+}
+.product-stock-value--available {
+  color: #34d399;
+}
+.product-stock-value--empty {
+  color: #fca5a5;
+}
+.product-primary-image-preview {
+  width: 96px;
+  height: 96px;
+  margin-top: 4px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  object-fit: cover;
+}
+.theme-light .products-page .routes-table-card {
+  border-color: #c9d8ea;
+  background: #fff;
+  box-shadow: 0 10px 24px rgb(30 64 175 / 7%);
+}
+.theme-light .products-page .routes-table-toolbar,
+.theme-light .products-page .routes-table-footer {
+  border-color: #d7e2ef;
+  background: #f8fbff;
+}
+.theme-light .products-page .routes-table thead tr {
+  background: #dceafa;
+}
+.theme-light .products-page .routes-table th {
+  border-color: #b9cce2;
+  color: #173b67;
+}
+.theme-light .products-page .routes-table td {
+  border-color: #d7e2ef;
+  color: #203b5c;
+}
+.theme-light .products-page .routes-table tbody tr,
+.theme-light .products-page .routes-table tbody tr:nth-child(even) {
+  background: #fff;
+}
+.theme-light .products-page .routes-table tbody tr:hover {
+  background: #f2f7fd;
+}
+.theme-light .products-page .product-cell__name {
+  color: #172b45 !important;
+}
+.theme-light .products-page .product-table-image {
+  border-color: #b9cce2;
+  background: #f4f8fd;
+}
+.theme-light .products-page .product-stock-value--available {
+  color: #087443;
+}
+.theme-light .products-page .product-stock-value--empty {
+  color: #c0263b;
+}

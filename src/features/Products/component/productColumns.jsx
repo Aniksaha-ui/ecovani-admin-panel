@@ -1,13 +1,36 @@
 import { BarChart3, Boxes, Pencil, Trash2 } from "lucide-react";
+import { APP_CONFIG } from "../../../services/config";
+import StatusBadge from "../../../components/ui/StatusBadge";
+
+const productImageUrl = (path) =>
+  path && /^https?:\/\//i.test(path)
+    ? path
+    : path
+      ? `${APP_CONFIG.imageBaseUrl.replace(/\/$/, "")}/${String(path).replace(/^\//, "")}`
+      : "";
+
 export const productColumns = () => [
   { id: "serial", label: "SL", accessor: "serial", width: "65px" },
+  {
+    id: "image_url",
+    label: "Image",
+    width: "86px",
+    render: (item) => {
+      const src = productImageUrl(item.image_url);
+      return src ? (
+        <img className="product-table-image" src={src} alt="" />
+      ) : (
+        <span className="product-table-image product-table-image--empty">—</span>
+      );
+    },
+  },
   {
     id: "name",
     label: "Product",
     width: "27%",
     render: (item) => (
-      <div>
-        <p className="font-semibold text-white">{item.name}</p>
+      <div className="product-cell">
+        <p className="product-cell__name font-semibold text-white">{item.name}</p>
         <p className="text-xs text-[var(--color-text-faint)]">
           {item.sku || "No SKU"}
         </p>
@@ -38,9 +61,7 @@ export const productColumns = () => [
     label: "Stock",
     render: (item) => (
       <span
-        className={
-          Number(item.stock_quantity) > 0 ? "text-emerald-300" : "text-red-300"
-        }
+        className={`product-stock-value ${Number(item.stock_quantity) > 0 ? "product-stock-value--available" : "product-stock-value--empty"}`}
       >
         {item.stock_quantity ?? 0}
       </span>
@@ -51,11 +72,7 @@ export const productColumns = () => [
     id: "is_active",
     label: "Status",
     render: (item) => (
-      <span
-        className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold ${item.is_active ? "border-emerald-700/70 bg-emerald-950/40 text-emerald-300" : "border-[#594449] bg-[#2a2023] text-[#c3aeb3]"}`}
-      >
-        {item.is_active ? "Active" : "Inactive"}
-      </span>
+      <StatusBadge value={item.is_active ? "Active" : "Inactive"} />
     ),
     width: "11%",
   },

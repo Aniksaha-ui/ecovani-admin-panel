@@ -1,6 +1,30 @@
 import { Pencil, Trash2 } from "lucide-react";
+import { APP_CONFIG } from "../../../services/config";
+
+const categoryImageUrl = (path) =>
+  path && /^https?:\/\//i.test(path)
+    ? path
+    : path
+      ? `${APP_CONFIG.imageBaseUrl.replace(/\/$/, "")}/${String(path).replace(/^\//, "")}`
+      : "";
+
 export const categoryColumns = [
   { id: "serial", label: "SL", accessor: "serial", width: "70px" },
+  {
+    id: "image",
+    label: "Image",
+    render: (item) => {
+      const src = categoryImageUrl(item.image);
+      return src ? (
+        <img className="category-table-image" src={src} alt="" />
+      ) : (
+        <span className="category-table-image category-table-image--empty">
+          —
+        </span>
+      );
+    },
+    width: "92px",
+  },
   {
     id: "name",
     label: "Category",

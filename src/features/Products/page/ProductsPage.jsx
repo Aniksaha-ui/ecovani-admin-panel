@@ -47,7 +47,7 @@ export default function ProductsPage() {
     },
   });
   return (
-    <main className="routes-page">
+    <main className="routes-page products-page">
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="flex flex-wrap items-start justify-between gap-4">

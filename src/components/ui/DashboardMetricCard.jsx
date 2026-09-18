@@ -13,17 +13,19 @@ export function DashboardMetricCard({
   tone = "blue",
 }) {
   return (
-    <article className="flex h-[76px] items-center gap-4 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface-raised)] px-5">
+    <article
+      className={`dashboard-metric-card dashboard-metric-card--${tone} flex h-[88px] items-center gap-4 rounded-lg border px-5`}
+    >
       <span
-        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${toneStyles[tone]}`}
+        className={`dashboard-metric-card__icon flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${toneStyles[tone]}`}
       >
         <Icon size={20} strokeWidth={2.2} />
       </span>
       <div>
-        <p className="text-[12px] font-medium text-[var(--color-text-muted)]">
+        <p className="dashboard-metric-card__label text-[12px] font-medium text-[var(--color-text-muted)]">
           {label}
         </p>
-        <p className="mt-1 text-base font-bold leading-none text-[var(--color-text-primary)]">
+        <p className="dashboard-metric-card__value mt-1 text-base font-bold leading-none text-[var(--color-text-primary)]">
           {value}
         </p>
       </div>

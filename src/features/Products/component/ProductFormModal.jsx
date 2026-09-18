@@ -19,6 +19,7 @@ const initialValues = {
   discount_end_date: "",
   section_ids: [],
   display_order: 1,
+  image: null,
   images: [],
 };
 const dateValue = (value) => (value ? String(value).slice(0, 10) : "");
@@ -35,6 +36,7 @@ export default function ProductFormModal({
       ? {
           ...initialValues,
           ...product,
+          image: null,
           images: [],
           category_id: String(product.category_id ?? ""),
           subcategory_id: String(product.subcategory_id ?? ""),
@@ -59,7 +61,7 @@ export default function ProductFormModal({
   const existingImages = product?.images || [];
   const remainingImages = Math.max(
     0,
-    10 - existingImages.length - values.images.length,
+    10 - existingImages.length - values.images.length - (values.image ? 1 : 0),
   );
   const update = (key, value) =>
     setValues((current) => ({ ...current, [key]: value }));
@@ -208,6 +210,27 @@ export default function ProductFormModal({
               placeholder="Optional product description"
             />
           </label>
+          <label className="admin-field admin-field--full">
+            Primary product image
+            <input
+              accept="image/png,image/jpeg,image/webp"
+              name="image"
+              type="file"
+              onChange={(event) =>
+                update("image", event.target.files?.[0] ?? null)
+              }
+            />
+            <span className="admin-field__hint">
+              Upload the main product image (JPG, PNG, or WebP; 5 MB maximum).
+            </span>
+            {values.image ? (
+              <img
+                className="product-primary-image-preview"
+                src={URL.createObjectURL(values.image)}
+                alt="Selected primary product"
+              />
+            ) : null}
+          </label>
           <label className="admin-field">
             Discount type
             <select
@@ -256,17 +279,18 @@ export default function ProductFormModal({
             />
           </label>
           <div className="admin-field admin-field--full">
-            <span>Product pictures</span>
+            <span>Additional product images</span>
             <input
               multiple
               disabled={!remainingImages}
               accept="image/png,image/jpeg,image/webp"
+              name="images[]"
               type="file"
               onChange={selectImages}
             />
             <span className="admin-field__hint">
               Add up to {remainingImages} more JPG, PNG, or WebP pictures (5 MB
-              each; 10 maximum). New pictures are added to the existing gallery.
+              each; 10 maximum). Images are stored with this product.
             </span>
             {existingImages.length || values.images.length ? (
               <div className="product-image-grid">

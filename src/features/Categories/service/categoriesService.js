@@ -43,12 +43,18 @@ export const getCategories = async ({ page = 1, search = "" } = {}) => {
 };
 
 export const saveCategory = async (category, id) => {
+  const body = new FormData();
+  body.append("name", category.name);
+  if (category.description) body.append("description", category.description);
+  if (category.image instanceof File) body.append("image", category.image);
+  if (id) body.append("_method", "PATCH");
+
   const payload = assertSucceeded(
     await apiRequest(
       id ? `${API_URLS.admin.categories}/${id}` : API_URLS.admin.categories,
       {
-        method: id ? "PATCH" : "POST",
-        body: JSON.stringify(category),
+        method: "POST",
+        body,
       },
     ),
     "Unable to save category.",
