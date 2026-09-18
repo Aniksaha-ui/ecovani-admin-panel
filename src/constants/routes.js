@@ -7,6 +7,7 @@ export const APP_ROUTES = {
   commerce: "/admin/commerce",
   catalog: "/admin/catalog",
   inventory: "/admin/inventory",
+  accounts: "/admin/accounts",
   categories: "/admin/categories",
   subcategories: "/admin/subcategories",
   sections: "/admin/sections",
@@ -26,4 +27,5 @@ export const APP_ROUTES = {
   transactions: "/admin/transactions",
   coupons: "/admin/coupons",
   companyAccounts: "/admin/company-accounts",
+  companyAccountHistory: "/admin/company-accounts/history",
 };

@@ -2,6 +2,8 @@ import {
   ArrowRight,
   Boxes,
   ClipboardList,
+  History,
+  Landmark,
   LayoutDashboard,
   PackageCheck,
   ReceiptText,
@@ -54,6 +56,12 @@ const hubs = {
         text: "Manage company payment accounts and current balances.",
         to: APP_ROUTES.companyAccounts,
         icon: ReceiptText,
+      },
+      {
+        title: "Account history",
+        text: "Review credits, debits, payment references, and account activity.",
+        to: APP_ROUTES.companyAccountHistory,
+        icon: History,
       },
       {
         title: "Coupons",
@@ -158,6 +166,25 @@ const hubs = {
         text: "Review complete inventory adjustment audit records.",
         to: APP_ROUTES.inventoryAdjustments,
         icon: PackageCheck,
+      },
+    ],
+  },
+  accounts: {
+    title: "Account",
+    subtitle: "Manage company balances and review every account movement.",
+    icon: Landmark,
+    cards: [
+      {
+        title: "Accounts",
+        text: "Manage company payment accounts and current balances.",
+        to: APP_ROUTES.companyAccounts,
+        icon: Landmark,
+      },
+      {
+        title: "Account History",
+        text: "Review credits, debits, payment references, and audit activity.",
+        to: APP_ROUTES.companyAccountHistory,
+        icon: History,
       },
     ],
   },

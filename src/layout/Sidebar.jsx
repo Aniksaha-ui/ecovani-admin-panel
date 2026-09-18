@@ -2,6 +2,7 @@ import {
   Boxes,
   ClipboardList,
   GalleryVerticalEnd,
+  Landmark,
   LayoutDashboard,
   LogOut,
   Users,
@@ -20,6 +21,7 @@ const menuItems = [
     to: APP_ROUTES.inventory,
     icon: ClipboardList,
   },
+  { label: "Account", to: APP_ROUTES.accounts, icon: Landmark },
 ];
 
 export function Sidebar({ isCollapsed, isOpen, onClose }) {

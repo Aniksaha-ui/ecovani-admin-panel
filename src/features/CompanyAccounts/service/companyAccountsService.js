@@ -23,6 +23,38 @@ export const listCompanyAccounts = async ({ page = 1, search = "" } = {}) => {
     },
   };
 };
+export const listAccountHistory = async ({
+  page = 1,
+  search = "",
+  userId = "",
+  month = "",
+} = {}) => {
+  const query = new URLSearchParams({ page: String(page), perPage: "10" });
+  if (search) query.set("search", search);
+  if (userId) query.set("user_id", userId);
+  if (month) query.set("month", month);
+  const data = await request(`/admin/company-accounts/history?${query}`);
+  const rows = data?.data || [];
+  return {
+    rows,
+    pagination: {
+      currentPage: data?.current_page || 1,
+      from: data?.from || 0,
+      lastPage: data?.last_page || 1,
+      to: data?.to || rows.length,
+      total: data?.total || rows.length,
+    },
+  };
+};
+export const getAccountHistoryOptions = () =>
+  request("/admin/company-accounts/history/options");
+export const getCompanyAccountSummary = ({ userId = "", month = "" } = {}) => {
+  const query = new URLSearchParams();
+  if (userId) query.set("user_id", userId);
+  if (month) query.set("month", month);
+  const suffix = query.size ? `?${query}` : "";
+  return request(`/admin/company-accounts/summary${suffix}`);
+};
 export const saveCompanyAccount = (values, id) =>
   request(id ? `/admin/company-accounts/${id}` : "/admin/company-accounts", {
     method: id ? "PATCH" : "POST",

@@ -167,6 +167,14 @@ function AppRoutes() {
           }
         />
         <Route
+          path={APP_ROUTES.accounts}
+          element={
+            <Suspense fallback={<FullPageLoader message="Loading accounts..." />}>
+              <MenuHubPage hub="accounts" />
+            </Suspense>
+          }
+        />
+        <Route
           path={APP_ROUTES.categories}
           element={
             <Suspense
@@ -345,6 +353,18 @@ function AppRoutes() {
               fallback={<FullPageLoader message="Loading coupons..." />}
             >
               <CommercePage section="coupons" />
+            </Suspense>
+          }
+        />
+        <Route
+          path={APP_ROUTES.companyAccountHistory}
+          element={
+            <Suspense
+              fallback={
+                <FullPageLoader message="Loading account history..." />
+              }
+            >
+              <CompanyAccountsPage />
             </Suspense>
           }
         />

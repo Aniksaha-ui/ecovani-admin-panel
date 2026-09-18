@@ -3179,3 +3179,178 @@
 .theme-light .products-page .product-stock-value--empty {
   color: #c0263b;
 }
+
+/* Receive-and-pay procurement: replace dark workflow cards with light paper panels. */
+.theme-light .operations-payment-flow {
+  gap: 16px;
+  background: #f6f8fb;
+  padding: 20px 22px;
+}
+.theme-light .operations-receipt-card,
+.theme-light .operations-payment-card {
+  border-color: #ccd8e6;
+  background: #fff;
+  box-shadow: 0 5px 14px rgb(15 23 42 / 6%);
+}
+.theme-light .operations-payment-card {
+  border-color: #b8cce5;
+}
+.theme-light .operations-section-heading {
+  color: #2563eb;
+}
+.theme-light .operations-section-heading strong {
+  color: #172b45;
+}
+.theme-light .operations-section-heading span {
+  color: #62748b;
+}
+.theme-light .operations-receipt-card .admin-field {
+  color: #344861;
+}
+.theme-light .operations-receipt-card .admin-field select,
+.theme-light .operations-payment-row :is(select, input) {
+  border-color: #c8d5e3;
+  background: #fff;
+  color: #172b45;
+}
+.theme-light .operations-items {
+  border-top: 1px solid #dce5ef;
+}
+.theme-light .operations-item {
+  border-color: #dce5ef;
+  color: #263d5b;
+}
+.theme-light .operations-item span:nth-child(2) {
+  color: #667b95;
+}
+.theme-light .operations-item strong {
+  color: #172b45;
+}
+.theme-light .operations-total {
+  border-color: #a9c8ec;
+  background: #edf5ff;
+}
+.theme-light .operations-total span {
+  color: #365474;
+}
+.theme-light .operations-total strong {
+  color: #173f73;
+}
+.theme-light .operations-payment-label {
+  color: #526b89;
+}
+.theme-light .operations-payment-balance {
+  border: 1px solid #f0b7bf;
+  background: #fff1f3;
+  color: #ad293b;
+}
+.theme-light .operations-payment-balance.is-balanced {
+  border-color: #9ad6ba;
+  background: #ecf9f1;
+  color: #087443;
+}
+.theme-light .operations-add {
+  border-color: #a9c8ec;
+  background: #fff;
+  color: #1d4f91;
+}
+.theme-light .operations-add:hover {
+  border-color: #2563eb;
+  background: #edf5ff;
+  color: #174a8a;
+}
+.company-accounts-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.company-accounts-tabs button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 8px;
+  background: var(--color-surface-raised);
+  padding: 0 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+}
+.company-accounts-tabs button.is-active {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-text-primary);
+}
+.account-history-type {
+  display: inline-flex;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 750;
+}
+.account-history-type--credit {
+  border-color: #347b5d;
+  background: #123d2d;
+  color: #8ee5b9;
+}
+.account-history-type--debit {
+  border-color: #8d3b4a;
+  background: #482027;
+  color: #ffadba;
+}
+.theme-light .company-accounts-tabs button {
+  border-color: #c7d7eb;
+  background: #fff;
+  color: #344f70;
+}
+.theme-light .company-accounts-tabs button.is-active {
+  border-color: #6d9fe0;
+  background: #eaf3ff;
+  color: #174a8a;
+}
+.theme-light .account-history-type--credit {
+  border-color: #9ad6ba;
+  background: #ecf9f1;
+  color: #087443;
+}
+.theme-light .account-history-type--debit {
+  border-color: #efb7c0;
+  background: #fff1f3;
+  color: #ad293b;
+}
+.account-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 16px;
+}
+.account-summary > div {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: 10px;
+  background: var(--color-surface-raised);
+  padding: 13px 15px;
+}
+.account-summary span { color: var(--color-text-muted); font-size: 11px; font-weight: 750; text-transform: uppercase; }
+.account-summary strong { color: var(--color-text-primary); font-size: 18px; }
+.theme-light .account-summary > div { border-color: #cbd9ea; background: #fff; box-shadow: 0 6px 16px rgb(30 64 175 / 6%); }
+.theme-light .account-summary span { color: #58708f; }
+.theme-light .account-summary strong { color: #173b67; }
+.account-history-filters { display: flex; gap: 8px; }
+.account-history-filters :is(select, input) { height: 34px; border: 1px solid var(--color-border-strong); border-radius: 7px; background: var(--color-surface-raised); padding: 0 10px; color: var(--color-text-primary); font: inherit; font-size: 12px; }
+.theme-light .account-history-filters :is(select, input) { border-color: #c7d7eb; background: #fff; color: #233d5c; }
+@media (max-width: 640px) {
+  .account-summary { grid-template-columns: 1fr; }
+  .account-history-filters { width: 100%; }
+  .account-history-filters :is(select, input) { flex: 1; min-width: 0; }
+}
+@media (max-width: 640px) {
+  .theme-light .operations-payment-flow {
+    padding: 16px;
+  }
+}
