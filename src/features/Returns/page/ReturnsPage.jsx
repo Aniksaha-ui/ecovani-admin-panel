@@ -6,6 +6,7 @@ import AdminDataTable, {
   AdminTableButton,
 } from "../../../components/ui/AdminDataTable";
 import ReturnDetailModal from "../component/ReturnDetailModal";
+import StatusBadge from "../../../components/ui/StatusBadge";
 import {
   getRefundDetails,
   getReturnDetails,
@@ -29,9 +30,7 @@ const formatDate = (value) => {
 };
 
 const badge = (status) => (
-  <span className={`returns-status returns-status--${status || "unknown"}`}>
-    {String(status || "unknown").replaceAll("_", " ")}
-  </span>
+  <StatusBadge value={status} className="returns-status" />
 );
 
 export default function ReturnsPage({ tab = "returns" }) {
@@ -248,7 +247,7 @@ export default function ReturnsPage({ tab = "returns" }) {
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="routes-page__title">
-            <RotateCcw size={20} color="#4f83ff" />
+            <RotateCcw size={20} color="var(--color-accent)" />
             <h1>{tab === "refunds" ? "Refund Ledger" : "Returns"}</h1>
           </div>
           <p className="routes-page__subtitle">

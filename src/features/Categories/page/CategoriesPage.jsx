@@ -32,14 +32,14 @@ export default function CategoriesPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <Tags size={20} color="#4f83ff" />
+                <Tags size={20} color="var(--color-accent)" />
                 <h1>Categories</h1>
               </div>
               <p className="routes-page__subtitle">
                 Organize the product catalog with clear, reusable categories.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <FolderPlus size={16} />
               {api.pagination.total} categories
             </div>

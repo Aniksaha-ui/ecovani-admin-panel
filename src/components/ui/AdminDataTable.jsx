@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronDown,
   ChevronLeft,
@@ -7,40 +7,57 @@ import {
   ChevronUp,
   Columns3,
   Search,
-} from 'lucide-react'
-import useDebouncedValue from '../../hooks/useDebouncedValue'
+} from "lucide-react";
+import useDebouncedValue from "../../hooks/useDebouncedValue";
 
 const getDefaultVisibleColumnIds = (columns) =>
-  columns.filter((column) => column.defaultHidden !== true).map((column) => column.id)
+  columns
+    .filter((column) => column.defaultHidden !== true)
+    .map((column) => column.id);
 
 const getColumnMobileLabel = (column) => {
-  if (typeof column.mobileLabel === 'string' && column.mobileLabel.trim()) {
-    return column.mobileLabel
+  if (typeof column.mobileLabel === "string" && column.mobileLabel.trim()) {
+    return column.mobileLabel;
   }
 
-  if (typeof column.label === 'string' || typeof column.label === 'number') {
-    return String(column.label)
+  if (typeof column.label === "string" || typeof column.label === "number") {
+    return String(column.label);
   }
 
-  if (typeof column.id === 'string' && column.id.trim()) {
-    return column.id.replace(/[_-]+/g, ' ')
+  if (typeof column.id === "string" && column.id.trim()) {
+    return column.id.replace(/[_-]+/g, " ");
   }
 
-  return 'Value'
-}
+  return "Value";
+};
 
 const isSerialLikeColumn = (column) => {
-  const id = String(column?.id ?? '').trim().toLowerCase()
-  const label = String(column?.label ?? '').trim().toLowerCase()
+  const id = String(column?.id ?? "")
+    .trim()
+    .toLowerCase();
+  const label = String(column?.label ?? "")
+    .trim()
+    .toLowerCase();
 
-  return id === 'serial' || id === 'sl' || label === 'serial' || label === 'sl' || label === '#'
-}
+  return (
+    id === "serial" ||
+    id === "sl" ||
+    label === "serial" ||
+    label === "sl" ||
+    label === "#"
+  );
+};
 
 function SortIcon() {
-  return <span aria-hidden="true"> ^</span>
+  return <span aria-hidden="true"> ^</span>;
 }
 
-function ColumnsDropdown({ columns, visibleColumnIds, onToggleColumn, onResetColumns }) {
+function ColumnsDropdown({
+  columns,
+  visibleColumnIds,
+  onToggleColumn,
+  onResetColumns,
+}) {
   return (
     <div className="routes-columns-menu">
       <div className="routes-columns-menu__header">
@@ -62,53 +79,65 @@ function ColumnsDropdown({ columns, visibleColumnIds, onToggleColumn, onResetCol
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 const getPaginationItems = (currentPage = 1, lastPage = 1) => {
   if (lastPage <= 1) {
-    return [1]
+    return [1];
   }
 
-  const pages = new Set([1, lastPage, currentPage, currentPage - 1, currentPage + 1])
+  const pages = new Set([
+    1,
+    lastPage,
+    currentPage,
+    currentPage - 1,
+    currentPage + 1,
+  ]);
 
   if (currentPage <= 3) {
-    pages.add(2)
-    pages.add(3)
+    pages.add(2);
+    pages.add(3);
   }
 
   if (currentPage >= lastPage - 2) {
-    pages.add(lastPage - 1)
-    pages.add(lastPage - 2)
+    pages.add(lastPage - 1);
+    pages.add(lastPage - 2);
   }
 
   const orderedPages = [...pages]
     .filter((page) => page >= 1 && page <= lastPage)
-    .sort((firstPage, secondPage) => firstPage - secondPage)
+    .sort((firstPage, secondPage) => firstPage - secondPage);
 
   return orderedPages.reduce((items, page, index) => {
-    const previousPage = orderedPages[index - 1]
+    const previousPage = orderedPages[index - 1];
 
     if (previousPage && page - previousPage > 1) {
-      items.push(`ellipsis-${previousPage}-${page}`)
+      items.push(`ellipsis-${previousPage}-${page}`);
     }
 
-    items.push(page)
-    return items
-  }, [])
-}
+    items.push(page);
+    return items;
+  }, []);
+};
 
-export function AdminTableButton({ children, count, variant = 'default', className = '', ...props }) {
+export function AdminTableButton({
+  children,
+  count,
+  variant = "default",
+  className = "",
+  ...props
+}) {
   return (
     <button
       type="button"
-      className={`routes-control ${variant === 'blue' ? 'routes-control--blue' : ''} ${className}`}
+      className={`routes-control ${variant === "blue" ? "routes-control--blue" : ""} ${className}`}
       {...props}
     >
       {children}
       {count ? <span className="routes-control__count">{count}</span> : null}
     </button>
-  )
+  );
 }
 
 export function AdminTableSelectButton({ children }) {
@@ -117,14 +146,14 @@ export function AdminTableSelectButton({ children }) {
       {children}
       <ChevronDown size={13} />
     </AdminTableButton>
-  )
+  );
 }
 
 export default function AdminDataTable({
   actions,
   columns,
   data,
-  emptyMessage = 'No data found',
+  emptyMessage = "No data found",
   filters,
   getRowKey = (row) => row.id,
   isLoading = false,
@@ -133,84 +162,107 @@ export default function AdminDataTable({
   pagination,
   renderRowActions,
   resultLabel,
-  rowActionsWidth = '88px',
+  rowActionsWidth = "88px",
   search,
-  searchPlaceholder = 'Search',
+  searchPlaceholder = "Search",
 }) {
-  const columnsMenuRef = useRef(null)
-  const defaultVisibleColumnIds = useMemo(() => getDefaultVisibleColumnIds(columns), [columns])
-  const [visibleColumnIds, setVisibleColumnIds] = useState(defaultVisibleColumnIds)
-  const [columnsOpen, setColumnsOpen] = useState(false)
-  const [expandedRowKeys, setExpandedRowKeys] = useState({})
-  const [searchInput, setSearchInput] = useState(search ?? '')
-  const debouncedSearch = useDebouncedValue(searchInput)
+  const columnsMenuRef = useRef(null);
+  const defaultVisibleColumnIds = useMemo(
+    () => getDefaultVisibleColumnIds(columns),
+    [columns],
+  );
+  const [visibleColumnIds, setVisibleColumnIds] = useState(
+    defaultVisibleColumnIds,
+  );
+  const [columnsOpen, setColumnsOpen] = useState(false);
+  const [expandedRowKeys, setExpandedRowKeys] = useState({});
+  const [searchInput, setSearchInput] = useState(search ?? "");
+  const debouncedSearch = useDebouncedValue(searchInput);
   const visibleColumns = useMemo(
     () => columns.filter((column) => visibleColumnIds.includes(column.id)),
     [columns, visibleColumnIds],
-  )
+  );
   const mobileSummaryColumn = useMemo(
-    () => visibleColumns.find((column) => !isSerialLikeColumn(column)) ?? visibleColumns[0] ?? null,
+    () =>
+      visibleColumns.find((column) => !isSerialLikeColumn(column)) ??
+      visibleColumns[0] ??
+      null,
     [visibleColumns],
-  )
+  );
   const mobileDetailColumns = useMemo(
-    () => visibleColumns.filter((column) => column.id !== mobileSummaryColumn?.id),
+    () =>
+      visibleColumns.filter((column) => column.id !== mobileSummaryColumn?.id),
     [mobileSummaryColumn, visibleColumns],
-  )
-  const currentPage = pagination?.currentPage ?? 1
-  const lastPage = pagination?.lastPage ?? 1
-  const paginationItems = useMemo(() => getPaginationItems(currentPage, lastPage), [currentPage, lastPage])
+  );
+  const currentPage = pagination?.currentPage ?? 1;
+  const lastPage = pagination?.lastPage ?? 1;
+  const paginationItems = useMemo(
+    () => getPaginationItems(currentPage, lastPage),
+    [currentPage, lastPage],
+  );
 
   useEffect(() => {
     const handlePointerDown = (event) => {
-      if (columnsMenuRef.current && !columnsMenuRef.current.contains(event.target)) {
-        setColumnsOpen(false)
+      if (
+        columnsMenuRef.current &&
+        !columnsMenuRef.current.contains(event.target)
+      ) {
+        setColumnsOpen(false);
       }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, []);
+
+  useEffect(() => {
+    setSearchInput(search ?? "");
+  }, [search]);
+
+  useEffect(() => {
+    if (debouncedSearch !== (search ?? "")) {
+      onSearchChange?.(debouncedSearch);
     }
-
-    document.addEventListener('pointerdown', handlePointerDown)
-
-    return () => document.removeEventListener('pointerdown', handlePointerDown)
-  }, [])
+  }, [debouncedSearch, onSearchChange, search]);
 
   useEffect(() => {
-    setSearchInput(search ?? '')
-  }, [search])
-
-  useEffect(() => {
-    if (debouncedSearch !== (search ?? '')) {
-      onSearchChange?.(debouncedSearch)
-    }
-  }, [debouncedSearch, onSearchChange, search])
-
-  useEffect(() => {
-    setExpandedRowKeys({})
-  }, [data, currentPage])
+    setExpandedRowKeys({});
+  }, [data, currentPage]);
 
   const toggleColumn = (columnId) => {
     setVisibleColumnIds((currentColumnIds) => {
       if (currentColumnIds.includes(columnId)) {
         if (currentColumnIds.length === 1) {
-          return currentColumnIds
+          return currentColumnIds;
         }
 
-        return currentColumnIds.filter((currentColumnId) => currentColumnId !== columnId)
+        return currentColumnIds.filter(
+          (currentColumnId) => currentColumnId !== columnId,
+        );
       }
 
       return columns
         .map((column) => column.id)
-        .filter((defaultColumnId) => defaultColumnId === columnId || currentColumnIds.includes(defaultColumnId))
-    })
-  }
+        .filter(
+          (defaultColumnId) =>
+            defaultColumnId === columnId ||
+            currentColumnIds.includes(defaultColumnId),
+        );
+    });
+  };
 
   const toggleRowExpansion = (rowKey) => {
     setExpandedRowKeys((currentRows) => ({
       ...currentRows,
       [rowKey]: !currentRows[rowKey],
-    }))
-  }
+    }));
+  };
 
   return (
-    <section className="routes-table-card">
+    <section
+      className={`routes-table-card ${columnsOpen ? "routes-table-card--columns-open" : ""}`}
+    >
       <div className="routes-table-toolbar">
         <label className="routes-search">
           <Search size={15} />
@@ -223,17 +275,25 @@ export default function AdminDataTable({
         </label>
 
         <div className="routes-columns" ref={columnsMenuRef}>
-          <button type="button" className="routes-control" onClick={() => setColumnsOpen((open) => !open)}>
+          <button
+            type="button"
+            className="routes-control"
+            onClick={() => setColumnsOpen((open) => !open)}
+          >
             <Columns3 size={14} />
             Columns
-            <span className="routes-control__count">{visibleColumnIds.length}</span>
+            <span className="routes-control__count">
+              {visibleColumnIds.length}
+            </span>
           </button>
           {columnsOpen ? (
             <ColumnsDropdown
               columns={columns}
               visibleColumnIds={visibleColumnIds}
               onToggleColumn={toggleColumn}
-              onResetColumns={() => setVisibleColumnIds(defaultVisibleColumnIds)}
+              onResetColumns={() =>
+                setVisibleColumnIds(defaultVisibleColumnIds)
+              }
             />
           ) : null}
         </div>
@@ -244,11 +304,13 @@ export default function AdminDataTable({
 
       <div className="routes-mobile-list md:hidden">
         {isLoading ? (
-          <div className="routes-mobile-card routes-mobile-card--empty">Loading records...</div>
+          <div className="routes-mobile-card routes-mobile-card--empty">
+            Loading records...
+          </div>
         ) : data.length ? (
           data.map((row) => {
-            const rowKey = getRowKey(row)
-            const isExpanded = expandedRowKeys[rowKey] === true
+            const rowKey = getRowKey(row);
+            const isExpanded = expandedRowKeys[rowKey] === true;
 
             return (
               <article key={rowKey} className="routes-mobile-card">
@@ -261,43 +323,65 @@ export default function AdminDataTable({
                   <div className="routes-mobile-card__summary">
                     {mobileSummaryColumn ? (
                       <div className="routes-mobile-card__summary-main">
-                        <span className="routes-mobile-card__label">{getColumnMobileLabel(mobileSummaryColumn)}</span>
+                        <span className="routes-mobile-card__label">
+                          {getColumnMobileLabel(mobileSummaryColumn)}
+                        </span>
                         <div className="routes-mobile-card__value">
                           {mobileSummaryColumn.render
                             ? mobileSummaryColumn.render(row)
-                            : row[mobileSummaryColumn.accessor ?? mobileSummaryColumn.id]}
+                            : row[
+                                mobileSummaryColumn.accessor ??
+                                  mobileSummaryColumn.id
+                              ]}
                         </div>
                       </div>
                     ) : null}
                   </div>
                   <span className="routes-mobile-card__toggle">
-                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                    {isExpanded ? (
+                      <ChevronUp size={16} />
+                    ) : (
+                      <ChevronDown size={16} />
+                    )}
                   </span>
                 </button>
 
                 {isExpanded ? (
                   <div className="routes-mobile-card__details">
                     {mobileDetailColumns.map((column) => (
-                      <div key={column.id} className="routes-mobile-card__detail-row">
-                        <span className="routes-mobile-card__label">{getColumnMobileLabel(column)}</span>
+                      <div
+                        key={column.id}
+                        className="routes-mobile-card__detail-row"
+                      >
+                        <span className="routes-mobile-card__label">
+                          {getColumnMobileLabel(column)}
+                        </span>
                         <div className="routes-mobile-card__detail-value">
-                          {column.render ? column.render(row) : row[column.accessor ?? column.id]}
+                          {column.render
+                            ? column.render(row)
+                            : row[column.accessor ?? column.id]}
                         </div>
                       </div>
                     ))}
                     {renderRowActions ? (
                       <div className="routes-mobile-card__detail-row">
-                        <span className="routes-mobile-card__label">Actions</span>
-                        <div className="routes-mobile-card__actions">{renderRowActions(row)}</div>
+                        <span className="routes-mobile-card__label">
+                          Actions
+                        </span>
+                        <div className="routes-mobile-card__actions">
+                          {renderRowActions(row)}
+                        </div>
                       </div>
                     ) : null}
                   </div>
                 ) : null}
               </article>
-            )
+            );
           })
         ) : (
-          <div className="routes-mobile-card routes-mobile-card--empty">{emptyMessage}</div>
+          <div className="routes-mobile-card routes-mobile-card--empty">
+            {emptyMessage}
+          </div>
         )}
       </div>
 
@@ -305,12 +389,18 @@ export default function AdminDataTable({
         <thead>
           <tr>
             {visibleColumns.map((column) => (
-              <th key={column.id} style={{ width: column.width, textAlign: column.align }}>
+              <th
+                key={column.id}
+                style={{ width: column.width, textAlign: column.align }}
+              >
                 {column.label} {column.sortable === false ? null : <SortIcon />}
               </th>
             ))}
             {renderRowActions ? (
-              <th className="routes-table__actions-heading" style={{ width: rowActionsWidth, textAlign: 'right' }}>
+              <th
+                className="routes-table__actions-heading"
+                style={{ width: rowActionsWidth, textAlign: "right" }}
+              >
                 Actions
               </th>
             ) : null}
@@ -319,7 +409,10 @@ export default function AdminDataTable({
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan={visibleColumns.length + (renderRowActions ? 1 : 0)} className="routes-table__empty">
+              <td
+                colSpan={visibleColumns.length + (renderRowActions ? 1 : 0)}
+                className="routes-table__empty"
+              >
                 Loading records...
               </td>
             </tr>
@@ -327,12 +420,21 @@ export default function AdminDataTable({
             data.map((row) => (
               <tr key={getRowKey(row)}>
                 {visibleColumns.map((column) => (
-                  <td key={column.id} className={column.className} data-label={getColumnMobileLabel(column)}>
-                    {column.render ? column.render(row) : row[column.accessor ?? column.id]}
+                  <td
+                    key={column.id}
+                    className={column.className}
+                    data-label={getColumnMobileLabel(column)}
+                  >
+                    {column.render
+                      ? column.render(row)
+                      : row[column.accessor ?? column.id]}
                   </td>
                 ))}
                 {renderRowActions ? (
-                  <td className="routes-table__actions-cell" data-label="Actions">
+                  <td
+                    className="routes-table__actions-cell"
+                    data-label="Actions"
+                  >
                     {renderRowActions(row)}
                   </td>
                 ) : null}
@@ -340,7 +442,10 @@ export default function AdminDataTable({
             ))
           ) : (
             <tr>
-              <td colSpan={visibleColumns.length + (renderRowActions ? 1 : 0)} className="routes-table__empty">
+              <td
+                colSpan={visibleColumns.length + (renderRowActions ? 1 : 0)}
+                className="routes-table__empty"
+              >
                 {emptyMessage}
               </td>
             </tr>
@@ -361,7 +466,7 @@ export default function AdminDataTable({
           </button>
           <div className="routes-pagination__pages">
             {paginationItems.map((item) =>
-              typeof item === 'string' ? (
+              typeof item === "string" ? (
                 <span key={item} className="routes-pagination__ellipsis">
                   ...
                 </span>
@@ -369,7 +474,7 @@ export default function AdminDataTable({
                 <button
                   key={item}
                   type="button"
-                  className={item === currentPage ? 'is-active' : ''}
+                  className={item === currentPage ? "is-active" : ""}
                   disabled={isLoading || item === currentPage}
                   onClick={() => onPageChange?.(item)}
                 >
@@ -389,5 +494,5 @@ export default function AdminDataTable({
         </div>
       </div>
     </section>
-  )
+  );
 }

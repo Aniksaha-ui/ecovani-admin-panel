@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Layers3, Pencil, Plus, RefreshCcw, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import AdminDataTable, {
@@ -192,7 +193,7 @@ export default function SectionProductsPage() {
       render: (row) => (
         <div>
           <strong className="text-white">{row.product_name}</strong>
-          <p className="mt-1 text-xs text-[#7d8ca5]">
+          <p className="mt-1 text-xs text-[var(--color-text-faint)]">
             {row.product_sku || "No SKU"}
           </p>
         </div>
@@ -233,14 +234,14 @@ export default function SectionProductsPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <Layers3 size={20} color="#4f83ff" />
+                <Layers3 size={20} color="var(--color-accent)" />
                 <h1>Section Products</h1>
               </div>
               <p className="routes-page__subtitle">
                 Assign products to sections with bundles and display ordering.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <Layers3 size={16} />
               {pagination.total || 0} assignments
             </div>

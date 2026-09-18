@@ -1,12 +1,13 @@
 import {
   ClipboardList,
+  Download,
   Eye,
   PackageCheck,
   Plus,
+  Printer,
   RefreshCcw,
-  X,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AdminDataTable, {
   AdminTableButton,
 } from "../../../components/ui/AdminDataTable";
@@ -18,6 +19,7 @@ import {
   StockModal,
 } from "../component/OperationsModal";
 import RequisitionDetailDrawer from "../component/RequisitionDetailDrawer";
+import StatusBadge from "../../../components/ui/StatusBadge";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import useOperations from "../hooks/useOperations";
 import {
@@ -46,11 +48,7 @@ const routes = [
   ["stocks", APP_ROUTES.productStocks],
   ["adjustments", APP_ROUTES.inventoryAdjustments],
 ];
-const badge = (value) => (
-  <span className="operations-badge">
-    {String(value || "pending").replace("_", " ")}
-  </span>
-);
+const badge = (value) => <StatusBadge value={value || "pending"} />;
 const money = (value) =>
   `৳${Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
@@ -70,7 +68,9 @@ const columnsFor = (section) => {
         render: (row) => (
           <div>
             <p className="font-semibold text-white">{row.requisition_number}</p>
-            <p className="text-xs text-[#7d8ca5]">{row.requested_by}</p>
+            <p className="text-xs text-[var(--color-text-faint)]">
+              {row.requested_by}
+            </p>
           </div>
         ),
       },
@@ -102,7 +102,9 @@ const columnsFor = (section) => {
         render: (row) => (
           <div>
             <p className="font-semibold text-white">{row.procurement_number}</p>
-            <p className="text-xs text-[#7d8ca5]">{row.requisition_number}</p>
+            <p className="text-xs text-[var(--color-text-faint)]">
+              {row.requisition_number}
+            </p>
           </div>
         ),
       },
@@ -145,7 +147,9 @@ const columnsFor = (section) => {
         render: (row) => (
           <div>
             <p className="font-semibold text-white">{row.product_name}</p>
-            <p className="text-xs text-[#7d8ca5]">{row.product_sku || "—"}</p>
+            <p className="text-xs text-[var(--color-text-faint)]">
+              {row.product_sku || "—"}
+            </p>
           </div>
         ),
       },
@@ -170,7 +174,9 @@ const columnsFor = (section) => {
         render: (row) => (
           <div>
             <p className="font-semibold text-white">{row.product_name}</p>
-            <p className="text-xs text-[#7d8ca5]">{row.sku || "—"}</p>
+            <p className="text-xs text-[var(--color-text-faint)]">
+              {row.sku || "—"}
+            </p>
           </div>
         ),
       },
@@ -208,7 +214,7 @@ const columnsFor = (section) => {
         render: (row) => (
           <div>
             <p>{row.adjusted_by_name || "System"}</p>
-            <p className="text-xs text-[#7d8ca5]">
+            <p className="text-xs text-[var(--color-text-faint)]">
               {row.created_at ? new Date(row.created_at).toLocaleString() : "—"}
             </p>
           </div>
@@ -223,7 +229,9 @@ const columnsFor = (section) => {
       render: (row) => (
         <div>
           <p className="font-semibold text-white">{row.product_name}</p>
-          <p className="text-xs text-[#7d8ca5]">{row.sku || "—"}</p>
+          <p className="text-xs text-[var(--color-text-faint)]">
+            {row.sku || "—"}
+          </p>
         </div>
       ),
     },
@@ -250,6 +258,8 @@ export default function OperationsPage({ section }) {
   const [modal, setModal] = useState(null);
   const [selected, setSelected] = useState(null);
   const [receiptDetail, setReceiptDetail] = useState(null);
+  const receiptInvoiceRef = useRef(null);
+  const [isReceiptExporting, setIsReceiptExporting] = useState(false);
   const onSaveRequisition = (data) =>
     api.run(() => createRequisition(data), "Requisition created.");
   const onHand = (data) =>
@@ -386,12 +396,44 @@ export default function OperationsPage({ section }) {
         ["Payment reference", invoice.payment_reference],
       ]
     : [];
+  const exportReceiptPdf = async () => {
+    if (!receiptInvoiceRef.current || !receiptDetail) return;
+    setIsReceiptExporting(true);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import("html2canvas"),
+        import("jspdf"),
+      ]);
+      const canvas = await html2canvas(receiptInvoiceRef.current, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true,
+        ignoreElements: (element) =>
+          element.dataset.html2canvasIgnore === "true",
+      });
+      const pdf = new jsPDF("p", "mm", "a4");
+      const margin = 9;
+      const printableWidth = 210 - margin * 2;
+      const printableHeight = 297 - margin * 2;
+      const scale = Math.min(
+        printableWidth / canvas.width,
+        printableHeight / canvas.height,
+      );
+      const width = canvas.width * scale;
+      const height = canvas.height * scale;
+      const image = canvas.toDataURL("image/png");
+      pdf.addImage(image, "PNG", (210 - width) / 2, margin, width, height);
+      pdf.save(`ecovani-stock-receipt-${receiptDetail.receipt_id}.pdf`);
+    } finally {
+      setIsReceiptExporting(false);
+    }
+  };
   return (
     <main className="routes-page">
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="routes-page__title">
-            <ClipboardList size={20} color="#4f83ff" />
+            <ClipboardList size={20} color="var(--color-accent)" />
             <h1>Operations · {names[section]}</h1>
           </div>
           <p className="routes-page__subtitle">
@@ -509,45 +551,62 @@ export default function OperationsPage({ section }) {
       ) : null}
       {receiptDetail ? (
         <div className="admin-modal-backdrop">
-          <article className="admin-modal admin-modal--wide operations-invoice">
-            <header className="operations-invoice__header">
-              <div>
-                <span className="operations-invoice__eyebrow">
-                  Goods receipt invoice
-                </span>
-                <h2>{invoice?.procurement_number}</h2>
-                <p>
-                  Receipt #{receiptDetail.receipt_id} · Requisition{" "}
-                  {invoice?.requisition_number}
-                </p>
+          <article
+            ref={receiptInvoiceRef}
+            className="admin-modal admin-modal--wide document-invoice legacy-invoice"
+          >
+            <header className="document-invoice__header">
+              <div className="document-invoice__reference">
+                <span>Receipt #</span>
+                <strong>{receiptDetail.receipt_id}</strong>
+                <small>
+                  Received {formatDate(receiptDetail.received_at, true)}
+                </small>
               </div>
-              <span className="operations-invoice__status">
-                {String(invoice?.status || "on hand").replace("_", " ")}
-              </span>
-              <button
-                className="admin-icon-button"
-                onClick={() => setReceiptDetail(null)}
-                aria-label="Close invoice"
-              >
-                <X size={18} />
-              </button>
+              <div className="document-invoice__brand">
+                <strong>ECOVANI</strong>
+                <span>Procurement & inventory</span>
+                <small>
+                  Mirpur 11, Dhaka 1216, Bangladesh
+                  <br />
+                  support@ecovani.com
+                </small>
+              </div>
             </header>
-            <section className="operations-invoice__identity">
+            <section className="document-invoice__summary">
               <div>
                 <span>Supplier</span>
                 <strong>{invoice?.supplier_name || "Not specified"}</strong>
               </div>
               <div>
-                <span>Receipt value</span>
-                <strong>{money(receivedValue)}</strong>
+                <span>Procurement no.</span>
+                <strong>{invoice?.procurement_number || "—"}</strong>
               </div>
               <div>
-                <span>Items received</span>
-                <strong>{receivedUnits} units</strong>
+                <span>Requisition no.</span>
+                <strong>{invoice?.requisition_number || "—"}</strong>
+              </div>
+              <div>
+                <span>Receipt date</span>
+                <strong>{formatDate(receiptDetail.received_at, true)}</strong>
+              </div>
+              <div>
+                <span>Received by</span>
+                <strong>
+                  {invoice?.received_by_name ||
+                    receiptDetail.received_by_name ||
+                    "—"}
+                </strong>
+              </div>
+              <div>
+                <span>Status</span>
+                <strong>
+                  {String(invoice?.status || "on hand").replaceAll("_", " ")}
+                </strong>
               </div>
             </section>
-            <section className="operations-invoice__details">
-              <h3>Request details</h3>
+            <section className="document-invoice__details">
+              <h3>Receipt details</h3>
               <div>
                 {invoiceDetails.map(([label, value]) => (
                   <p key={label}>
@@ -557,85 +616,115 @@ export default function OperationsPage({ section }) {
                 ))}
               </div>
             </section>
-            {invoice?.notes ? (
-              <p className="operations-invoice__notes">
-                <strong>Notes:</strong> {invoice.notes}
-              </p>
-            ) : null}
-            <div className="operations-invoice__table-wrap">
-              <table className="operations-invoice__table">
+            <section className="document-invoice__items">
+              <table>
                 <thead>
                   <tr>
                     <th>Item</th>
-                    <th>SKU</th>
-                    <th>Warehouse</th>
-                    <th>Qty</th>
+                    <th>SKU / warehouse</th>
+                    <th>Quantity</th>
                     <th>Unit cost</th>
-                    <th>Line total</th>
-                    <th>Stock after</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
                   {receiptDetail.items?.map((item) => (
                     <tr key={item.id}>
                       <td>{item.product_name}</td>
-                      <td>{item.product_sku || "—"}</td>
-                      <td>{item.warehouse_location}</td>
+                      <td>
+                        {item.product_sku || "—"} ·{" "}
+                        {item.warehouse_location || "—"}
+                      </td>
                       <td>{item.quantity_received}</td>
                       <td>{money(item.unit_cost)}</td>
                       <td>{money(lineTotal(item))}</td>
-                      <td>{item.stock_after}</td>
+                    </tr>
+                  ))}
+                  {Array.from({
+                    length: Math.max(
+                      0,
+                      14 - (receiptDetail.items?.length || 0),
+                    ),
+                  }).map((_, index) => (
+                    <tr
+                      className="document-invoice__blank-row"
+                      key={`blank-${index}`}
+                    >
+                      <td>&nbsp;</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td colSpan="5">Total received value</td>
-                    <td>{money(receivedValue)}</td>
-                    <td>{receivedUnits} units</td>
-                  </tr>
-                </tfoot>
               </table>
-            </div>
-            <footer className="operations-invoice__footer">
-              <section className="operations-invoice__payments">
-                <span>Paid from company accounts</span>
-                {receiptDetail.payments?.length ? (
-                  receiptDetail.payments.map((payment) => (
-                    <p key={payment.payment_reference}>
-                      <strong>
-                        {payment.account_name || "Company account"}
-                      </strong>
-                      <small>
-                        {payment.account_number || "—"} ·{" "}
-                        {payment.payment_reference}
-                      </small>
-                      <b>{money(payment.amount)}</b>
-                    </p>
-                  ))
-                ) : (
-                  <p>Payment record unavailable</p>
-                )}
-              </section>
-              <section className="operations-invoice__confirmation">
-                <div>
-                  <strong>{invoice?.approved_by_name || "—"}</strong>
-                  <i />
-                  <span>Approved By</span>
-                  <small>{formatDate(invoice?.accepted_at, true)}</small>
-                </div>
-                <div>
-                  <strong>
-                    {invoice?.received_by_name ||
-                      receiptDetail.received_by_name ||
-                      "—"}
-                  </strong>
-                  <i />
-                  <span>Received By</span>
-                  <small>{formatDate(invoice?.received_at, true)}</small>
-                </div>
-              </section>
+            </section>
+            <footer className="document-invoice__footer">
+              <div className="document-invoice__notes">
+                <span>Notes</span>
+                <p>
+                  {invoice?.notes ||
+                    "Stock receipt verified and recorded against the procurement."}
+                </p>
+                <small>
+                  Approved by: {invoice?.approved_by_name || "—"} · Received by:{" "}
+                  {invoice?.received_by_name ||
+                    receiptDetail.received_by_name ||
+                    "—"}
+                </small>
+              </div>
+              <div className="document-invoice__totals">
+                <p>
+                  <span>Items received</span>
+                  <strong>{receivedUnits}</strong>
+                </p>
+                <p>
+                  <span>Subtotal</span>
+                  <strong>{money(receivedValue)}</strong>
+                </p>
+                <p>
+                  <span>Discount</span>
+                  <strong>{money(0)}</strong>
+                </p>
+                <p>
+                  <span>Tax</span>
+                  <strong>{money(0)}</strong>
+                </p>
+                <p className="document-invoice__grand-total">
+                  <span>Grand total</span>
+                  <strong>{money(receivedValue)}</strong>
+                </p>
+              </div>
             </footer>
+            <div
+              className="document-invoice__actions"
+              data-html2canvas-ignore="true"
+            >
+              <button
+                type="button"
+                className="routes-control"
+                onClick={() => window.print()}
+              >
+                <Printer size={14} /> Print
+              </button>
+              <button
+                type="button"
+                className="routes-control routes-control--blue"
+                disabled={isReceiptExporting}
+                onClick={exportReceiptPdf}
+              >
+                <Download size={14} />
+                {isReceiptExporting ? "Preparing PDF…" : "Download PDF"}
+              </button>
+              <button
+                type="button"
+                className="routes-control"
+                onClick={() => setReceiptDetail(null)}
+              >
+                Close
+              </button>
+            </div>
           </article>
         </div>
       ) : null}

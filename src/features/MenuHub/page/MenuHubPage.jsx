@@ -172,7 +172,7 @@ export default function MenuHubPage({ hub }) {
         <header className="menu-hub-header">
           <div>
             <div className="routes-page__title">
-              <Icon size={21} color="#4f83ff" />
+              <Icon size={21} color="var(--color-accent)" />
               <h1>{data.title}</h1>
             </div>
             <p className="routes-page__subtitle">{data.subtitle}</p>
@@ -183,7 +183,11 @@ export default function MenuHubPage({ hub }) {
           {data.cards.map((card) => {
             const CardIcon = card.icon;
             return (
-              <Link key={card.to} to={card.to} className="menu-hub-card">
+              <Link
+                key={card.to}
+                to={card.to}
+                className={`menu-hub-card ${card.title === "Orders" ? "menu-hub-card--orders" : ""}`}
+              >
                 <div className="menu-hub-card__top">
                   <span className="menu-hub-card__icon">
                     <CardIcon size={20} />

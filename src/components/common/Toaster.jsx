@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { CheckCircle2, Info, TriangleAlert, X, XCircle } from "lucide-react";
 
 const ToastContext = createContext(null);
@@ -27,13 +33,16 @@ const toastStyles = {
   },
 };
 
-const createToastId = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+const createToastId = () =>
+  `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
   const dismiss = useCallback((toastId) => {
-    setToasts((currentToasts) => currentToasts.filter((toast) => toast.id !== toastId));
+    setToasts((currentToasts) =>
+      currentToasts.filter((toast) => toast.id !== toastId),
+    );
   }, []);
 
   const notify = useCallback(
@@ -57,18 +66,22 @@ export function ToastProvider({ children }) {
 
       return id;
     },
-    [dismiss]
+    [dismiss],
   );
 
   const toast = useMemo(
     () => ({
-      error: (message, options = {}) => notify({ ...options, message, type: "error" }),
-      info: (message, options = {}) => notify({ ...options, message, type: "info" }),
-      success: (message, options = {}) => notify({ ...options, message, type: "success" }),
-      warning: (message, options = {}) => notify({ ...options, message, type: "warning" }),
+      error: (message, options = {}) =>
+        notify({ ...options, message, type: "error" }),
+      info: (message, options = {}) =>
+        notify({ ...options, message, type: "info" }),
+      success: (message, options = {}) =>
+        notify({ ...options, message, type: "success" }),
+      warning: (message, options = {}) =>
+        notify({ ...options, message, type: "warning" }),
       dismiss,
     }),
-    [dismiss, notify]
+    [dismiss, notify],
   );
 
   return (
@@ -85,10 +98,19 @@ export function ToastProvider({ children }) {
               className={`pointer-events-auto flex items-start gap-3 rounded-lg border p-4 shadow-xl shadow-black/30 ${style.className}`}
               role="status"
             >
-              <Icon size={19} className={`mt-0.5 shrink-0 ${style.iconClassName}`} />
+              <Icon
+                size={19}
+                className={`mt-0.5 shrink-0 ${style.iconClassName}`}
+              />
               <div className="min-w-0 flex-1">
-                {toastItem.title ? <p className="text-sm font-bold text-white">{toastItem.title}</p> : null}
-                <p className="text-sm font-medium leading-5">{toastItem.message}</p>
+                {toastItem.title ? (
+                  <p className="text-sm font-bold text-white">
+                    {toastItem.title}
+                  </p>
+                ) : null}
+                <p className="text-sm font-medium leading-5">
+                  {toastItem.message}
+                </p>
               </div>
               <button
                 type="button"

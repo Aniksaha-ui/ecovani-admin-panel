@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   Download,
   Eye,
@@ -16,13 +17,10 @@ import AdminDataTable, {
 import { useToast } from "../../../components/common/Toaster";
 import * as service from "../service/commerceService";
 import TransactionDetailModal from "../component/TransactionDetailModal";
+import StatusBadge from "../../../components/ui/StatusBadge";
 
 const money = (value) => `৳${Number(value || 0).toLocaleString()}`;
-const badge = (value) => (
-  <span className="operations-badge">
-    {String(value || "—").replaceAll("_", " ")}
-  </span>
-);
+const badge = (value) => <StatusBadge value={value} />;
 const names = {
   orders: "Orders",
   transactions: "Transactions",
@@ -149,6 +147,17 @@ function OrderInvoice({ order, onClose }) {
   const date = order.created_at
     ? new Date(order.created_at).toLocaleString()
     : "—";
+  const shippingAddress = [
+    order.address_line1,
+    order.address_line2,
+    order.address_city,
+    order.address_state,
+    order.postal_code,
+    order.address_country,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  const customerPhone = order.address_phone || order.customer_phone || "—";
   const exportPdf = async () => {
     if (!invoiceRef.current) return;
     setIsExporting(true);
@@ -159,26 +168,23 @@ function OrderInvoice({ order, onClose }) {
       ]);
       const canvas = await html2canvas(invoiceRef.current, {
         scale: 2,
-        backgroundColor: "#191617",
+        backgroundColor: "#ffffff",
         useCORS: true,
         ignoreElements: (element) =>
           element.dataset.html2canvasIgnore === "true",
       });
       const pdf = new jsPDF("p", "mm", "a4");
       const margin = 10;
-      const width = 210 - margin * 2;
-      const height = (canvas.height * width) / canvas.width;
-      let remaining = height;
-      let position = margin;
+      const printableWidth = 210 - margin * 2;
+      const printableHeight = 297 - margin * 2;
+      const scale = Math.min(
+        printableWidth / canvas.width,
+        printableHeight / canvas.height,
+      );
+      const width = canvas.width * scale;
+      const height = canvas.height * scale;
       const image = canvas.toDataURL("image/png");
-      pdf.addImage(image, "PNG", margin, position, width, height);
-      remaining -= 297 - margin * 2;
-      while (remaining > 0) {
-        position = remaining - height + margin;
-        pdf.addPage();
-        pdf.addImage(image, "PNG", margin, position, width, height);
-        remaining -= 297 - margin * 2;
-      }
+      pdf.addImage(image, "PNG", (210 - width) / 2, margin, width, height);
       pdf.save(`ecovani-invoice-${order.id}.pdf`);
     } finally {
       setIsExporting(false);
@@ -188,74 +194,65 @@ function OrderInvoice({ order, onClose }) {
     <div className="admin-modal-backdrop">
       <article
         ref={invoiceRef}
-        className="admin-modal admin-modal--wide operations-invoice commerce-order-invoice"
+        className="admin-modal admin-modal--wide document-invoice legacy-invoice commerce-order-invoice"
       >
-        <header className="operations-invoice__header">
-          <div>
-            <span className="operations-invoice__eyebrow">
-              Ecovani Tech · Order invoice
-            </span>
-            <h2>Invoice #{order.id}</h2>
-            <p>Issued {date}</p>
+        <header className="document-invoice__header">
+          <div className="document-invoice__reference">
+            <span>Invoice #</span>
+            <strong>{order.id}</strong>
+            <small>Issued {date}</small>
           </div>
-          <span className="operations-invoice__status">
-            {String(order.status || "—").replaceAll("_", " ")}
-          </span>
-          <button
-            data-html2canvas-ignore="true"
-            className="admin-icon-button"
-            onClick={onClose}
-            aria-label="Close order invoice"
-          >
-            <X size={18} />
-          </button>
+          <div className="document-invoice__brand">
+            <strong>ECOVANI</strong>
+            <span>Modern essentials, thoughtfully delivered</span>
+            <small>
+              Mirpur 11, Dhaka 1216, Bangladesh
+              <br />
+              support@ecovani.com
+            </small>
+          </div>
         </header>
-        <section className="operations-invoice__identity">
+        <section className="document-invoice__summary">
           <div>
-            <span>Invoice total</span>
-            <strong>{money(order.total_amount)}</strong>
+            <span>Name</span>
+            <strong>{order.customer_name || "—"}</strong>
           </div>
           <div>
-            <span>Payment status</span>
+            <span>Order date</span>
+            <strong>{date}</strong>
+          </div>
+          <div>
+            <span>Phone</span>
+            <strong>{customerPhone}</strong>
+          </div>
+          <div>
+            <span>Payment method</span>
             <strong>
               {String(order.payment_status || "—").replaceAll("_", " ")}
             </strong>
           </div>
           <div>
-            <span>Items</span>
-            <strong>{order.items?.length || 0} line items</strong>
+            <span>Email</span>
+            <strong>{order.customer_email || "—"}</strong>
+          </div>
+          <div>
+            <span>Shipping status</span>
+            <strong>{String(order.status || "—").replaceAll("_", " ")}</strong>
+          </div>
+          <div className="document-invoice__summary-wide">
+            <span>Address</span>
+            <strong>{shippingAddress || "Address not provided"}</strong>
           </div>
         </section>
-        <section className="operations-invoice__parties">
-          <div>
-            <span>Billed to</span>
-            <strong>{order.customer_name || "—"}</strong>
-            <small>{order.customer_email || "—"}</small>
-          </div>
-          <div>
-            <span>To</span>
-            <strong>Ecovani Tech</strong>
-            <small>Mirpur 11, Dhaka</small>
-          </div>
-          <div>
-            <span>Order reference</span>
-            <strong>#{order.id}</strong>
-            <small>
-              {order.tran_id
-                ? `Transaction: ${order.tran_id}`
-                : "No transaction reference"}
-            </small>
-          </div>
-        </section>
-        <div className="operations-invoice__table-wrap">
-          <table className="operations-invoice__table">
+        <section className="document-invoice__items">
+          <table>
             <thead>
               <tr>
                 <th>Item</th>
-                <th>SKU</th>
-                <th>Qty</th>
+                <th>Description</th>
+                <th>Quantity</th>
                 <th>Unit price</th>
-                <th>Line total</th>
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -272,36 +269,50 @@ function OrderInvoice({ order, onClose }) {
                   </td>
                 </tr>
               ))}
+              {Array.from({
+                length: Math.max(0, 14 - (order.items?.length || 0)),
+              }).map((_, index) => (
+                <tr
+                  className="document-invoice__blank-row"
+                  key={`blank-${index}`}
+                >
+                  <td>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              ))}
             </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan="4">Invoice total</td>
-                <td>{money(order.total_amount)}</td>
-              </tr>
-            </tfoot>
           </table>
-        </div>
-        <footer className="operations-invoice__footer">
-          <div>
-            <span>Delivery address</span>
+        </section>
+        <footer className="document-invoice__footer">
+          <div className="document-invoice__notes">
+            <span>Notes</span>
             <p>
-              <strong>
-                {[
-                  order.address_line1,
-                  order.address_line2,
-                  order.address_city,
-                  order.address_state,
-                  order.postal_code,
-                  order.address_country,
-                ]
-                  .filter(Boolean)
-                  .join(", ") || "Not provided"}
-              </strong>
+              Thank you for choosing Ecovani. This is a computer-generated
+              invoice.
+            </p>
+            <small>Company policy: No refunds after 24 hours.</small>
+          </div>
+          <div className="document-invoice__totals">
+            <p>
+              <span>Subtotal</span>
+              <strong>{money(order.total_amount)}</strong>
+            </p>
+            <p>
+              <span>Discount</span>
+              <strong>{money(0)}</strong>
+            </p>
+            <p>
+              <span>Tax</span>
+              <strong>{money(0)}</strong>
+            </p>
+            <p className="document-invoice__grand-total">
+              <span>Grand total</span>
+              <strong>{money(order.total_amount)}</strong>
             </p>
           </div>
-          <p className="commerce-order-invoice__note">
-            This is a computer-generated invoice.
-          </p>
         </footer>
         <div
           data-html2canvas-ignore="true"
@@ -379,7 +390,9 @@ export default function CommercePage({ section }) {
             render: (row) => (
               <div>
                 <p>{row.customer_name}</p>
-                <p className="text-xs text-[#7d8ca5]">{row.customer_email}</p>
+                <p className="text-xs text-[var(--color-text-faint)]">
+                  {row.customer_email}
+                </p>
               </div>
             ),
           },
@@ -516,7 +529,7 @@ export default function CommercePage({ section }) {
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="routes-page__title">
-            <Truck size={20} color="#4f83ff" />
+            <Truck size={20} color="var(--color-accent)" />
             <h1>{names[section]}</h1>
           </div>
           <p className="routes-page__subtitle">

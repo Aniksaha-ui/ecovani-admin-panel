@@ -1,9 +1,14 @@
 .routes-page {
   min-height: 100%;
-  background: #100d0e;
-  color: #ffffff;
+  background: var(--color-canvas);
+  color: var(--color-text-primary);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     sans-serif;
   padding: 28px 24px;
 }
@@ -26,7 +31,7 @@
 
 .routes-page__title h1 {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 20px;
   font-weight: 800;
   line-height: 1;
@@ -34,16 +39,16 @@
 
 .routes-page__subtitle {
   margin: 12px 0 0;
-  color: #b4c5df;
+  color: var(--color-text-secondary);
   font-size: 14px;
   line-height: 20px;
 }
 
 .routes-table-card {
   overflow: hidden;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
 }
 
 .routes-mobile-list {
@@ -54,14 +59,14 @@
 
 .routes-mobile-card {
   overflow: hidden;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: #171314;
+  background: var(--color-surface);
 }
 
 .routes-mobile-card--empty {
   padding: 18px 16px;
-  color: #9fb2d0;
+  color: var(--color-text-muted);
   text-align: center;
   font-size: 13px;
   font-weight: 700;
@@ -94,7 +99,7 @@
 }
 
 .routes-mobile-card__label {
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -104,7 +109,7 @@
 .routes-mobile-card__value,
 .routes-mobile-card__detail-value {
   min-width: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
   line-height: 20px;
 }
@@ -114,7 +119,7 @@
 }
 
 .routes-mobile-card__summary-secondary .routes-mobile-card__value {
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
 }
 
 .routes-mobile-card__toggle {
@@ -124,16 +129,16 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: #211d20;
-  color: #9fb2d0;
+  background: var(--color-surface-raised);
+  color: var(--color-text-muted);
 }
 
 .routes-mobile-card__details {
   display: grid;
   gap: 12px;
-  border-top: 1px solid #2d282b;
+  border-top: 1px solid var(--color-border);
   padding: 14px 16px 16px;
 }
 
@@ -162,7 +167,7 @@
   border-radius: 8px;
   background: rgb(127 29 29 / 20%);
   padding: 12px 14px;
-  color: #fecaca;
+  color: var(--color-danger);
   font-size: 13px;
   font-weight: 700;
 }
@@ -180,9 +185,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 10px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 0 14px;
   color: #b8c8e5;
   font-size: 13px;
@@ -197,12 +202,12 @@
 .sales-report-tab:hover {
   border-color: #40506e;
   background: #1c181b;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .sales-report-tab.is-active {
-  border-color: #1d4ed8;
-  background: #17214a;
+  border-color: var(--color-accent-strong);
+  background: var(--color-accent-soft);
   color: #dbeafe;
 }
 
@@ -212,7 +217,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 0 16px;
 }
 
@@ -222,9 +227,9 @@
   height: 30px;
   align-items: center;
   gap: 8px;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
   color: #8c97aa;
 }
@@ -235,13 +240,13 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 12px;
   font-family: inherit;
 }
 
 .routes-search input::placeholder {
-  color: #70798a;
+  color: var(--color-text-faint);
 }
 
 .routes-control {
@@ -249,11 +254,11 @@
   height: 30px;
   align-items: center;
   gap: 8px;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -261,8 +266,8 @@
 
 .routes-control--blue {
   border-color: #1e40af;
-  background: #17214a;
-  color: #bfdbfe;
+  background: var(--color-accent-soft);
+  color: var(--color-link);
 }
 
 .routes-control__count {
@@ -272,9 +277,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: #17214a;
+  background: var(--color-accent-soft);
   padding: 0 6px;
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 10px;
   font-weight: 800;
 }
@@ -290,9 +295,9 @@
   z-index: 30;
   width: min(208px, calc(100vw - 32px));
   overflow: hidden;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
   box-shadow: 0 18px 40px rgb(0 0 0 / 35%);
 }
 
@@ -301,9 +306,9 @@
   height: 36px;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 0 12px;
-  color: #9fb2d0;
+  color: var(--color-text-muted);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -313,7 +318,7 @@
 .routes-columns-menu__header button {
   border: 0;
   background: transparent;
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 10px;
   font-weight: 700;
   font-family: inherit;
@@ -332,13 +337,13 @@
   gap: 10px;
   border-radius: 4px;
   padding: 0 4px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 12px;
   font-weight: 700;
 }
 
 .routes-columns-menu__option:hover {
-  background: #211d20;
+  background: var(--color-surface-raised);
 }
 
 .routes-columns-menu__option input {
@@ -354,9 +359,9 @@
   gap: 8px;
   border: 0;
   border-radius: 6px;
-  background: #1d4ed8;
+  background: var(--color-accent-strong);
   padding: 0 12px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 12px;
   font-weight: 800;
   font-family: inherit;
@@ -371,14 +376,14 @@
 
 .routes-table thead tr {
   height: 42px;
-  border-bottom: 1px solid #2d282b;
-  background: #221f20;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-header);
 }
 
 .routes-table th {
   padding: 0 16px;
-  border-right: 1px solid #2d282b;
-  color: #9fb2d0;
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -388,18 +393,18 @@
 
 .routes-table tbody tr {
   height: 56px;
-  border-bottom: 1px solid #282325;
-  background: #171314;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
 }
 
 .routes-table tbody tr:hover {
-  background: #1d181a;
+  background: var(--color-surface-hover);
 }
 
 .routes-table td {
   padding: 0 16px;
-  border-right: 1px solid #2d282b;
-  color: #ffffff;
+  border-right: 1px solid var(--color-border);
+  color: var(--color-text-primary);
   font-size: 14px;
   line-height: 20px;
   vertical-align: middle;
@@ -411,13 +416,13 @@
 }
 
 .routes-table tfoot tr {
-  border-top: 1px solid #332d30;
-  background: #1d181a;
+  border-top: 1px solid var(--color-border-strong);
+  background: var(--color-surface-hover);
 }
 
 .routes-table tfoot td {
   padding: 14px 16px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
   line-height: 20px;
   vertical-align: middle;
@@ -438,14 +443,14 @@
   justify-content: center;
   border-radius: 999px;
   background: #102256;
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 12px;
   font-weight: 800;
 }
 
 .routes-table__name-text {
   overflow: hidden;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -458,32 +463,32 @@
 }
 
 .routes-table__muted {
-  color: #b4c5df !important;
+  color: var(--color-text-secondary) !important;
 }
 
 .routes-table__empty {
   height: 96px;
-  color: #9fb2d0 !important;
+  color: var(--color-text-muted) !important;
   text-align: center;
   font-weight: 700;
 }
 
 .routes-table__summary-label {
-  color: #ffffff !important;
+  color: var(--color-text-primary) !important;
   font-weight: 800;
 }
 
 .routes-table__summary-cell {
-  color: #ffffff !important;
+  color: var(--color-text-primary) !important;
   font-weight: 700;
 }
 
 .routes-table__summary-cell--credit {
-  color: #6ee7b7 !important;
+  color: var(--color-success) !important;
 }
 
 .routes-table__summary-cell--debit {
-  color: #facc15 !important;
+  color: var(--color-warning) !important;
 }
 
 .routes-table__status {
@@ -509,12 +514,12 @@
 
 .routes-status--active {
   background: rgb(16 185 129 / 15%);
-  color: #6ee7b7;
+  color: var(--color-success);
 }
 
 .routes-status--inactive {
   background: rgb(245 158 11 / 15%);
-  color: #facc15;
+  color: var(--color-warning);
 }
 
 .routes-table__actions {
@@ -522,7 +527,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  color: #969baa;
+  color: var(--color-text-muted);
 }
 
 .routes-icon-button {
@@ -542,13 +547,13 @@
   height: 54px;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid #282325;
+  border-top: 1px solid var(--color-border-subtle);
   padding: 0 16px;
 }
 
 .routes-table-footer p {
   margin: 0;
-  color: #9fb2d0;
+  color: var(--color-text-muted);
   font-size: 12px;
   font-weight: 600;
 }
@@ -568,13 +573,13 @@
 
 .monitoring-table thead tr {
   height: 42px;
-  border-bottom: 1px solid #2d282b;
-  background: #221f20;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-header);
 }
 
 .monitoring-table th {
   padding: 0 16px;
-  color: #9fb2d0;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -585,12 +590,12 @@
 
 .monitoring-table tbody tr {
   min-height: 56px;
-  border-bottom: 1px solid #282325;
-  background: #171314;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
 }
 
 .monitoring-table tbody tr:hover {
-  background: #1d181a;
+  background: var(--color-surface-hover);
 }
 
 .monitoring-table tbody tr.is-warning {
@@ -599,7 +604,7 @@
 
 .monitoring-table td {
   padding: 14px 16px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 13px;
   line-height: 20px;
   vertical-align: top;
@@ -607,7 +612,7 @@
 
 .monitoring-table__path,
 .monitoring-table__sql {
-  color: #c5d9f7 !important;
+  color: var(--color-text-secondary) !important;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px !important;
 }
@@ -631,7 +636,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid #282325;
+  border: 1px solid var(--color-border-subtle);
   border-radius: 6px;
   background: transparent;
   min-width: 30px;
@@ -650,14 +655,14 @@
 }
 
 .routes-pagination button:not(:disabled):hover {
-  border-color: #3b3438;
-  color: #c5d9f7;
+  border-color: var(--color-border-strong);
+  color: var(--color-text-secondary);
 }
 
 .routes-pagination button.is-active {
-  border-color: #1d4ed8;
-  background: #17214a;
-  color: #bfdbfe;
+  border-color: var(--color-accent-strong);
+  background: var(--color-accent-soft);
+  color: var(--color-link);
 }
 
 .routes-pagination button:disabled {
@@ -684,12 +689,12 @@
 
 .refund-status-badge.is-pending {
   background: rgb(245 158 11 / 15%);
-  color: #facc15;
+  color: var(--color-warning);
 }
 
 .refund-status-badge.is-disbursed {
   background: rgb(16 185 129 / 15%);
-  color: #6ee7b7;
+  color: var(--color-success);
 }
 
 .refund-filter-group {
@@ -703,11 +708,11 @@
   height: 30px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -718,9 +723,9 @@
 }
 
 .refund-filter-button.is-active {
-  border-color: #1d4ed8;
-  background: #17214a;
-  color: #bfdbfe;
+  border-color: var(--color-accent-strong);
+  background: var(--color-accent-soft);
+  color: var(--color-link);
 }
 
 .refund-action-button {
@@ -732,7 +737,7 @@
   border-radius: 6px;
   background: rgb(16 185 129 / 12%);
   padding: 0 12px;
-  color: #d1fae5;
+  color: var(--color-success);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -759,7 +764,7 @@
   border-radius: 999px;
   background: rgb(96 165 250 / 12%);
   padding: 0 12px;
-  color: #bfdbfe;
+  color: var(--color-link);
   font-size: 12px;
   font-weight: 700;
 }
@@ -773,11 +778,11 @@
   height: 32px;
   align-items: center;
   gap: 8px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -797,15 +802,15 @@
 }
 
 .vehicle-seat-modal__stat {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 16px;
 }
 
 .vehicle-seat-modal__stat p {
   margin: 0;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 12px;
   font-weight: 600;
 }
@@ -813,7 +818,7 @@
 .vehicle-seat-modal__stat strong {
   display: block;
   margin-top: 10px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
   font-weight: 800;
 }
@@ -844,9 +849,9 @@
   flex: 1;
   min-width: min(260px, 100%);
   height: 38px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 0 12px;
   color: #8c97aa;
 }
@@ -857,13 +862,13 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 13px;
   font-family: inherit;
 }
 
 .vehicle-seat-modal__search input::placeholder {
-  color: #70798a;
+  color: var(--color-text-faint);
 }
 
 .vehicle-seat-modal__filters {
@@ -874,9 +879,9 @@
 
 .vehicle-seat-modal__layout-card,
 .vehicle-seat-modal__sidebar-card {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #211d20;
+  background: var(--color-surface-raised);
 }
 
 .vehicle-seat-modal__layout-card {
@@ -904,7 +909,7 @@
 
 .vehicle-seat-modal__sidebar-eyebrow {
   margin: 0;
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -927,7 +932,7 @@
 }
 
 .vehicle-seat-modal__distribution-row strong {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-weight: 800;
 }
 
@@ -945,17 +950,17 @@
 
 .tracking-status-badge.is-scheduled {
   background: rgb(96 165 250 / 15%);
-  color: #bfdbfe;
+  color: var(--color-link);
 }
 
 .tracking-status-badge.is-active {
   background: rgb(16 185 129 / 15%);
-  color: #6ee7b7;
+  color: var(--color-success);
 }
 
 .tracking-status-badge.is-completed {
   background: rgb(245 158 11 / 15%);
-  color: #facc15;
+  color: var(--color-warning);
 }
 
 .tracking-report-filter-group {
@@ -970,11 +975,11 @@
   height: 30px;
   align-items: center;
   gap: 8px;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 10px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
 }
@@ -984,7 +989,7 @@
   border: 0;
   outline: 0;
   background: transparent;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 12px;
   font-family: inherit;
 }
@@ -1014,7 +1019,7 @@
 
 .occupancy-status-badge.is-critical {
   background: rgb(239 68 68 / 15%);
-  color: #fca5a5;
+  color: var(--color-danger);
 }
 
 .occupancy-status-badge.is-warning {
@@ -1024,7 +1029,7 @@
 
 .occupancy-status-badge.is-watch {
   background: rgb(96 165 250 / 15%);
-  color: #bfdbfe;
+  color: var(--color-link);
 }
 
 .occupancy-progress-cell {
@@ -1038,7 +1043,7 @@
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #221f20;
+  background: var(--color-surface-header);
 }
 
 .occupancy-progress__fill {
@@ -1051,7 +1056,7 @@
 }
 
 .occupancy-progress__fill.is-warning {
-  background: #f59e0b;
+  background: var(--color-warning);
 }
 
 .occupancy-progress__fill.is-watch {
@@ -1069,7 +1074,7 @@
   flex: 1;
   overflow: hidden;
   border-radius: 999px;
-  background: #2d282b;
+  background: var(--color-border);
 }
 
 .booking-summary-share__fill {
@@ -1079,7 +1084,7 @@
 
 .booking-summary-share span {
   min-width: 38px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 800;
 }
@@ -1095,7 +1100,7 @@
   height: 8px;
   overflow: hidden;
   border-radius: 999px;
-  background: #221f20;
+  background: var(--color-surface-header);
 }
 
 .cancellation-rate__fill {
@@ -1108,7 +1113,7 @@
 }
 
 .cancellation-rate__fill.is-warning {
-  background: #f59e0b;
+  background: var(--color-warning);
 }
 
 .cancellation-rate__fill.is-danger {
@@ -1117,7 +1122,7 @@
 
 .cancellation-rate-cell span {
   min-width: 48px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 800;
 }
@@ -1147,9 +1152,9 @@
   width: min(760px, 100%);
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 12px;
-  background: #171314;
+  background: var(--color-surface);
   box-shadow: 0 24px 70px rgb(0 0 0 / 45%);
 }
 
@@ -1159,7 +1164,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 20px 22px;
 }
 
@@ -1168,7 +1173,7 @@
 }
 
 .report-drawer__eyebrow {
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1177,7 +1182,7 @@
 
 .report-drawer__header h2 {
   margin: 8px 0 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 20px;
   font-weight: 800;
   overflow-wrap: anywhere;
@@ -1185,7 +1190,7 @@
 
 .report-drawer__subtitle {
   margin: 10px 0 0;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 13px;
   line-height: 20px;
 }
@@ -1195,11 +1200,11 @@
   height: 34px;
   align-items: center;
   gap: 8px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -1214,9 +1219,9 @@
 .report-drawer__table-card {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 16px;
 }
 
@@ -1254,9 +1259,9 @@
   flex-direction: column;
   width: min(680px, 100%);
   overflow: hidden;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 10px;
-  background: #171314;
+  background: var(--color-surface);
   box-shadow: 0 24px 70px rgb(0 0 0 / 45%);
 }
 
@@ -1266,7 +1271,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 18px 20px;
 }
 
@@ -1276,7 +1281,7 @@
 
 .crud-modal__header h2 {
   margin: 4px 0 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
   font-weight: 800;
   overflow-wrap: anywhere;
@@ -1284,11 +1289,11 @@
 
 .crud-modal__header button {
   height: 32px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 700;
   font-family: inherit;
@@ -1296,7 +1301,7 @@
 
 .crud-modal__eyebrow {
   margin: 0;
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1318,7 +1323,7 @@
 }
 
 .crud-field span {
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 800;
 }
@@ -1327,11 +1332,11 @@
 .crud-field select,
 .crud-field textarea {
   height: 38px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 6px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 12px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 13px;
   outline: none;
   font-family: inherit;
@@ -1351,7 +1356,7 @@
 }
 
 .crud-field small {
-  color: #fca5a5;
+  color: var(--color-danger);
   font-size: 11px;
   font-weight: 700;
 }
@@ -1360,7 +1365,7 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  border-top: 1px solid #2d282b;
+  border-top: 1px solid var(--color-border);
   padding: 16px 20px;
 }
 
@@ -1374,15 +1379,15 @@
 }
 
 .crud-button--ghost {
-  border: 1px solid #332d30;
-  background: #211d20;
-  color: #c5d9f7;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-raised);
+  color: var(--color-text-secondary);
 }
 
 .crud-button--primary {
-  border: 1px solid #1d4ed8;
-  background: #1d4ed8;
-  color: #ffffff;
+  border: 1px solid var(--color-accent-strong);
+  background: var(--color-accent-strong);
+  color: var(--color-text-primary);
 }
 
 .trip-summary-modal {
@@ -1400,23 +1405,23 @@
   min-width: 720px;
   border-collapse: collapse;
   overflow: hidden;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #171314;
-  color: #ffffff;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
 }
 
 .trip-summary-table th,
 .trip-summary-table td {
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 12px 14px;
   text-align: left;
   font-size: 13px;
 }
 
 .trip-summary-table th {
-  background: #221f20;
-  color: #9fb2d0;
+  background: var(--color-surface-header);
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -1435,7 +1440,7 @@
 
 .trip-seat-layout h3 {
   margin: 0 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 13px;
   font-weight: 800;
   text-transform: capitalize;
@@ -1448,9 +1453,9 @@
 }
 
 .trip-seat-layout article {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 12px;
   text-align: center;
 }
@@ -1467,24 +1472,24 @@
 
 .trip-seat-layout strong {
   display: block;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
 }
 
 .trip-seat-layout span {
   display: block;
   margin-top: 4px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 700;
 }
 
 .trip-summary-empty {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 24px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   text-align: center;
   font-size: 13px;
   font-weight: 700;
@@ -1492,7 +1497,7 @@
 
 .booking-invoice-modal__panel {
   width: min(1480px, 100%);
-  background: #100d0e;
+  background: var(--color-canvas);
 }
 
 .booking-invoice-workspace {
@@ -1507,7 +1512,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 18px 22px;
 }
 
@@ -1524,10 +1529,10 @@
   height: 32px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 10px;
-  background: #171314;
-  color: #c5d9f7;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
 }
 
 .booking-invoice-workspace__title-block {
@@ -1544,14 +1549,14 @@
 
 .booking-invoice-workspace__title-row h2 {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
   font-weight: 800;
 }
 
 .booking-invoice-workspace__title-block p {
   margin: 0;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 14px;
   font-weight: 600;
 }
@@ -1568,9 +1573,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 0 14px;
   color: #f8fafc;
   font-size: 13px;
@@ -1581,7 +1586,7 @@
 .booking-invoice-action--danger {
   border-color: rgb(220 38 38 / 60%);
   background: transparent;
-  color: #fca5a5;
+  color: var(--color-danger);
 }
 
 .booking-invoice-workspace__body {
@@ -1603,9 +1608,9 @@
 
 .booking-invoice-card {
   overflow: hidden;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 14px;
-  background: #171314;
+  background: var(--color-surface);
 }
 
 .booking-invoice-card--compact {
@@ -1622,7 +1627,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 16px 20px;
 }
 
@@ -1632,7 +1637,7 @@
 
 .booking-invoice-card__header h3 {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
   font-weight: 800;
 }
@@ -1645,12 +1650,12 @@
   width: 100%;
   min-width: 720px;
   border-collapse: collapse;
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .booking-invoice-table th,
 .booking-invoice-table td {
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 14px 16px;
   text-align: left;
   font-size: 14px;
@@ -1683,18 +1688,18 @@
 }
 
 .booking-invoice-line-item strong {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 15px;
 }
 
 .booking-invoice-line-item span {
-  color: #7ea1ff;
+  color: var(--color-link);
   font-size: 12px;
   font-weight: 700;
 }
 
 .booking-invoice-line-item small {
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 12px;
   line-height: 18px;
 }
@@ -1710,9 +1715,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 10px 0;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
@@ -1723,13 +1728,13 @@
 .booking-invoice-totals > div.is-total {
   border-bottom: 0;
   padding-bottom: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 16px;
   font-weight: 800;
 }
 
 .booking-invoice-totals > div.is-total strong {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
 }
 
@@ -1747,7 +1752,7 @@
 }
 
 .booking-invoice-ledger__header {
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   color: #7184a6;
   font-size: 11px;
   font-weight: 800;
@@ -1756,12 +1761,12 @@
 }
 
 .booking-invoice-ledger__row {
-  color: #9fb2d0;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .booking-invoice-ledger__row strong {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .booking-invoice-document__aside {
@@ -1779,7 +1784,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  border-bottom: 1px solid #2d282b;
+  border-bottom: 1px solid var(--color-border);
   padding: 12px 0;
 }
 
@@ -1788,13 +1793,13 @@
 }
 
 .booking-invoice-details__row span {
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 14px;
 }
 
 .booking-invoice-details__row strong {
   text-align: right;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 700;
 }
@@ -1810,13 +1815,13 @@
   }
 
   body {
-    background: #ffffff;
+    background: var(--color-text-primary);
   }
 
   .crud-modal {
     position: absolute;
     inset: 0;
-    background: #ffffff;
+    background: var(--color-text-primary);
     padding: 0;
   }
 
@@ -1830,7 +1835,7 @@
     max-height: none;
     border: 0;
     border-radius: 0;
-    background: #ffffff;
+    background: var(--color-text-primary);
     box-shadow: none;
   }
 
@@ -1847,7 +1852,7 @@
   .booking-invoice-card,
   .booking-invoice-table {
     border-color: #d1d5db;
-    background: #ffffff;
+    background: var(--color-text-primary);
     color: #111827;
   }
 
@@ -1889,15 +1894,15 @@
 }
 
 .trip-users-summary article {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 14px;
 }
 
 .trip-users-summary span {
   display: block;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -1907,7 +1912,7 @@
 .trip-users-summary strong {
   display: block;
   margin-top: 8px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 18px;
 }
 
@@ -1923,7 +1928,7 @@
   justify-content: center;
   min-width: 72px;
   height: 26px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
   padding: 0 10px;
   font-size: 11px;
@@ -1933,12 +1938,12 @@
 .package-feature-badge.is-active {
   border-color: rgb(59 130 246 / 28%);
   background: rgb(59 130 246 / 12%);
-  color: #bfdbfe;
+  color: var(--color-link);
 }
 
 .package-feature-badge.is-inactive {
-  background: #171314;
-  color: #8fa0bd;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
 }
 
 .package-form-modal__panel {
@@ -1953,9 +1958,9 @@
 
 .package-form-section {
   margin-bottom: 18px;
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 18px;
 }
 
@@ -1973,14 +1978,14 @@
 
 .package-form-section__header h3 {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 15px;
   font-weight: 800;
 }
 
 .package-form-section__header p {
   margin: 6px 0 0;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 12px;
   line-height: 18px;
 }
@@ -2007,11 +2012,11 @@
   align-items: center;
   gap: 10px;
   height: 38px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 999px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 0 14px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
   font-weight: 800;
 }
@@ -2027,15 +2032,15 @@
   align-items: flex-start;
   gap: 14px;
   min-height: 80px;
-  border: 1px solid #332d30;
+  border: 1px solid var(--color-border-strong);
   border-radius: 8px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 14px;
 }
 
 .package-form-file p {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 13px;
   font-weight: 700;
 }
@@ -2043,7 +2048,7 @@
 .package-form-file span {
   display: block;
   margin-top: 6px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
 }
 
@@ -2052,11 +2057,11 @@
   width: 100%;
   height: auto;
   margin-top: 12px;
-  border: 1px dashed #3b3438;
+  border: 1px dashed var(--color-border-strong);
   border-radius: 8px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 10px 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -2069,7 +2074,7 @@
   justify-content: center;
   border-radius: 10px;
   background: rgb(37 99 235 / 12%);
-  color: #7ea1ff;
+  color: var(--color-link);
 }
 
 .package-form-stack {
@@ -2105,17 +2110,17 @@
 }
 
 .package-form-inline-button {
-  border: 1px solid #332d30;
-  background: #171314;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
   padding: 0 12px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
 }
 
 .package-form-remove-button {
   width: 40px;
-  border: 1px solid #3b3438;
-  background: #171314;
-  color: #9fb2d0;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   margin-top: 28px;
 }
 
@@ -2135,9 +2140,9 @@
 }
 
 .package-detail-card {
-  border: 1px solid #2d282b;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: #211d20;
+  background: var(--color-surface-raised);
   padding: 18px;
 }
 
@@ -2155,7 +2160,7 @@
 .package-detail-card__media {
   overflow: hidden;
   border-radius: 10px;
-  background: #171314;
+  background: var(--color-surface);
   min-height: 240px;
 }
 
@@ -2173,21 +2178,21 @@
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 12px;
   font-weight: 700;
 }
 
 .package-detail-card__content h3 {
   margin: 10px 0 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 22px;
   font-weight: 800;
 }
 
 .package-detail-card__content p {
   margin: 14px 0 18px;
-  color: #c5d9f7;
+  color: var(--color-text-secondary);
   font-size: 14px;
   line-height: 24px;
 }
@@ -2203,9 +2208,9 @@
   align-items: center;
   height: 28px;
   border-radius: 999px;
-  background: #171314;
+  background: var(--color-surface);
   padding: 0 12px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
 }
@@ -2225,7 +2230,7 @@
 
 .package-detail-card__title h4 {
   margin: 0;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 15px;
   font-weight: 800;
 }
@@ -2237,7 +2242,7 @@
 
 .package-detail-list span {
   display: block;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -2246,7 +2251,7 @@
 .package-detail-list strong {
   display: block;
   margin-top: 6px;
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 700;
 }
@@ -2262,10 +2267,10 @@
 }
 
 .package-empty-state {
-  border: 1px dashed #3b3438;
+  border: 1px dashed var(--color-border-strong);
   border-radius: 8px;
   padding: 22px;
-  color: #8fa0bd;
+  color: var(--color-text-muted);
   text-align: center;
   font-size: 13px;
   font-weight: 700;
@@ -2368,7 +2373,7 @@
 
   .monitoring-table tbody tr {
     margin: 10px;
-    border: 1px solid #2d282b;
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     overflow: hidden;
   }
@@ -2377,13 +2382,13 @@
     display: flex;
     justify-content: space-between;
     gap: 16px;
-    border-bottom: 1px solid #282325;
+    border-bottom: 1px solid var(--color-border-subtle);
   }
 
   .monitoring-table td::before {
     content: attr(data-label);
     flex: 0 0 34%;
-    color: #8fa0bd;
+    color: var(--color-text-muted);
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
@@ -2571,3 +2576,114 @@
     text-align: left;
   }
 }
+
+.theme-light .user-comparison-panel {
+  --color-text-primary: #172033;
+  --color-text-secondary: #29496f;
+  --color-text-muted: #526f95;
+  --color-text-faint: #607a9c;
+  border-color: #a9c7ea;
+  background: linear-gradient(135deg, #edf5ff, #e3f0ff) !important;
+  box-shadow: 0 12px 26px rgb(30 64 175 / 10%);
+}
+
+.routes-table-card--columns-open {
+  overflow: visible;
+}
+
+/* Light-mode dialogs use the same paper palette as invoices. */
+.theme-light
+  :is(
+    .admin-modal,
+    .common-drawer__panel,
+    .crud-modal__panel,
+    .report-drawer__panel,
+    .trip-summary-modal,
+    .vehicle-seat-modal__panel,
+    .package-form-modal__panel,
+    .package-details-modal__panel,
+    .booking-invoice-modal__panel,
+    .returns-detail-modal
+  ) {
+  border-color: #303030 !important;
+  background: #fff !important;
+  color: #222 !important;
+  box-shadow: 0 18px 50px rgb(15 23 42 / 18%) !important;
+}
+.theme-light
+  :is(
+    .admin-modal,
+    .common-drawer__panel,
+    .crud-modal__panel,
+    .report-drawer__panel,
+    .trip-summary-modal,
+    .vehicle-seat-modal__panel,
+    .package-form-modal__panel,
+    .package-details-modal__panel,
+    .booking-invoice-modal__panel,
+    .returns-detail-modal
+  )
+  :is(h1, h2, h3, h4, strong) {
+  color: #222;
+}
+.theme-light
+  :is(
+    .admin-modal__header,
+    .common-drawer__header,
+    .crud-modal__header,
+    .report-drawer__header,
+    .vehicle-seat-modal__toolbar,
+    .package-form-section__header,
+    .booking-invoice-workspace__topbar,
+    .returns-detail-header
+  ) {
+  border-color: #303030 !important;
+  background: #ededed !important;
+}
+.theme-light
+  :is(
+    .admin-modal__header p,
+    .common-drawer__header p,
+    .crud-modal__eyebrow,
+    .report-drawer__subtitle,
+    .package-form-section__header p
+  ) {
+  color: #52657f !important;
+}
+.theme-light
+  :is(
+    .admin-modal,
+    .common-drawer__panel,
+    .crud-modal__panel,
+    .report-drawer__panel,
+    .vehicle-seat-modal__panel,
+    .package-form-modal__panel,
+    .package-details-modal__panel,
+    .returns-detail-modal
+  )
+  :is(input, select, textarea) {
+  border-color: #64748b;
+  background: #fff;
+  color: #222;
+}
+.theme-light
+  :is(
+    .admin-modal__actions,
+    .crud-modal__footer,
+    .booking-invoice-workspace__topbar
+  ) {
+  border-color: #303030 !important;
+  background: #fff !important;
+}
+
+/* Structured form layout for standard light-mode dialogs. */
+.theme-light .admin-modal:not(.document-invoice) { overflow: hidden; border-radius: 12px; padding: 0; }
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header { min-height: 76px; box-sizing: border-box; margin: 0; align-items: flex-start; border-bottom: 1px solid #303030 !important; background: #eef1f5 !important; padding: 17px 20px; }
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header h2 { color: #172033; font-size: 18px; }
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__header p { margin-top: 6px; background: transparent !important; color: #52657f !important; }
+.theme-light .admin-modal:not(.document-invoice) .admin-form-grid { padding: 20px; }
+.theme-light .admin-modal:not(.document-invoice) > .admin-field { margin: 20px 20px 0; }
+.theme-light .admin-modal:not(.document-invoice) .admin-field { color: #263b57; font-size: 12px; }
+.theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea) { margin-top: 1px; border-color: #8fa4bf; border-radius: 7px; background: #fff; color: #172033; }
+.theme-light .admin-modal:not(.document-invoice) .admin-field :is(input, select, textarea):focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgb(37 99 235 / 14%); }
+.theme-light .admin-modal:not(.document-invoice) .admin-modal__actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 0; border-top: 1px solid #d3dce8; padding: 14px 20px; }

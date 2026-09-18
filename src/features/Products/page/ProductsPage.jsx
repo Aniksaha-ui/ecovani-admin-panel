@@ -53,7 +53,7 @@ export default function ProductsPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <Boxes size={20} color="#4f83ff" />
+                <Boxes size={20} color="var(--color-accent)" />
                 <h1>Products</h1>
               </div>
               <p className="routes-page__subtitle">
@@ -61,7 +61,7 @@ export default function ProductsPage() {
                 placement.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <Boxes size={16} />
               {api.pagination.total} products
             </div>
@@ -123,7 +123,12 @@ export default function ProductsPage() {
           onClose={() => setStockProduct(null)}
         />
       ) : null}
-      {productReport ? <ProductReportDrawer report={productReport} onClose={() => setProductReport(null)} /> : null}
+      {productReport ? (
+        <ProductReportDrawer
+          report={productReport}
+          onClose={() => setProductReport(null)}
+        />
+      ) : null}
       {loadingEditId ? (
         <div className="admin-loading-note">
           Loading product #{loadingEditId}…

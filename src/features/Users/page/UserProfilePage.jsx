@@ -12,9 +12,9 @@ import {
   ShieldCheck,
   Tickets,
   UserRound,
-} from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Bar,
   BarChart,
@@ -29,216 +29,300 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts'
-import FullPageLoader from '../../../components/common/FullPageLoader'
-import { useToast } from '../../../components/common/Toaster'
-import { APP_ROUTES } from '../../../constants/routes'
-import { formatUserProfileCurrency } from '../utils/usersUtils'
-import { emptyUserProfileDetails, getUserProfile } from '../service/usersService'
+} from "recharts";
+import FullPageLoader from "../../../components/common/FullPageLoader";
+import { useToast } from "../../../components/common/Toaster";
+import { APP_ROUTES } from "../../../constants/routes";
+import { formatUserProfileCurrency } from "../utils/usersUtils";
+import {
+  emptyUserProfileDetails,
+  getUserProfile,
+} from "../service/usersService";
 
-const CHART_COLORS = ['#4f83ff', '#2dd4bf', '#f59e0b', '#f43f5e', '#a78bfa', '#38bdf8']
+const CHART_COLORS = [
+  "var(--color-accent)",
+  "var(--color-info)",
+  "var(--color-warning)",
+  "var(--color-danger)",
+  "#a78bfa",
+  "#38bdf8",
+];
 
-function MetricCard({ icon: Icon, label, toneClassName = 'text-white', value, hint }) {
+function MetricCard({
+  icon: Icon,
+  label,
+  toneClassName = "text-white",
+  value,
+  hint,
+}) {
   return (
-    <article className="rounded-2xl border border-[#332d30] bg-[linear-gradient(180deg,rgba(32,27,29,0.96),rgba(18,15,16,0.96))] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.25)]">
+    <article className="rounded-2xl border border-[var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(32,27,29,0.96),rgba(18,15,16,0.96))] p-5 shadow-[0_18px_45px_rgba(0,0,0,0.25)]">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#8fa0bd]">{label}</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
+            {label}
+          </p>
           <p className={`mt-3 text-2xl font-bold ${toneClassName}`}>{value}</p>
         </div>
         {Icon ? (
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[#3a3337] bg-[#171314] text-[#7ea1ff]">
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] text-[var(--color-link)]">
             <Icon size={18} />
           </span>
         ) : null}
       </div>
-      {hint ? <p className="mt-3 text-sm text-[#8fa0bd]">{hint}</p> : null}
+      {hint ? (
+        <p className="mt-3 text-sm text-[var(--color-text-muted)]">{hint}</p>
+      ) : null}
     </article>
-  )
+  );
 }
 
 function Panel({ title, subtitle, action, children, icon: Icon }) {
   return (
-    <section className="rounded-2xl border border-[#332d30] bg-[#231f21] shadow-[0_18px_45px_rgba(0,0,0,0.18)]">
-      <header className="flex flex-wrap items-start justify-between gap-4 border-b border-[#2d282b] px-5 py-4">
+    <section className="rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface-raised)] shadow-[0_18px_45px_rgba(0,0,0,0.18)]">
+      <header className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--color-border)] px-5 py-4">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
             {Icon ? <Icon size={16} className="text-blue-400" /> : null}
             <h2 className="text-sm font-bold text-white">{title}</h2>
           </div>
-          {subtitle ? <p className="mt-2 text-sm text-[#8fa0bd]">{subtitle}</p> : null}
+          {subtitle ? (
+            <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+              {subtitle}
+            </p>
+          ) : null}
         </div>
         {action}
       </header>
       <div className="p-5">{children}</div>
     </section>
-  )
+  );
 }
 
 function StatusBadge({ label, toneClassName }) {
   return (
-    <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] ${toneClassName}`}>
+    <span
+      className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.08em] ${toneClassName}`}
+    >
       {label}
     </span>
-  )
+  );
 }
 
 function EmptyState({ message }) {
   return (
-    <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-[#332d30] bg-[#171314] px-5 py-8 text-center text-sm font-medium text-[#8fa0bd]">
+    <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface)] px-5 py-8 text-center text-sm font-medium text-[var(--color-text-muted)]">
       {message}
     </div>
-  )
+  );
 }
 
 function DetailGrid({ items }) {
   return (
     <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
       {items.map((item) => (
-        <div key={item.label} className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">{item.label}</p>
-          <p className="mt-2 break-words text-sm font-semibold text-white">{item.value}</p>
+        <div
+          key={item.label}
+          className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4"
+        >
+          <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+            {item.label}
+          </p>
+          <p className="mt-2 break-words text-sm font-semibold text-white">
+            {item.value}
+          </p>
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 export default function UserProfilePage() {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const toast = useToast()
-  const [profile, setProfile] = useState(emptyUserProfileDetails)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [expandedBookings, setExpandedBookings] = useState({})
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const toast = useToast();
+  const [profile, setProfile] = useState(emptyUserProfileDetails);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [expandedBookings, setExpandedBookings] = useState({});
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
 
     const loadProfile = async () => {
-      setIsLoading(true)
-      setError('')
-      setExpandedBookings({})
+      setIsLoading(true);
+      setError("");
+      setExpandedBookings({});
 
       try {
-        const response = await getUserProfile(id)
+        const response = await getUserProfile(id);
         if (isMounted) {
-          setProfile(response)
+          setProfile(response);
         }
       } catch (loadError) {
-        const message = loadError.message || 'Unable to load customer profile.'
+        const message = loadError.message || "Unable to load customer profile.";
         if (isMounted) {
-          setError(message)
-          setProfile(emptyUserProfileDetails)
+          setError(message);
+          setProfile(emptyUserProfileDetails);
         }
-        toast.error(message)
+        toast.error(message);
       } finally {
         if (isMounted) {
-          setIsLoading(false)
+          setIsLoading(false);
         }
       }
-    }
+    };
 
-    void loadProfile()
+    void loadProfile();
 
     return () => {
-      isMounted = false
-    }
-  }, [id, toast])
+      isMounted = false;
+    };
+  }, [id, toast]);
 
   const toggleBooking = (bookingId) => {
     setExpandedBookings((currentState) => ({
       ...currentState,
       [bookingId]: !currentState[bookingId],
-    }))
-  }
+    }));
+  };
 
   const bookingHealthChartData = useMemo(
     () => [
-      { label: 'Paid', value: profile.summary.paidBookings, fill: '#2dd4bf' },
-      { label: 'Pending', value: profile.summary.pendingBookings, fill: '#f59e0b' },
-      { label: 'Cancelled', value: profile.summary.cancelledBookings, fill: '#f43f5e' },
+      {
+        label: "Paid",
+        value: profile.summary.paidBookings,
+        fill: "var(--color-info)",
+      },
+      {
+        label: "Pending",
+        value: profile.summary.pendingBookings,
+        fill: "var(--color-warning)",
+      },
+      {
+        label: "Cancelled",
+        value: profile.summary.cancelledBookings,
+        fill: "var(--color-danger)",
+      },
     ],
-    [profile.summary.cancelledBookings, profile.summary.paidBookings, profile.summary.pendingBookings],
-  )
+    [
+      profile.summary.cancelledBookings,
+      profile.summary.paidBookings,
+      profile.summary.pendingBookings,
+    ],
+  );
 
   const portfolioChartData = useMemo(
-    () => [
-      { label: 'Bookings', value: profile.summary.totalBookings },
-      { label: 'Tickets', value: profile.summary.totalTickets },
-      { label: 'Refunds', value: profile.summary.totalRefunds },
-      { label: 'Visa', value: profile.summary.visaApplications },
-    ].filter((item) => item.value > 0),
-    [profile.summary.totalBookings, profile.summary.totalRefunds, profile.summary.totalTickets, profile.summary.visaApplications],
-  )
+    () =>
+      [
+        { label: "Bookings", value: profile.summary.totalBookings },
+        { label: "Tickets", value: profile.summary.totalTickets },
+        { label: "Refunds", value: profile.summary.totalRefunds },
+        { label: "Visa", value: profile.summary.visaApplications },
+      ].filter((item) => item.value > 0),
+    [
+      profile.summary.totalBookings,
+      profile.summary.totalRefunds,
+      profile.summary.totalTickets,
+      profile.summary.visaApplications,
+    ],
+  );
 
   const operationsChartData = useMemo(
     () => [
-      { label: 'Open Tickets', value: profile.summary.openTickets, fill: '#4f83ff' },
-      { label: 'Refund Pending', value: profile.summary.refundPending, fill: '#a78bfa' },
-      { label: 'Visa Apps', value: profile.summary.visaApplications, fill: '#38bdf8' },
+      {
+        label: "Open Tickets",
+        value: profile.summary.openTickets,
+        fill: "var(--color-accent)",
+      },
+      {
+        label: "Refund Pending",
+        value: profile.summary.refundPending,
+        fill: "#a78bfa",
+      },
+      {
+        label: "Visa Apps",
+        value: profile.summary.visaApplications,
+        fill: "#38bdf8",
+      },
     ],
-    [profile.summary.openTickets, profile.summary.refundPending, profile.summary.visaApplications],
-  )
+    [
+      profile.summary.openTickets,
+      profile.summary.refundPending,
+      profile.summary.visaApplications,
+    ],
+  );
 
   const monthlyBookingTrendData = useMemo(() => {
-    const monthlyMap = new Map()
+    const monthlyMap = new Map();
 
     profile.bookings.forEach((booking) => {
-      const rawDate = booking.createdAt
+      const rawDate = booking.createdAt;
       if (!rawDate) {
-        return
+        return;
       }
 
-      const parsedDate = new Date(rawDate)
+      const parsedDate = new Date(rawDate);
       if (Number.isNaN(parsedDate.getTime())) {
-        return
+        return;
       }
 
-      const monthKey = `${parsedDate.getFullYear()}-${String(parsedDate.getMonth() + 1).padStart(2, '0')}`
-      const monthLabel = parsedDate.toLocaleDateString('en-US', {
-        month: 'short',
-        year: 'numeric',
-      })
+      const monthKey = `${parsedDate.getFullYear()}-${String(parsedDate.getMonth() + 1).padStart(2, "0")}`;
+      const monthLabel = parsedDate.toLocaleDateString("en-US", {
+        month: "short",
+        year: "numeric",
+      });
 
       const currentEntry = monthlyMap.get(monthKey) ?? {
         amount: 0,
         bookingCount: 0,
         monthKey,
         monthLabel,
-      }
+      };
 
-      currentEntry.bookingCount += 1
-      currentEntry.amount += Number(booking.amount ?? 0)
-      monthlyMap.set(monthKey, currentEntry)
-    })
+      currentEntry.bookingCount += 1;
+      currentEntry.amount += Number(booking.amount ?? 0);
+      monthlyMap.set(monthKey, currentEntry);
+    });
 
     return [...monthlyMap.values()]
-      .sort((firstEntry, secondEntry) => firstEntry.monthKey.localeCompare(secondEntry.monthKey))
+      .sort((firstEntry, secondEntry) =>
+        firstEntry.monthKey.localeCompare(secondEntry.monthKey),
+      )
       .slice(-8)
       .map((entry) => ({
         ...entry,
         amountLabel: formatUserProfileCurrency(entry.amount),
-      }))
-  }, [profile.bookings])
+      }));
+  }, [profile.bookings]);
 
   const customerHighlights = useMemo(
     () => [
-      { label: 'Customer', value: profile.user.name },
-      { label: 'Email', value: profile.user.email },
-      { label: 'Role', value: profile.user.roleLabel },
-      { label: 'Joined', value: profile.user.joinedAtLabel },
-      { label: 'Last Booking', value: profile.summary.lastBookingAtLabel },
-      { label: 'Last Ticket', value: profile.summary.lastTicketAtLabel },
-      { label: 'Paid / Pending', value: `${profile.summary.paidBookings} / ${profile.summary.pendingBookings}` },
-      { label: 'Cancelled / Refund Pending', value: `${profile.summary.cancelledBookings} / ${profile.summary.refundPending}` },
+      { label: "Customer", value: profile.user.name },
+      { label: "Email", value: profile.user.email },
+      { label: "Role", value: profile.user.roleLabel },
+      { label: "Joined", value: profile.user.joinedAtLabel },
+      { label: "Last Booking", value: profile.summary.lastBookingAtLabel },
+      { label: "Last Ticket", value: profile.summary.lastTicketAtLabel },
+      {
+        label: "Paid / Pending",
+        value: `${profile.summary.paidBookings} / ${profile.summary.pendingBookings}`,
+      },
+      {
+        label: "Cancelled / Refund Pending",
+        value: `${profile.summary.cancelledBookings} / ${profile.summary.refundPending}`,
+      },
     ],
     [profile],
-  )
+  );
 
   if (isLoading) {
-    return <FullPageLoader message="Loading customer profile..." subtext="Fetching customer analytics, bookings, and support history." />
+    return (
+      <FullPageLoader
+        message="Loading customer profile..."
+        subtext="Fetching customer analytics, bookings, and support history."
+      />
+    );
   }
 
   return (
@@ -247,7 +331,7 @@ export default function UserProfilePage() {
         <div className="mb-5">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 py-2 text-sm font-semibold text-[#c5d9f7] transition hover:bg-white/5 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 py-2 text-sm font-semibold text-[var(--color-text-secondary)] transition hover:bg-white/5 hover:text-white"
             onClick={() => navigate(APP_ROUTES.users)}
           >
             <ArrowLeft size={15} />
@@ -259,15 +343,16 @@ export default function UserProfilePage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <UserRound size={20} color="#4f83ff" />
+                <UserRound size={20} color="var(--color-accent)" />
                 <h1>{profile.user.name}</h1>
               </div>
               <p className="routes-page__subtitle">
-                Full customer intelligence view with bookings, support activity, refund pressure, and visa operations.
+                Full customer intelligence view with bookings, support activity,
+                refund pressure, and visa operations.
               </p>
             </div>
 
-            <div className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <CreditCard size={16} />
               <span>{profile.summary.totalSpentLabel} lifetime value</span>
             </div>
@@ -321,10 +406,26 @@ export default function UserProfilePage() {
             subtitle="Fast read on support load and financial follow-up."
           >
             <div className="grid gap-3 sm:grid-cols-2">
-              <MetricCard label="Open Tickets" value={profile.summary.openTickets} toneClassName="text-blue-200" />
-              <MetricCard label="Refund Pending" value={profile.summary.refundPending} toneClassName="text-violet-200" />
-              <MetricCard label="Visa Applications" value={profile.summary.visaApplications} toneClassName="text-sky-200" />
-              <MetricCard label="Total Refunds" value={profile.summary.totalRefunds} toneClassName="text-rose-200" />
+              <MetricCard
+                label="Open Tickets"
+                value={profile.summary.openTickets}
+                toneClassName="text-blue-200"
+              />
+              <MetricCard
+                label="Refund Pending"
+                value={profile.summary.refundPending}
+                toneClassName="text-violet-200"
+              />
+              <MetricCard
+                label="Visa Applications"
+                value={profile.summary.visaApplications}
+                toneClassName="text-sky-200"
+              />
+              <MetricCard
+                label="Total Refunds"
+                value={profile.summary.totalRefunds}
+                toneClassName="text-rose-200"
+              />
             </div>
           </Panel>
         </section>
@@ -338,12 +439,29 @@ export default function UserProfilePage() {
             <div className="h-[280px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={bookingHealthChartData}>
-                  <CartesianGrid stroke="#2d282b" vertical={false} />
-                  <XAxis dataKey="label" stroke="#8fa0bd" tickLine={false} axisLine={false} />
-                  <YAxis stroke="#8fa0bd" tickLine={false} axisLine={false} allowDecimals={false} />
+                  <CartesianGrid
+                    stroke="var(--color-border)"
+                    vertical={false}
+                  />
+                  <XAxis
+                    dataKey="label"
+                    stroke="var(--color-text-muted)"
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    stroke="var(--color-text-muted)"
+                    tickLine={false}
+                    axisLine={false}
+                    allowDecimals={false}
+                  />
                   <Tooltip
-                    cursor={{ fill: 'rgba(255,255,255,0.03)' }}
-                    contentStyle={{ background: '#171314', border: '1px solid #332d30', borderRadius: 14 }}
+                    cursor={{ fill: "rgba(255,255,255,0.03)" }}
+                    contentStyle={{
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border-strong)",
+                      borderRadius: 14,
+                    }}
                   />
                   <Bar dataKey="value" radius={[10, 10, 0, 0]}>
                     {bookingHealthChartData.map((entry) => (
@@ -372,11 +490,18 @@ export default function UserProfilePage() {
                       paddingAngle={3}
                     >
                       {portfolioChartData.map((entry, index) => (
-                        <Cell key={entry.label} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                        <Cell
+                          key={entry.label}
+                          fill={CHART_COLORS[index % CHART_COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ background: '#171314', border: '1px solid #332d30', borderRadius: 14 }}
+                      contentStyle={{
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border-strong)",
+                        borderRadius: 14,
+                      }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -393,20 +518,37 @@ export default function UserProfilePage() {
           >
             <div className="h-[280px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={operationsChartData} layout="vertical" margin={{ left: 12, right: 8 }}>
-                  <CartesianGrid stroke="#2d282b" horizontal={false} />
-                  <XAxis type="number" stroke="#8fa0bd" tickLine={false} axisLine={false} allowDecimals={false} />
+                <BarChart
+                  data={operationsChartData}
+                  layout="vertical"
+                  margin={{ left: 12, right: 8 }}
+                >
+                  <CartesianGrid
+                    stroke="var(--color-border)"
+                    horizontal={false}
+                  />
+                  <XAxis
+                    type="number"
+                    stroke="var(--color-text-muted)"
+                    tickLine={false}
+                    axisLine={false}
+                    allowDecimals={false}
+                  />
                   <YAxis
                     type="category"
                     dataKey="label"
-                    stroke="#8fa0bd"
+                    stroke="var(--color-text-muted)"
                     tickLine={false}
                     axisLine={false}
                     width={92}
                   />
                   <Tooltip
-                    cursor={{ fill: 'rgba(255,255,255,0.03)' }}
-                    contentStyle={{ background: '#171314', border: '1px solid #332d30', borderRadius: 14 }}
+                    cursor={{ fill: "rgba(255,255,255,0.03)" }}
+                    contentStyle={{
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border-strong)",
+                      borderRadius: 14,
+                    }}
                   />
                   <Bar dataKey="value" radius={[0, 10, 10, 0]}>
                     {operationsChartData.map((entry) => (
@@ -429,11 +571,19 @@ export default function UserProfilePage() {
               <div className="h-[360px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={monthlyBookingTrendData}>
-                    <CartesianGrid stroke="#2d282b" vertical={false} />
-                    <XAxis dataKey="monthLabel" stroke="#8fa0bd" tickLine={false} axisLine={false} />
+                    <CartesianGrid
+                      stroke="var(--color-border)"
+                      vertical={false}
+                    />
+                    <XAxis
+                      dataKey="monthLabel"
+                      stroke="var(--color-text-muted)"
+                      tickLine={false}
+                      axisLine={false}
+                    />
                     <YAxis
                       yAxisId="left"
-                      stroke="#8fa0bd"
+                      stroke="var(--color-text-muted)"
                       tickLine={false}
                       axisLine={false}
                       allowDecimals={false}
@@ -441,19 +591,23 @@ export default function UserProfilePage() {
                     <YAxis
                       yAxisId="right"
                       orientation="right"
-                      stroke="#8fa0bd"
+                      stroke="var(--color-text-muted)"
                       tickLine={false}
                       axisLine={false}
                       tickFormatter={(value) => `${Math.round(value)}`}
                     />
                     <Tooltip
-                      contentStyle={{ background: '#171314', border: '1px solid #332d30', borderRadius: 14 }}
+                      contentStyle={{
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border-strong)",
+                        borderRadius: 14,
+                      }}
                       formatter={(value, name) => {
-                        if (name === 'Amount') {
-                          return formatUserProfileCurrency(value)
+                        if (name === "Amount") {
+                          return formatUserProfileCurrency(value);
                         }
 
-                        return value
+                        return value;
                       }}
                     />
                     <Legend />
@@ -461,7 +615,7 @@ export default function UserProfilePage() {
                       yAxisId="left"
                       dataKey="bookingCount"
                       name="Bookings"
-                      fill="#4f83ff"
+                      fill="var(--color-accent)"
                       radius={[10, 10, 0, 0]}
                     />
                     <Line
@@ -469,9 +623,9 @@ export default function UserProfilePage() {
                       type="monotone"
                       dataKey="amount"
                       name="Amount"
-                      stroke="#2dd4bf"
+                      stroke="var(--color-info)"
                       strokeWidth={3}
-                      dot={{ fill: '#2dd4bf', r: 4 }}
+                      dot={{ fill: "var(--color-info)", r: 4 }}
                       activeDot={{ r: 6 }}
                     />
                   </ComposedChart>
@@ -494,20 +648,26 @@ export default function UserProfilePage() {
                 {profile.bookings.map((booking) => (
                   <article
                     key={booking.id}
-                    className="rounded-2xl border border-[#332d30] bg-[linear-gradient(180deg,rgba(24,20,21,0.98),rgba(17,14,15,0.98))] p-5"
+                    className="rounded-2xl border border-[var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(24,20,21,0.98),rgba(17,14,15,0.98))] p-5"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <p className="text-base font-bold text-white">{booking.displayTitle}</p>
-                        <p className="mt-1 text-xs text-[#8fa0bd]">
-                          Booking #{booking.id} • {booking.bookingType} • {booking.createdAtLabel}
+                        <p className="text-base font-bold text-white">
+                          {booking.displayTitle}
+                        </p>
+                        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                          Booking #{booking.id} • {booking.bookingType} •{" "}
+                          {booking.createdAtLabel}
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <StatusBadge label={booking.status} toneClassName={booking.statusToneClassName} />
+                        <StatusBadge
+                          label={booking.status}
+                          toneClassName={booking.statusToneClassName}
+                        />
                         <button
                           type="button"
-                          className="inline-flex items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-3 py-2 text-xs font-semibold text-[#c5d9f7] transition hover:bg-white/5 hover:text-white"
+                          className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-xs font-semibold text-[var(--color-text-secondary)] transition hover:bg-white/5 hover:text-white"
                           onClick={() => toggleBooking(booking.id)}
                         >
                           {expandedBookings[booking.id] ? (
@@ -525,54 +685,87 @@ export default function UserProfilePage() {
                       </div>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-[#332d30] bg-[#171314] px-4 py-3">
+                    <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 py-3">
                       <div>
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Amount</p>
-                        <p className="mt-1 text-sm font-semibold text-white">{booking.amountLabel}</p>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Amount
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {booking.amountLabel}
+                        </p>
                       </div>
-                      <div className="h-8 w-px bg-[#2d282b]" />
+                      <div className="h-8 w-px bg-[var(--color-border)]" />
                       <div>
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Payment</p>
-                        <p className="mt-1 text-sm font-semibold text-white">{booking.paymentLabel}</p>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Payment
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {booking.paymentLabel}
+                        </p>
                       </div>
-                      <div className="h-8 w-px bg-[#2d282b]" />
+                      <div className="h-8 w-px bg-[var(--color-border)]" />
                       <div>
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Travel / Stay</p>
-                        <p className="mt-1 text-sm font-semibold text-white">{booking.travelDateLabel}</p>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Travel / Stay
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-white">
+                          {booking.travelDateLabel}
+                        </p>
                       </div>
                     </div>
 
                     {expandedBookings[booking.id] ? (
                       <>
                         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Amount</p>
-                            <p className="mt-2 text-sm font-semibold text-white">{booking.amountLabel}</p>
+                          <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                              Amount
+                            </p>
+                            <p className="mt-2 text-sm font-semibold text-white">
+                              {booking.amountLabel}
+                            </p>
                           </div>
-                          <div className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Payment</p>
-                            <p className="mt-2 text-sm font-semibold text-white">{booking.paymentLabel}</p>
+                          <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                              Payment
+                            </p>
+                            <p className="mt-2 text-sm font-semibold text-white">
+                              {booking.paymentLabel}
+                            </p>
                           </div>
-                          <div className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Travel / Stay</p>
-                            <p className="mt-2 text-sm font-semibold text-white">{booking.travelDateLabel}</p>
+                          <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                              Travel / Stay
+                            </p>
+                            <p className="mt-2 text-sm font-semibold text-white">
+                              {booking.travelDateLabel}
+                            </p>
                           </div>
-                          <div className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
-                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Seats</p>
-                            <p className="mt-2 text-sm font-semibold text-white">{booking.seatNumbers}</p>
+                          <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4">
+                            <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                              Seats
+                            </p>
+                            <p className="mt-2 text-sm font-semibold text-white">
+                              {booking.seatNumbers}
+                            </p>
                           </div>
                         </div>
 
                         <div className="mt-4 flex flex-wrap items-center gap-2">
-                          <StatusBadge label={booking.extraStatus} toneClassName={booking.extraStatusToneClassName} />
+                          <StatusBadge
+                            label={booking.extraStatus}
+                            toneClassName={booking.extraStatusToneClassName}
+                          />
                           {booking.visaApplicationNo ? (
                             <span className="inline-flex rounded-full border border-cyan-500/20 bg-cyan-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-cyan-100">
-                              {booking.visaApplicationNo} • {booking.visaCountry} • {booking.visaType}
+                              {booking.visaApplicationNo} •{" "}
+                              {booking.visaCountry} • {booking.visaType}
                             </span>
                           ) : null}
-                          {booking.refundStatus !== 'N/A' ? (
+                          {booking.refundStatus !== "N/A" ? (
                             <span className="inline-flex rounded-full border border-rose-500/20 bg-rose-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-rose-100">
-                              Refund {booking.refundAmountLabel} • {booking.refundStatus}
+                              Refund {booking.refundAmountLabel} •{" "}
+                              {booking.refundStatus}
                             </span>
                           ) : null}
                         </div>
@@ -607,11 +800,18 @@ export default function UserProfilePage() {
                       {profile.tickets.map((ticket) => (
                         <tr key={ticket.id}>
                           <td>
-                            <div className="font-semibold text-white">{ticket.title}</div>
-                            <div className="mt-1 text-xs text-[#8fa0bd]">{ticket.description}</div>
+                            <div className="font-semibold text-white">
+                              {ticket.title}
+                            </div>
+                            <div className="mt-1 text-xs text-[var(--color-text-muted)]">
+                              {ticket.description}
+                            </div>
                           </td>
                           <td>
-                            <StatusBadge label={ticket.status} toneClassName={ticket.statusToneClassName} />
+                            <StatusBadge
+                              label={ticket.status}
+                              toneClassName={ticket.statusToneClassName}
+                            />
                           </td>
                           <td>{ticket.resolvedBy}</td>
                           <td>{ticket.createdAtLabel}</td>
@@ -633,15 +833,25 @@ export default function UserProfilePage() {
               {profile.refunds.length ? (
                 <div className="space-y-3">
                   {profile.refunds.map((refund) => (
-                    <article key={refund.id} className="rounded-xl border border-[#332d30] bg-[#171314] p-4">
+                    <article
+                      key={refund.id}
+                      className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-4"
+                    >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-white">{refund.bookingLabel}</p>
-                          <p className="mt-1 text-xs text-[#8fa0bd]">{refund.reason}</p>
+                          <p className="text-sm font-semibold text-white">
+                            {refund.bookingLabel}
+                          </p>
+                          <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                            {refund.reason}
+                          </p>
                         </div>
-                        <StatusBadge label={refund.status} toneClassName={refund.statusToneClassName} />
+                        <StatusBadge
+                          label={refund.status}
+                          toneClassName={refund.statusToneClassName}
+                        />
                       </div>
-                      <div className="mt-3 flex items-center justify-between text-sm text-[#dbe7fb]">
+                      <div className="mt-3 flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
                         <span>{refund.amountLabel}</span>
                         <span>{refund.createdAtLabel}</span>
                       </div>
@@ -662,31 +872,57 @@ export default function UserProfilePage() {
             {profile.visaApplications.length ? (
               <div className="grid gap-4 xl:grid-cols-2">
                 {profile.visaApplications.map((application) => (
-                  <article key={application.id} className="rounded-2xl border border-[#332d30] bg-[#171314] p-5">
+                  <article
+                    key={application.id}
+                    className="rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-5"
+                  >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="text-sm font-bold text-white">{application.applicationNo}</p>
-                        <p className="mt-1 text-xs text-[#8fa0bd]">{application.countryAndTypeLabel}</p>
+                        <p className="text-sm font-bold text-white">
+                          {application.applicationNo}
+                        </p>
+                        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+                          {application.countryAndTypeLabel}
+                        </p>
                       </div>
-                      <StatusBadge label={application.status} toneClassName={application.statusToneClassName} />
+                      <StatusBadge
+                        label={application.status}
+                        toneClassName={application.statusToneClassName}
+                      />
                     </div>
 
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-xl border border-[#332d30] bg-[#120f10] p-4">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Package / Owner</p>
-                        <p className="mt-2 text-sm font-semibold text-white">{application.packageLabel}</p>
+                      <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-canvas-deep)] p-4">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Package / Owner
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {application.packageLabel}
+                        </p>
                       </div>
-                      <div className="rounded-xl border border-[#332d30] bg-[#120f10] p-4">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Fee</p>
-                        <p className="mt-2 text-sm font-semibold text-white">{application.feeLabel}</p>
+                      <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-canvas-deep)] p-4">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Fee
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {application.feeLabel}
+                        </p>
                       </div>
-                      <div className="rounded-xl border border-[#332d30] bg-[#120f10] p-4">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Payment Status</p>
-                        <p className="mt-2 text-sm font-semibold text-white">{application.paymentStatus}</p>
+                      <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-canvas-deep)] p-4">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Payment Status
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {application.paymentStatus}
+                        </p>
                       </div>
-                      <div className="rounded-xl border border-[#332d30] bg-[#120f10] p-4">
-                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#8fa0bd]">Created</p>
-                        <p className="mt-2 text-sm font-semibold text-white">{application.createdAtLabel}</p>
+                      <div className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-canvas-deep)] p-4">
+                        <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-muted)]">
+                          Created
+                        </p>
+                        <p className="mt-2 text-sm font-semibold text-white">
+                          {application.createdAtLabel}
+                        </p>
                       </div>
                     </div>
                   </article>
@@ -699,5 +935,5 @@ export default function UserProfilePage() {
         </section>
       </div>
     </main>
-  )
+  );
 }

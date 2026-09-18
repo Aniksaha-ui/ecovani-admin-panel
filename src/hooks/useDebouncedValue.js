@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-const DEFAULT_DEBOUNCE_MS = 350
+const DEFAULT_DEBOUNCE_MS = 350;
 
 export default function useDebouncedValue(value, delay = DEFAULT_DEBOUNCE_MS) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
+  const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
+      setDebouncedValue(value);
+    }, delay);
 
-    return () => window.clearTimeout(timeoutId)
-  }, [delay, value])
+    return () => window.clearTimeout(timeoutId);
+  }, [delay, value]);
 
-  return debouncedValue
+  return debouncedValue;
 }

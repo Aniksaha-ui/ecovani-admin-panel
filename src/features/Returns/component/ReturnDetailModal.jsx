@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef } from "react";
+import StatusBadge from "../../../components/ui/StatusBadge";
 
 const emptyValue = (value) =>
   value === null || value === undefined || value === "" ? "—" : value;
@@ -176,11 +177,10 @@ export default function ReturnDetailModal({
             <section className="returns-detail-summary">
               <div>
                 <span>Return status</span>
-                <strong
-                  className={`returns-status returns-status--${returnRecord?.status || "unknown"}`}
-                >
-                  {humanize(returnRecord?.status)}
-                </strong>
+                <StatusBadge
+                  value={returnRecord?.status}
+                  className="returns-status"
+                />
                 <small>Return #{returnRecord?.id}</small>
               </div>
               <div>

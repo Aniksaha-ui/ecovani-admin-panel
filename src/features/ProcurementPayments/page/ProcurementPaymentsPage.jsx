@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   BanknoteArrowDown,
   Pencil,
@@ -206,7 +207,9 @@ export default function ProcurementPaymentsPage() {
       render: (row) => (
         <div>
           <strong className="text-white">{row.account_name}</strong>
-          <p className="mt-1 text-xs text-[#7d8ca5]">{row.account_number}</p>
+          <p className="mt-1 text-xs text-[var(--color-text-faint)]">
+            {row.account_number}
+          </p>
         </div>
       ),
     },
@@ -246,7 +249,7 @@ export default function ProcurementPaymentsPage() {
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="routes-page__title">
-            <BanknoteArrowDown size={20} color="#4f83ff" />
+            <BanknoteArrowDown size={20} color="var(--color-accent)" />
             <h1>Procurement Payments</h1>
           </div>
           <p className="routes-page__subtitle">

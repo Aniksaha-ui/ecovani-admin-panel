@@ -8,7 +8,9 @@ export const productColumns = () => [
     render: (item) => (
       <div>
         <p className="font-semibold text-white">{item.name}</p>
-        <p className="text-xs text-[#7d8ca5]">{item.sku || "No SKU"}</p>
+        <p className="text-xs text-[var(--color-text-faint)]">
+          {item.sku || "No SKU"}
+        </p>
       </div>
     ),
   },
@@ -16,9 +18,11 @@ export const productColumns = () => [
     id: "category_name",
     label: "Category",
     render: (item) => (
-      <div className="text-sm text-[#dbe7fb]">
+      <div className="text-sm text-[var(--color-text-secondary)]">
         <p>{item.category_name}</p>
-        <p className="text-xs text-[#7d8ca5]">{item.subcategory_name}</p>
+        <p className="text-xs text-[var(--color-text-faint)]">
+          {item.subcategory_name}
+        </p>
       </div>
     ),
     width: "19%",
@@ -67,7 +71,10 @@ export const productActions =
         <Boxes size={14} />
         Stock
       </button>
-      <button className="product-report-action" onClick={() => onViewReport(item)}>
+      <button
+        className="product-report-action"
+        onClick={() => onViewReport(item)}
+      >
         <BarChart3 size={14} /> Report
       </button>
       <button

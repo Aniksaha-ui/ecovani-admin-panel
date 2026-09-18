@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Landmark, Pencil, Plus, RefreshCcw, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import AdminDataTable, {
@@ -165,7 +166,9 @@ export default function CompanyAccountsPage() {
       render: (row) => (
         <div>
           <strong className="text-white">{row.account_name}</strong>
-          <p className="mt-1 text-xs text-[#7d8ca5]">{row.account_number}</p>
+          <p className="mt-1 text-xs text-[var(--color-text-faint)]">
+            {row.account_number}
+          </p>
         </div>
       ),
     },
@@ -212,7 +215,7 @@ export default function CompanyAccountsPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <Landmark size={20} color="#4f83ff" />
+                <Landmark size={20} color="var(--color-accent)" />
                 <h1>Company Accounts</h1>
               </div>
               <p className="routes-page__subtitle">
@@ -220,7 +223,7 @@ export default function CompanyAccountsPage() {
                 payments.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <Landmark size={16} />
               {pagination.total || 0} accounts
             </div>

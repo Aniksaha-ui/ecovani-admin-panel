@@ -1,7 +1,9 @@
 import { APP_CONFIG } from "./config";
 
-export const AUTH_SESSION_TIMEOUT_EVENT = "travel-agency-admin-auth-session-timeout";
-export const AUTH_SESSION_TIMEOUT_MESSAGE = "Session is timeout. Please login again.";
+export const AUTH_SESSION_TIMEOUT_EVENT =
+  "travel-agency-admin-auth-session-timeout";
+export const AUTH_SESSION_TIMEOUT_MESSAGE =
+  "Session is timeout. Please login again.";
 
 let hasDispatchedSessionTimeout = false;
 
@@ -50,10 +52,7 @@ const flattenValidationErrors = (errors) => {
     return "";
   }
 
-  return Object.values(errors)
-    .flat()
-    .filter(Boolean)
-    .join(" ");
+  return Object.values(errors).flat().filter(Boolean).join(" ");
 };
 
 const resolveErrorMessage = (data, fallback) => {
@@ -93,14 +92,21 @@ export const apiRequest = async (path, options = {}) => {
   });
   const data = await parseResponseBody(response);
   const isLoginRequest = path.endsWith("/login");
-  const hasSession = Boolean(window.localStorage.getItem(APP_CONFIG.authStorageKey));
+  const hasSession = Boolean(
+    window.localStorage.getItem(APP_CONFIG.authStorageKey),
+  );
 
-  if (response.status === 401 && hasSession && !isLoginRequest && !hasDispatchedSessionTimeout) {
+  if (
+    response.status === 401 &&
+    hasSession &&
+    !isLoginRequest &&
+    !hasDispatchedSessionTimeout
+  ) {
     hasDispatchedSessionTimeout = true;
     window.dispatchEvent(
       new CustomEvent(AUTH_SESSION_TIMEOUT_EVENT, {
         detail: { message: AUTH_SESSION_TIMEOUT_MESSAGE },
-      })
+      }),
     );
   }
 

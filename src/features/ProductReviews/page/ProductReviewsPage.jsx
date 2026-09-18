@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   MessageSquare,
   Pencil,
@@ -185,7 +186,7 @@ export default function ProductReviewsPage() {
       render: (row) => (
         <div>
           <strong className="text-white">{row.product_name}</strong>
-          <p className="mt-1 text-xs text-[#7d8ca5]">
+          <p className="mt-1 text-xs text-[var(--color-text-faint)]">
             {row.product_sku || "No SKU"}
           </p>
         </div>
@@ -197,7 +198,9 @@ export default function ProductReviewsPage() {
       render: (row) => (
         <div>
           <strong>{row.user_name}</strong>
-          <p className="mt-1 text-xs text-[#7d8ca5]">{row.user_email}</p>
+          <p className="mt-1 text-xs text-[var(--color-text-faint)]">
+            {row.user_email}
+          </p>
         </div>
       ),
     },
@@ -205,7 +208,7 @@ export default function ProductReviewsPage() {
       id: "rating",
       label: "Rating",
       render: (row) => (
-        <span className="text-[#ffb400]">
+        <span className="text-[var(--color-warning)]">
           {"★".repeat(row.rating)}
           <span className="text-[#778397]">{"★".repeat(5 - row.rating)}</span>
         </span>
@@ -248,7 +251,7 @@ export default function ProductReviewsPage() {
       <div className="routes-page__inner">
         <header className="routes-page__header">
           <div className="routes-page__title">
-            <MessageSquare size={20} color="#4f83ff" />
+            <MessageSquare size={20} color="var(--color-accent)" />
             <h1>Product Reviews</h1>
           </div>
           <p className="routes-page__subtitle">

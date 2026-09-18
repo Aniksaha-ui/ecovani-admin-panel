@@ -25,8 +25,32 @@ export default function ProductStockModal({ product, onClose }) {
         <h3>Current warehouse stock</h3>
         <div className="stock-history__table-wrap">
           <table>
-            <thead><tr><th>Warehouse</th><th>Stock quantity</th></tr></thead>
-            <tbody>{(product.stock_breakdown || []).length ? product.stock_breakdown.map((entry) => <tr key={entry.id}><td>{entry.warehouse_location || "Unassigned warehouse"}</td><td>{Number(entry.stock_quantity || 0).toLocaleString()} units</td></tr>) : <tr><td colSpan="2" className="stock-history__empty">No stock records found.</td></tr>}</tbody>
+            <thead>
+              <tr>
+                <th>Warehouse</th>
+                <th>Stock quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(product.stock_breakdown || []).length ? (
+                product.stock_breakdown.map((entry) => (
+                  <tr key={entry.id}>
+                    <td>
+                      {entry.warehouse_location || "Unassigned warehouse"}
+                    </td>
+                    <td>
+                      {Number(entry.stock_quantity || 0).toLocaleString()} units
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2" className="stock-history__empty">
+                    No stock records found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
         </div>
       </section>

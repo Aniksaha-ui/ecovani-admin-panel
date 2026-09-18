@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   FolderTree,
   Pencil,
@@ -161,7 +162,7 @@ export default function SubcategoriesPage() {
       render: (row) => (
         <div>
           <strong className="text-white">{row.name}</strong>
-          <p className="mt-1 max-w-80 truncate text-xs text-[#7d8ca5]">
+          <p className="mt-1 max-w-80 truncate text-xs text-[var(--color-text-faint)]">
             {row.description || "No description"}
           </p>
         </div>
@@ -203,14 +204,14 @@ export default function SubcategoriesPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <Tags size={20} color="#4f83ff" />
+                <Tags size={20} color="var(--color-accent)" />
                 <h1>Subcategories</h1>
               </div>
               <p className="routes-page__subtitle">
                 Manage product subcategories and their parent categories.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <FolderTree size={16} />
               {pagination.total || 0} subcategories
             </div>

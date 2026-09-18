@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import {
   LayoutPanelTop,
   Pencil,
@@ -10,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import AdminDataTable, {
   AdminTableButton,
 } from "../../../components/ui/AdminDataTable";
+import StatusBadge from "../../../components/ui/StatusBadge";
 import { useToast } from "../../../components/common/Toaster";
 import {
   deleteSection,
@@ -151,9 +153,7 @@ export default function SectionsPage() {
       id: "is_active",
       label: "Status",
       render: (row) => (
-        <span className="operations-badge">
-          {Number(row.is_active) ? "Active" : "Inactive"}
-        </span>
+        <StatusBadge value={Number(row.is_active) ? "Active" : "Inactive"} />
       ),
     },
     {
@@ -191,14 +191,14 @@ export default function SectionsPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="routes-page__title">
-                <LayoutPanelTop size={20} color="#4f83ff" />
+                <LayoutPanelTop size={20} color="var(--color-accent)" />
                 <h1>Sections</h1>
               </div>
               <p className="routes-page__subtitle">
                 Manage visible product sections and their display order.
               </p>
             </div>
-            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[#332d30] bg-[#171314] px-4 text-sm font-semibold text-[#c5d9f7]">
+            <div className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-4 text-sm font-semibold text-[var(--color-text-secondary)]">
               <LayoutPanelTop size={16} />
               {pagination.total || 0} sections
             </div>
