@@ -1307,3 +1307,197 @@
   white-space: normal;
   line-height: 1.25;
 }
+
+.pos-profit-modal {
+  width: min(100%, 498px);
+  border-radius: 8px;
+}
+.pos-profit-modal .pos-modal-head {
+  min-height: 58px;
+  padding: 16px 20px;
+}
+.pos-profit-modal .pos-modal-head h2 {
+  font-size: 18px;
+  color: #303b49;
+}
+.pos-profit-modal .pos-modal-head button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f20e13;
+  color: #fff;
+}
+.pos-profit-modal .pos-modal-head button svg {
+  width: 13px;
+  height: 13px;
+}
+.pos-profit-modal .pos-modal-body {
+  padding: 20px 20px 0;
+}
+.pos-profit-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.pos-profit-cards > div {
+  height: 86px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 15px 16px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.pos-profit-cards strong {
+  font-size: 20px;
+  font-weight: 700;
+}
+.pos-profit-sale {
+  border-color: #23bb75 !important;
+  background: #f1fcf8;
+}
+.pos-profit-sale strong {
+  color: #20a86d;
+}
+.pos-profit-expense {
+  border-color: #ff3636 !important;
+  background: #fff1f1;
+}
+.pos-profit-expense strong {
+  color: #ef1717;
+}
+.pos-profit-net {
+  border-color: #295bff !important;
+  background: #eef4ff;
+}
+.pos-profit-net strong {
+  color: #0d55e9;
+}
+.pos-profit-rows {
+  margin-top: 16px;
+}
+.pos-profit-rows > div {
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 20px;
+  border-bottom: 1px solid #e0e5ea;
+  font-size: 13px;
+}
+.pos-profit-rows > div:nth-child(odd) {
+  background: #f2f5f8;
+}
+.pos-profit-rows span {
+  color: #626d79;
+}
+.pos-profit-rows strong {
+  color: #303b49;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pos-profit-rows > .pos-profit-cash {
+  background: #e1e7ec;
+  font-weight: 700;
+}
+.pos-profit-cash span,
+.pos-profit-cash strong {
+  color: #303b49;
+  font-weight: 700;
+}
+.pos-profit-note {
+  margin: 10px 0 0;
+  color: #687889;
+  font-size: 11px;
+}
+.pos-profit-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px -20px 0;
+  padding: 15px 20px;
+  border-top: 1px solid #e4eaf1;
+}
+.pos-profit-footer button {
+  min-width: 66px;
+  height: 36px;
+  border: 0;
+  border-radius: 5px;
+  background: #ff9f43;
+  color: #fff;
+  cursor: pointer;
+}
+@media (max-width: 520px) {
+  .pos-profit-cards {
+    gap: 8px;
+  }
+  .pos-profit-cards > div {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .pos-profit-cards strong {
+    font-size: 16px;
+  }
+}
+
+.theme-dark .pos-profit-modal {
+  background: #1b1b24;
+  color: #e9edf5;
+  box-shadow: 0 28px 80px #0009;
+}
+.theme-dark .pos-profit-modal .pos-modal-head,
+.theme-dark .pos-profit-footer {
+  border-color: #373844;
+}
+.theme-dark .pos-profit-modal .pos-modal-head h2 {
+  color: #f3f5fa;
+}
+.theme-dark .pos-profit-cards > div {
+  box-shadow: inset 0 1px #ffffff0d;
+}
+.theme-dark .pos-profit-cards span {
+  color: #e1e6ef;
+}
+.theme-dark .pos-profit-sale {
+  border-color: #258d65 !important;
+  background: #123529;
+}
+.theme-dark .pos-profit-sale strong {
+  color: #69e5ae;
+}
+.theme-dark .pos-profit-expense {
+  border-color: #b74b58 !important;
+  background: #3b2029;
+}
+.theme-dark .pos-profit-expense strong {
+  color: #ff8a98;
+}
+.theme-dark .pos-profit-net {
+  border-color: #526dde !important;
+  background: #202e53;
+}
+.theme-dark .pos-profit-net strong {
+  color: #91b5ff;
+}
+.theme-dark .pos-profit-rows > div {
+  border-color: #343742;
+}
+.theme-dark .pos-profit-rows > div:nth-child(odd) {
+  background: #242630;
+}
+.theme-dark .pos-profit-rows span,
+.theme-dark .pos-profit-rows strong {
+  color: #d9e0ea;
+}
+.theme-dark .pos-profit-rows > .pos-profit-cash {
+  background: #323945;
+}
+.theme-dark .pos-profit-cash span,
+.theme-dark .pos-profit-cash strong {
+  color: #fff;
+}
+.theme-dark .pos-profit-note {
+  color: #a8b4c4;
+}

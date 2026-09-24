@@ -55,7 +55,7 @@ export default function PosPage() {
   const [featured, setFeatured] = useState(false);
   const [cart, setCart] = useState([]);
   const [customerId, setCustomerId] = useState("");
-  const [walkIn, setWalkIn] = useState({ name: "", phone: "" });
+  const [walkIn, setWalkIn] = useState({ name: "", email: "", phone: "" });
   const [values, setValues] = useState(initialValues);
   const [method, setMethod] = useState("cash");
   const [split, setSplit] = useState(false);
@@ -223,7 +223,7 @@ export default function PosPage() {
   const reset = () => {
     setCart([]);
     setCustomerId("");
-    setWalkIn({ name: "", phone: "" });
+    setWalkIn({ name: "", email: "", phone: "" });
     setValues(initialValues);
     setMethod("cash");
     setSplit(false);
@@ -232,6 +232,7 @@ export default function PosPage() {
   const payload = () => ({
     customer_id: customerId ? Number(customerId) : null,
     walk_in_name: walkIn.name,
+    walk_in_email: walkIn.email,
     walk_in_phone: walkIn.phone,
     items: cart.map((item) => ({
       product_id: item.id,
@@ -317,6 +318,7 @@ export default function PosPage() {
     setCustomerId(draft.customer_id ? String(draft.customer_id) : "");
     setWalkIn({
       name: draft.walk_in_name || "",
+      email: draft.walk_in_email || "",
       phone: draft.walk_in_phone || "",
     });
     setValues({

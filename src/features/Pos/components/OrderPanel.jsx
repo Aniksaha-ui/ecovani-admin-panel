@@ -60,10 +60,11 @@ export default function OrderPanel({
                 <UserRoundPlus size={17} />
               </button>
             </div>
-            {!customerId && (walkIn.name || walkIn.phone) && (
+            {!customerId && (walkIn.name || walkIn.email || walkIn.phone) && (
               <p className="pos-customer-note">
                 {walkIn.name || "Walk-in Customer"}
                 {walkIn.phone ? ` · ${walkIn.phone}` : ""}
+                {walkIn.email ? ` · ${walkIn.email}` : ""}
               </p>
             )}
           </div>

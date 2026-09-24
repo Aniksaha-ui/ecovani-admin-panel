@@ -4,7 +4,7 @@ import TodayTransactions from "./TodayTransactions";
 import { paymentMethods } from "./PaymentPicker";
 import PosReceipt from "./PosReceipt";
 
-export function PosModal({ title, onClose, children, wide = false }) {
+export function PosModal({ title, onClose, children, wide = false, className = "" }) {
   return (
     <div
       className="pos-modal-backdrop"
@@ -13,7 +13,7 @@ export function PosModal({ title, onClose, children, wide = false }) {
       }}
     >
       <div
-        className={`pos-modal ${wide ? "wide" : ""}`}
+        className={`pos-modal ${wide ? "wide" : ""} ${className}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
@@ -34,9 +34,18 @@ export function CustomerDialog({ value, onChange, onClose }) {
   return (
     <PosModal title="Walk-in customer" onClose={onClose}>
       <p className="pos-modal-help">
-        Customer details appear on the invoice. They are optional for walk-in
-        sales.
+        Add an email or phone to create or reuse a customer account when the sale
+        is placed. Leave both blank for an anonymous walk-in sale.
       </p>
+      <label className="pos-field">
+        Email
+        <input
+          type="email"
+          value={value.email || ""}
+          onChange={(e) => onChange({ ...value, email: e.target.value })}
+          placeholder="Email address"
+        />
+      </label>
       <label className="pos-field">
         Name
         <input
@@ -281,7 +290,57 @@ export function HoldsDialog({ holds, onResume, onDelete, onClose }) {
   );
 }
 
+function ProfitReportDialog({ report, onClose }) {
+  const breakdown = report.profit_breakdown || {};
+  const rows = [
+    ["Product Revenue", breakdown.product_revenue],
+    ["Product Cost", breakdown.product_cost],
+    ["Expense", breakdown.expense],
+    ["Total Stock Adjustment", breakdown.stock_adjustment],
+    ["Deposit Payment", breakdown.deposit_payment],
+    ["Total Purchase Shipping Cost", breakdown.purchase_shipping_cost],
+    ["Total Sell Discount", breakdown.sell_discount],
+    ["Total Sell Return", breakdown.sell_return],
+    ["Closing Stock", breakdown.closing_stock],
+    ["Total Sales", breakdown.total_sales],
+    ["Total Sale Return", breakdown.sale_return],
+    ["Total Expense", breakdown.total_expense],
+    ["Total Cash", breakdown.total_cash],
+  ];
+  return (
+    <PosModal title="Today's Profit" onClose={onClose} className="pos-profit-modal">
+      <div className="pos-profit-cards">
+        <div className="pos-profit-sale">
+          <span>Total Sale</span>
+          <strong>{money(report.net_sales)}</strong>
+        </div>
+        <div className="pos-profit-expense" title="Product cost only; other operating expenses are not tracked by POS.">
+          <span>Expense</span>
+          <strong>{money(report.estimated_cost)}</strong>
+        </div>
+        <div className="pos-profit-net">
+          <span>Total Profit</span>
+          <strong>{money(report.estimated_profit)}</strong>
+        </div>
+      </div>
+      <div className="pos-profit-rows">
+        {rows.map(([label, value], index) => (
+          <div className={index === rows.length - 1 ? "pos-profit-cash" : ""} key={label}>
+            <span>{label}</span>
+            <strong>{value == null ? "—" : money(value)}</strong>
+          </div>
+        ))}
+      </div>
+      <p className="pos-profit-note">— Not tracked in POS. Profit excludes untracked operating expenses.</p>
+      <div className="pos-profit-footer">
+        <button onClick={onClose}>Cancel</button>
+      </div>
+    </PosModal>
+  );
+}
+
 export function ReportDialog({ report, profit, onClose, onSelect }) {
+  if (profit) return <ProfitReportDialog report={report} onClose={onClose} />;
   return (
     <PosModal
       title={profit ? "Today's profit report" : "Today's sales & transactions"}
