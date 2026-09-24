@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "./Footer";
+import { APP_ROUTES } from "../constants/routes";
 import { Navbar } from "./Navbar";
 import { Sidebar } from "./Sidebar";
 
@@ -24,6 +25,8 @@ export function AppLayout() {
       return setSidebarOpen((currentValue) => !currentValue);
     return undefined;
   };
+
+  if (location.pathname === APP_ROUTES.pos) return <Outlet />;
 
   return (
     <div className="flex min-h-dvh bg-[var(--color-canvas)] text-slate-200">

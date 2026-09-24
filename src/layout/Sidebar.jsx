@@ -5,6 +5,7 @@ import {
   Landmark,
   LayoutDashboard,
   LogOut,
+  Store,
   Users,
   X,
 } from "lucide-react";
@@ -13,6 +14,7 @@ import { APP_ROUTES } from "../constants/routes";
 import { useAuthContext } from "../contexts/AuthContext";
 
 const menuItems = [
+  { label: "Point of Sale", to: APP_ROUTES.pos, icon: Store },
   { label: "User Management", to: APP_ROUTES.userManagement, icon: Users },
   { label: "Commerce", to: APP_ROUTES.commerce, icon: LayoutDashboard },
   { label: "Catalog", to: APP_ROUTES.catalog, icon: Boxes },

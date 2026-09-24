@@ -28,4 +28,5 @@ export const APP_ROUTES = {
   coupons: "/admin/coupons",
   companyAccounts: "/admin/company-accounts",
   companyAccountHistory: "/admin/company-accounts/history",
+  pos: "/admin/pos",
 };

@@ -50,6 +50,7 @@ const CompanyAccountsPage = lazy(
   () => import("./features/CompanyAccounts/page/CompanyAccountsPage"),
 );
 const MenuHubPage = lazy(() => import("./features/MenuHub/page/MenuHubPage"));
+const PosPage = lazy(() => import("./features/Pos/page"));
 
 function ProtectedRoute({ children }) {
   const {
@@ -98,6 +99,7 @@ function AppRoutes() {
         }
       >
         <Route path="/" element={<Navigate to={APP_ROUTES.users} replace />} />
+        <Route path={APP_ROUTES.pos} element={<Suspense fallback={<FullPageLoader message="Loading POS..." />}><PosPage /></Suspense>} />
         <Route
           path={APP_ROUTES.users}
           element={
